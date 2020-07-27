@@ -166,4 +166,11 @@ public interface AllApiIneterface {
             @Part("pin") String pin,
             @Part("isnew") String isnew
     );
+
+    @Multipart
+    @POST("emartindia/api/getLogs.php")
+    Call<trackBean> getLogs(
+            @Part("order_id") String order_id
+    );
+
 }

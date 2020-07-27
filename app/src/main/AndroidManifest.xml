@@ -36,9 +36,12 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".Address" />
-        <activity android:name=".Web" />
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Address"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Web"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".OrderDetails"
             android:screenOrientation="portrait" />

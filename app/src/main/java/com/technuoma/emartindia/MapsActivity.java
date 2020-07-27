@@ -151,14 +151,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 .position(mDestination)
                                 .title("Melbourne")
                                 .snippet("Population: 4,137,400")
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.home)));
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery)));
 
                 Marker melbourne2 = mMap.addMarker(
                         new MarkerOptions()
                                 .position(mOrigin)
                                 .title("Melbourne")
                                 .snippet("Population: 4,137,400")
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery)));
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.home)));
 
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
 

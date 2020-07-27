@@ -2,61 +2,81 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.technuoma.emartindia">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name="com.technuoma.emartindia.Bean"
+        android:name=".Bean"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
-        <activity android:name="com.technuoma.emartindia.Address"/>
-        <activity android:name="com.technuoma.emartindia.Web" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
-            android:name="com.technuoma.emartindia.OrderDetails"
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
+        <activity android:name=".Address" />
+        <activity android:name=".Web" />
+        <activity
+            android:name=".OrderDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.OTP"
+            android:name=".OTP"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.Location"
+            android:name=".Location"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.Search"
+            android:name=".Search"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.Orders"
+            android:name=".Orders"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.Checkout"
+            android:name=".Checkout"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.Cart"
+            android:name=".Cart"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.SingleProduct"
+            android:name=".SingleProduct"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.Products"
+            android:name=".Products"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.SubCat"
+            android:name=".SubCat"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.Category"
+            android:name=".Category"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.Login"
+            android:name=".Login"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.emartindia.Spalsh"
+            android:name=".Spalsh"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,11 +84,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.technuoma.emartindia.MainActivity" />
-        <activity android:name="com.technuoma.emartindia.WebViewActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".WebViewActivity" />
 
         <service
-            android:name="com.technuoma.emartindia.MyFirebaseMessagingService"
+            android:name=".MyFirebaseMessagingService"
             android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

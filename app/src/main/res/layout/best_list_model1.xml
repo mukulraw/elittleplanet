@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_margin="4dp"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="5dp"
     app:cardBackgroundColor="#ffffff"
     android:layout_height="wrap_content">
 

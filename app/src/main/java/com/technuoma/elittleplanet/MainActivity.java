@@ -198,12 +198,12 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         essentails.setAdapter(adapter4);
         essentails.setLayoutManager(manager3);
 
-        manager5.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+        /*manager5.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int i) {
                 return Integer.parseInt(adapter6.getSpace(i));
             }
-        });
+        });*/
 
 
         categories.setAdapter(adapter6);
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
                 Intent intent = new Intent(MainActivity.this, Web.class);
                 intent.putExtra("title", "Terms & Conditions");
-                intent.putExtra("url", "https://technuoma.com/emartindia/terms.php");
+                intent.putExtra("url", "https://technuoma.com/elittleplanet/terms.php");
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
 
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
                 Intent intent = new Intent(MainActivity.this, Web.class);
                 intent.putExtra("title", "FAQs");
-                intent.putExtra("url", "https://technuoma.com/emartindia/faq.php");
+                intent.putExtra("url", "https://technuoma.com/elittleplanet/faq.php");
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
 

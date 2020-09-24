@@ -37,11 +37,13 @@
         <activity
             android:name="com.technuoma.elittleplanet.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.technuoma.elittleplanet.Address"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.technuoma.elittleplanet.Web"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.technuoma.elittleplanet.Address"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.technuoma.elittleplanet.Web"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.technuoma.elittleplanet.OrderDetails"
             android:screenOrientation="portrait" />

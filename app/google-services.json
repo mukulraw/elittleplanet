@@ -44,6 +44,50 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:723362617491:android:89d24bc273a5073f565566",
+        "android_client_info": {
+          "package_name": "com.lkd.loankarado"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723362617491-c83kau4dcm02e11lq2a65htloje892du.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lkd.loankarado",
+            "certificate_hash": "4d9e0547a0931fd363e84153798a0024a6d3ca6c"
+          }
+        },
+        {
+          "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPZpJp5CUBraCP_H6FHQ2imp-iBym_hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723362617491-gfuktjhp5rg79undr0sgc15vtjljf1l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nsezconnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:723362617491:android:a33c432455302918",
         "android_client_info": {
           "package_name": "com.mrtecks.e2l"
@@ -344,6 +388,186 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:723362617491:android:79a6e694f1be1838565566",
+        "android_client_info": {
+          "package_name": "com.technuoma.bonpizza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPZpJp5CUBraCP_H6FHQ2imp-iBym_hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723362617491-gfuktjhp5rg79undr0sgc15vtjljf1l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nsezconnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723362617491:android:b9a53f14a3bac9ef565566",
+        "android_client_info": {
+          "package_name": "com.technuoma.bonpizzastore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPZpJp5CUBraCP_H6FHQ2imp-iBym_hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723362617491-gfuktjhp5rg79undr0sgc15vtjljf1l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nsezconnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723362617491:android:8ab243d51e6b524b565566",
+        "android_client_info": {
+          "package_name": "com.technuoma.easyHomezIndia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPZpJp5CUBraCP_H6FHQ2imp-iBym_hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723362617491-gfuktjhp5rg79undr0sgc15vtjljf1l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nsezconnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723362617491:android:67887dd61800edb2565566",
+        "android_client_info": {
+          "package_name": "com.technuoma.easyhomezclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPZpJp5CUBraCP_H6FHQ2imp-iBym_hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723362617491-gfuktjhp5rg79undr0sgc15vtjljf1l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nsezconnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723362617491:android:4b7fa7b92feed0e7565566",
+        "android_client_info": {
+          "package_name": "com.technuoma.elittleplanet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPZpJp5CUBraCP_H6FHQ2imp-iBym_hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723362617491-gfuktjhp5rg79undr0sgc15vtjljf1l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nsezconnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:723362617491:android:b989a212c091d85e565566",
         "android_client_info": {
           "package_name": "com.technuoma.emartclient"
@@ -383,6 +607,78 @@
         "mobilesdk_app_id": "1:723362617491:android:2fbcdc9f5ee9eb23565566",
         "android_client_info": {
           "package_name": "com.technuoma.emartindia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPZpJp5CUBraCP_H6FHQ2imp-iBym_hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723362617491-gfuktjhp5rg79undr0sgc15vtjljf1l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nsezconnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723362617491:android:ce1778c7def8cbb6565566",
+        "android_client_info": {
+          "package_name": "com.technuoma.gbuyclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPZpJp5CUBraCP_H6FHQ2imp-iBym_hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723362617491-gfuktjhp5rg79undr0sgc15vtjljf1l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nsezconnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723362617491:android:f298089860dd62ef565566",
+        "android_client_info": {
+          "package_name": "com.technuoma.gbuysmart"
         }
       },
       "oauth_client": [

@@ -20,46 +20,46 @@ import retrofit2.http.Part;
 public interface AllApiIneterface {
 
     @Multipart
-    @POST("emartindia/api/getHome2.php")
+    @POST("elittleplanet/api/getHome2.php")
     Call<homeBean> getHome(
             @Part("lat") String lat,
             @Part("lng") String lng
     );
 
     @Multipart
-    @POST("emartindia/api/getSubCat1.php")
+    @POST("elittleplanet/api/getSubCat1.php")
     Call<subCat1Bean> getSubCat1(
             @Part("cat") String cat
     );
 
     @Multipart
-    @POST("emartindia/api/getSubCat2.php")
+    @POST("elittleplanet/api/getSubCat2.php")
     Call<subCat1Bean> getSubCat2(
             @Part("subcat1") String cat
     );
 
     @Multipart
-    @POST("emartindia/api/getProducts.php")
+    @POST("elittleplanet/api/getProducts.php")
     Call<productsBean> getProducts(
             @Part("subcat2") String cat,
             @Part("location_id") String location_id
     );
 
     @Multipart
-    @POST("emartindia/api/getProductById.php")
+    @POST("elittleplanet/api/getProductById.php")
     Call<singleProductBean> getProductById(
             @Part("id") String cat
     );
 
     @Multipart
-    @POST("emartindia/api/search.php")
+    @POST("elittleplanet/api/search.php")
     Call<searchBean> search(
             @Part("query") String query,
             @Part("location_id") String location_id
     );
 
     @Multipart
-    @POST("emartindia/api/login.php")
+    @POST("elittleplanet/api/login.php")
     Call<loginBean> login(
             @Part("phone") String phone,
             @Part("token") String token,
@@ -67,14 +67,14 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("emartindia/api/verify.php")
+    @POST("elittleplanet/api/verify.php")
     Call<loginBean> verify(
             @Part("phone") String phone,
             @Part("otp") String otp
     );
 
     @Multipart
-    @POST("emartindia/api/addCart.php")
+    @POST("elittleplanet/api/addCart.php")
     Call<singleProductBean> addCart(
             @Part("user_id") String user_id,
             @Part("product_id") String product_id,
@@ -84,7 +84,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("emartindia/api/updateCart.php")
+    @POST("elittleplanet/api/updateCart.php")
     Call<singleProductBean> updateCart(
             @Part("id") String id,
             @Part("quantity") String quantity,
@@ -92,62 +92,62 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("emartindia/api/deleteCart.php")
+    @POST("elittleplanet/api/deleteCart.php")
     Call<singleProductBean> deleteCart(
             @Part("id") String id
     );
 
     @Multipart
-    @POST("emartindia/api/getRew.php")
+    @POST("elittleplanet/api/getRew.php")
     Call<String> getRew(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("emartindia/api/clearCart.php")
+    @POST("elittleplanet/api/clearCart.php")
     Call<singleProductBean> clearCart(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("emartindia/api/getOrderDetails.php")
+    @POST("elittleplanet/api/getOrderDetails.php")
     Call<orderDetailsBean> getOrderDetails(
             @Part("order_id") String order_id
     );
 
     @Multipart
-    @POST("emartindia/api/getCart.php")
+    @POST("elittleplanet/api/getCart.php")
     Call<cartBean> getCart(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("emartindia/api/getOrders.php")
+    @POST("elittleplanet/api/getOrders.php")
     Call<ordersBean> getOrders(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("emartindia/api/getAddress.php")
+    @POST("elittleplanet/api/getAddress.php")
     Call<addressBean> getAddress(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("emartindia/api/deleteAddress.php")
+    @POST("elittleplanet/api/deleteAddress.php")
     Call<addressBean> deleteAddress(
             @Part("id") String id
     );
 
     @Multipart
-    @POST("emartindia/api/checkPromo.php")
+    @POST("elittleplanet/api/checkPromo.php")
     Call<checkPromoBean> checkPromo(
             @Part("promo") String promo,
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("emartindia/api/buyVouchers.php")
+    @POST("elittleplanet/api/buyVouchers.php")
     Call<checkoutBean> buyVouchers(
             @Part("user_id") String user_id,
             @Part("lat") String lat,
@@ -168,7 +168,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("emartindia/api/getLogs.php")
+    @POST("elittleplanet/api/getLogs.php")
     Call<trackBean> getLogs(
             @Part("order_id") String order_id
     );

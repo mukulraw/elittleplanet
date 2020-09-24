@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/colorAccent" />
+        app:srcCompat="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/rewards"
@@ -32,6 +32,7 @@
         android:padding="10dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
+        android:visibility="gone"
         android:text="eCashback - "
         android:gravity="end"
         android:textColor="#ffffff"
@@ -72,6 +73,7 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="eCash - 0"
+            android:visibility="gone"
             android:drawableStart="@drawable/ic_wallet"
             android:drawablePadding="22dp"
             android:id="@+id/wallet"
@@ -92,6 +94,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="gone"
             android:background="#cdcdcd"
             />
 

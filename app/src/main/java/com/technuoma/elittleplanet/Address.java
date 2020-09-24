@@ -68,7 +68,7 @@ public class Address extends AppCompatActivity {
             }
         });
 
-        toolbar.setTitleTextColor(Color.BLACK);
+        toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle("My Addresses");
 
 

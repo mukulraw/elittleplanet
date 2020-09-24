@@ -37,7 +37,7 @@ public class Web extends AppCompatActivity {
             }
         });
 
-        toolbar.setTitleTextColor(Color.BLACK);
+        toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle(title);
 
         webView.loadUrl(url);

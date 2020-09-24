@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.technuoma.emartindia">
+    package="com.technuoma.elittleplanet">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".Bean"
+        android:name="com.technuoma.elittleplanet.Bean"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -35,51 +35,51 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name="com.technuoma.elittleplanet.MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Address"
+        <activity android:name="com.technuoma.elittleplanet.Address"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Web"
+        <activity android:name="com.technuoma.elittleplanet.Web"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".OrderDetails"
+            android:name="com.technuoma.elittleplanet.OrderDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OTP"
+            android:name="com.technuoma.elittleplanet.OTP"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Location"
+            android:name="com.technuoma.elittleplanet.Location"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Search"
+            android:name="com.technuoma.elittleplanet.Search"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Orders"
+            android:name="com.technuoma.elittleplanet.Orders"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Checkout"
+            android:name="com.technuoma.elittleplanet.Checkout"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Cart"
+            android:name="com.technuoma.elittleplanet.Cart"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SingleProduct"
+            android:name="com.technuoma.elittleplanet.SingleProduct"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Products"
+            android:name="com.technuoma.elittleplanet.Products"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SubCat"
+            android:name="com.technuoma.elittleplanet.SubCat"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Category"
+            android:name="com.technuoma.elittleplanet.Category"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Login"
+            android:name="com.technuoma.elittleplanet.Login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Spalsh"
+            android:name="com.technuoma.elittleplanet.Spalsh"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -87,11 +87,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".WebViewActivity" />
+        <activity android:name="com.technuoma.elittleplanet.MainActivity" />
+        <activity android:name="com.technuoma.elittleplanet.WebViewActivity" />
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name="com.technuoma.elittleplanet.MyFirebaseMessagingService"
             android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

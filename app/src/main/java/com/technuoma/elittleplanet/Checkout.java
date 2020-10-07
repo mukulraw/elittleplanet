@@ -127,6 +127,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
         gtotal = String.valueOf(gt);
 
+        address.setText(SharePreferenceUtils.getInstance().getString("deliveryLocation"));
 
         progress.setVisibility(View.VISIBLE);
 

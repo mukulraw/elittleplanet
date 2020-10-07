@@ -1,5 +1,6 @@
 package com.technuoma.elittleplanet;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.Html;
@@ -65,8 +67,10 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.santalu.autoviewpager.AutoViewPager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import me.relex.circleindicator.CircleIndicator;
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     List<Best> list2;
     List<Cat> list3;
     List<Banners> list4;
-    TextView count, rewards, login, terms, about, address, logout, cart, orders, refer , location;
+    TextView count, rewards, login, terms, about, address, logout, cart, orders, refer, location;
     ImageButton cart1;
     EditText search;
     OfferAdapter adapter;
@@ -514,7 +518,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Call<homeBean> call = cr.getHome(SharePreferenceUtils.getInstance().getString("lat") , SharePreferenceUtils.getInstance().getString("lng"));
+        Call<homeBean> call = cr.getHome(SharePreferenceUtils.getInstance().getString("lat"), SharePreferenceUtils.getInstance().getString("lng"));
         call.enqueue(new Callback<homeBean>() {
             @Override
             public void onResponse(Call<homeBean> call, Response<homeBean> response) {
@@ -715,8 +719,24 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
                         adapter.setData(ll);
                     }
 
-                    SharePreferenceUtils.getInstance().saveString("location" , response.body().getLocation());
-                    location.setText(response.body().getCity());
+                    SharePreferenceUtils.getInstance().saveString("location", response.body().getLocation());
+
+
+                    Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                    List<android.location.Address> addresses = null;
+                    try {
+                        addresses = geocoder.getFromLocation(Double.parseDouble(SharePreferenceUtils.getInstance().getString("lat")), Double.parseDouble(SharePreferenceUtils.getInstance().getString("lng")), 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Log.d("address", addresses.toString());
+
+                    SharePreferenceUtils.getInstance().saveString("deliveryLocation", addresses.get(0).getAddressLine(0));
+                    location.setText(addresses.get(0).getAddressLine(0));
+
+
+                    //location.setText(response.body().getCity());
 
                 }
 
@@ -747,7 +767,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         @Override
         public Fragment getItem(int position) {
             page frag = new page();
-            frag.setData(blist.get(position).getImage(), blist.get(position).getCname(), blist.get(position).getCid() , blist.get(position).getCatimage());
+            frag.setData(blist.get(position).getImage(), blist.get(position).getCname(), blist.get(position).getCid(), blist.get(position).getCatimage());
             return frag;
         }
 
@@ -760,7 +780,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
     public static class page extends Fragment {
 
-        String url, tit, cid = "" , image2;
+        String url, tit, cid = "", image2;
 
         ImageView image;
 
@@ -1314,8 +1334,8 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
                         lat = String.valueOf(location.getLatitude());
                         lng = String.valueOf(location.getLongitude());
 
-                        SharePreferenceUtils.getInstance().saveString("lat" , lat);
-                        SharePreferenceUtils.getInstance().saveString("lng" , lng);
+                        SharePreferenceUtils.getInstance().saveString("lat", lat);
+                        SharePreferenceUtils.getInstance().saveString("lng", lng);
 
                         Log.d("lat123", lat);
 

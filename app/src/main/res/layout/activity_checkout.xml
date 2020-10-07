@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:text="Online Gateway"
                     android:textColor="#000" />
 
@@ -393,7 +393,7 @@
                 android:minHeight="0dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/white"
+                android:textColor="@color/white2"
                 android:background="@drawable/green_back_round2"
                 app:layout_constraintBottom_toBottomOf="@+id/editText8"
                 app:layout_constraintEnd_toEndOf="parent"

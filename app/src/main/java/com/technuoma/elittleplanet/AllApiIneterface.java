@@ -39,6 +39,13 @@ public interface AllApiIneterface {
     );
 
     @Multipart
+    @POST("elittleplanet/api/getOrderId.php")
+    Call<payBean> getOrderId(
+            @Part("amount") String amount,
+            @Part("receipt") String receipt
+    );
+
+    @Multipart
     @POST("elittleplanet/api/getProducts.php")
     Call<productsBean> getProducts(
             @Part("subcat2") String cat,

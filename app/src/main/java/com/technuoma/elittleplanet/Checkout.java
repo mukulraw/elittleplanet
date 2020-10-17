@@ -24,11 +24,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.razorpay.PaymentResultListener;
 import com.technuoma.elittleplanet.addressPOJO.Datum;
 import com.technuoma.elittleplanet.addressPOJO.addressBean;
 import com.technuoma.elittleplanet.checkPromoPOJO.checkPromoBean;
 import com.technuoma.elittleplanet.checkoutPOJO.checkoutBean;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,20 +51,20 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, PaymentResultListener {
 
     Toolbar toolbar;
-    EditText name, address, area, city, pin , promo;
-    Button proceed , apply;
+    EditText name, address, area, city, pin, promo;
+    Button proceed, apply;
     ProgressBar progress;
-    String amm , gtotal;
-    Spinner slot , addr;
+    String amm, gtotal;
+    Spinner slot, addr;
     String tslot = "";
     String paymode;
     RadioGroup group;
     String oid;
     TextView date;
-    TextView amount , grand;
+    TextView amount, grand;
     String dd = "";
     List<String> ts;
 
@@ -75,6 +78,9 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        com.razorpay.Checkout.preload(getApplicationContext());
+
         setContentView(R.layout.activity_checkout);
 
         list = new ArrayList<>();
@@ -118,7 +124,6 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         toolbar.setTitle("Checkout");
 
 
-
         amount.setText("₹ " + amm);
 
         float gt = Float.parseFloat(amm) + 0;
@@ -157,8 +162,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
                     adlist.addAll(response.body().getData());
 
-                    for (int i = 0 ; i < response.body().getData().size() ; i++)
-                    {
+                    for (int i = 0; i < response.body().getData().size(); i++) {
                         list.add(response.body().getData().get(i).getName());
                     }
 
@@ -169,7 +173,6 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                         android.R.layout.simple_list_item_1, list);
 
                 addr.setAdapter(adapter);
-
 
 
                 progress.setVisibility(View.GONE);
@@ -186,8 +189,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if (position > 0)
-                {
+                if (position > 0) {
 
 
                     isnew = "0";
@@ -199,9 +201,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     pin.setText(item.getPin());
 
 
-                }
-                else
-                {
+                } else {
                     isnew = "1";
                 }
 
@@ -217,12 +217,9 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if (!ts.get(position).equals("No time slot available for today"))
-                {
+                if (!ts.get(position).equals("No time slot available for today")) {
                     tslot = ts.get(position);
-                }
-                else
-                {
+                } else {
                     tslot = "";
                 }
 
@@ -322,15 +319,13 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         });
 
 
-
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String pc = promo.getText().toString();
 
-                if (pc.length() > 0)
-                {
+                if (pc.length() > 0) {
 
                     apply.setEnabled(false);
                     apply.setClickable(false);
@@ -350,14 +345,13 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                    Call<checkPromoBean> call = cr.checkPromo(pc , SharePreferenceUtils.getInstance().getString("userId"));
+                    Call<checkPromoBean> call = cr.checkPromo(pc, SharePreferenceUtils.getInstance().getString("userId"));
 
                     call.enqueue(new Callback<checkPromoBean>() {
                         @Override
                         public void onResponse(Call<checkPromoBean> call, Response<checkPromoBean> response) {
 
-                            if (response.body().getStatus().equals("1"))
-                            {
+                            if (response.body().getStatus().equals("1")) {
 
                                 float amt = Float.parseFloat(amm);
                                 float dis = Float.parseFloat(response.body().getData().getDiscount());
@@ -380,9 +374,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
                                 Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 apply.setEnabled(true);
                                 apply.setClickable(true);
@@ -406,9 +398,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                         }
                     });
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(Checkout.this, "Invalid PROMO code", Toast.LENGTH_SHORT).show();
                 }
 
@@ -431,25 +421,20 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     if (a.length() > 0) {
 
 
-                        if (ar.length() > 0)
-                        {
+                        if (ar.length() > 0) {
 
-                            if (c.length() > 0)
-                            {
+                            if (c.length() > 0) {
 
-                                if (p.length() > 0)
-                                {
+                                if (p.length() > 0) {
 
                                     int iidd = group.getCheckedRadioButtonId();
 
                                     if (iidd > -1) {
 
 
-                                        if (dd.length() > 0)
-                                        {
+                                        if (dd.length() > 0) {
 
-                                            if (tslot.length() >0)
-                                            {
+                                            if (tslot.length() > 0) {
                                                 RadioButton cb = group.findViewById(iidd);
 
                                                 paymode = cb.getText().toString();
@@ -464,7 +449,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
                                                     String adr = a + ", " + ar + ", " + c + ", " + p;
 
-                                                    Log.d("addd" , adr);
+                                                    Log.d("addd", adr);
 
                                                     Retrofit retrofit = new Retrofit.Builder()
                                                             .baseUrl(b.baseurl)
@@ -531,8 +516,59 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                                                     });
                                                 } else {
 
+                                                    progress.setVisibility(View.VISIBLE);
 
-                                                    Intent intent = new Intent(Checkout.this, WebViewActivity.class);
+                                                    Bean b = (Bean) getApplicationContext();
+
+                                                    String adr = a + ", " + ar + ", " + c + ", " + p;
+
+                                                    Log.d("addd", adr);
+
+                                                    Retrofit retrofit = new Retrofit.Builder()
+                                                            .baseUrl(b.baseurl)
+                                                            .addConverterFactory(ScalarsConverterFactory.create())
+                                                            .addConverterFactory(GsonConverterFactory.create())
+                                                            .build();
+
+                                                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                                    Call<payBean> call1 = cr.getOrderId(String.valueOf(Float.parseFloat(gtotal) * 100), oid);
+
+                                                    call1.enqueue(new Callback<payBean>() {
+                                                        @Override
+                                                        public void onResponse(Call<payBean> call, Response<payBean> response) {
+
+                                                            com.razorpay.Checkout checkout = new com.razorpay.Checkout();
+                                                            checkout.setKeyID("rzp_live_DkMBHh063mz5ET");
+                                                            checkout.setImage(R.drawable.back);
+
+                                                            try {
+                                                                JSONObject options = new JSONObject();
+
+                                                                options.put("name", "Options Mobiles Pvt Ltd");
+                                                                options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+                                                                options.put("order_id", response.body().getId());//from response of step 3.
+                                                                options.put("theme.color", "#3399cc");
+                                                                options.put("currency", "INR");
+                                                                options.put("amount", String.valueOf(response.body().getAmount() * 100));//pass amount in currency subunits
+                                                                //options.put("prefill.email", "gaurav.kumar@example.com");
+                                                                options.put("prefill.contact", SharePreferenceUtils.getInstance().getString("phone"));
+                                                                checkout.open(Checkout.this, options);
+                                                            } catch (Exception e) {
+                                                                Log.e("TAG", "Error in starting Razorpay Checkout", e);
+                                                            }
+
+                                                            progress.setVisibility(View.GONE);
+
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<payBean> call, Throwable t) {
+                                                            progress.setVisibility(View.GONE);
+                                                        }
+                                                    });
+
+                                                    /*Intent intent = new Intent(Checkout.this, WebViewActivity.class);
                                                     intent.putExtra(AvenuesParams.ACCESS_CODE, "AVOL70EE77BF91LOFB");
                                                     intent.putExtra(AvenuesParams.MERCHANT_ID, "133862");
                                                     intent.putExtra(AvenuesParams.ORDER_ID, oid);
@@ -545,51 +581,35 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                                                     intent.putExtra(AvenuesParams.CANCEL_URL, "https://mrtecks.com/grocery/api/pay/ccavResponseHandler.php");
                                                     intent.putExtra(AvenuesParams.RSA_KEY_URL, "https://mrtecks.com/grocery/api/pay/GetRSA.php");
 
-                                                    startActivityForResult(intent, 12);
+                                                    startActivityForResult(intent, 12);*/
 
 
                                                 }
-                                            }
-                                            else
-                                            {
+                                            } else {
                                                 Toast.makeText(Checkout.this, "Please select a Delivery Time Slot", Toast.LENGTH_SHORT).show();
                                             }
 
 
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             Toast.makeText(Checkout.this, "Please select a Delivery Date", Toast.LENGTH_SHORT).show();
                                         }
-
-
-
 
 
                                     } else {
                                         Toast.makeText(Checkout.this, "Please select a Payment Mode", Toast.LENGTH_SHORT).show();
                                     }
 
-                                }
-                                else
-                                {
+                                } else {
                                     Toast.makeText(Checkout.this, "Please select a valid PIN Code", Toast.LENGTH_SHORT).show();
                                 }
 
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(Checkout.this, "Please select a valid City", Toast.LENGTH_SHORT).show();
                             }
 
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(Checkout.this, "Please select a valid Locality/ Area/ District", Toast.LENGTH_SHORT).show();
                         }
-
-
-
 
 
                     } else {
@@ -631,7 +651,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
             String adr = a + ", " + ar + ", " + c + ", " + p;
 
-            Log.d("addd" , adr);
+            Log.d("addd", adr);
 
 
             Call<checkoutBean> call = cr.buyVouchers(
@@ -659,7 +679,6 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                     progress.setVisibility(View.GONE);
-
 
 
                     Dialog dialog = new Dialog(Checkout.this, R.style.DialogCustomTheme);
@@ -719,14 +738,13 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = df.format(c);
 
-        Log.d("current date" , formattedDate);
+        Log.d("current date", formattedDate);
 
-        if (dd.equals(formattedDate))
-        {
+        if (dd.equals(formattedDate)) {
 
             String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
-            Log.d("today" , currentTime);
+            Log.d("today", currentTime);
 
             String time1 = "19:30";
             String time2 = "11:30";
@@ -787,8 +805,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
             tslot = "";
 
 
-            if (date1.compareTo(cd) > 0)
-            {
+            if (date1.compareTo(cd) > 0) {
                 ts.add("6 AM - 10 PM");
             }
 
@@ -813,8 +830,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
             {
                 ts.add("7:30 - 9:00");
             }*/
-            else
-            {
+            else {
                 ts.add("No time slot available for today");
             }
 
@@ -824,10 +840,8 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
             slot.setAdapter(adapter);
 
 
-        }
-        else
-        {
-            Log.d("today" , "false");
+        } else {
+            Log.d("today", "false");
             ts.clear();
             tslot = "";
 
@@ -840,8 +854,6 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
             //ts.add("7:30 - 9:00");
 
 
-
-
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1, ts);
 
@@ -850,4 +862,111 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         }
 
     }
+
+    @Override
+    public void onPaymentSuccess(String s) {
+
+        Log.e("TAG", "Exception in onPaymentError" + s);
+
+        try {
+            //Toast.makeText(this, "Payment Successful: " + s, Toast.LENGTH_SHORT).show();
+
+            progress.setVisibility(View.VISIBLE);
+
+            Bean b = (Bean) getApplicationContext();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(b.baseurl)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+            String n = name.getText().toString();
+            String a = address.getText().toString();
+            String ar = area.getText().toString();
+            String c = city.getText().toString();
+            String p = pin.getText().toString();
+
+            String adr = a + ", " + ar + ", " + c + ", " + p;
+
+            Log.d("addd", adr);
+
+
+            Call<checkoutBean> call = cr.buyVouchers(
+                    SharePreferenceUtils.getInstance().getString("userId"),
+                    SharePreferenceUtils.getInstance().getString("lat"),
+                    SharePreferenceUtils.getInstance().getString("lng"),
+                    gtotal,
+                    s,
+                    n,
+                    adr,
+                    "online",
+                    tslot,
+                    dd,
+                    pid,
+                    a,
+                    ar,
+                    c,
+                    p,
+                    isnew
+            );
+            call.enqueue(new Callback<checkoutBean>() {
+                @Override
+                public void onResponse(Call<checkoutBean> call, Response<checkoutBean> response) {
+
+                    Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    progress.setVisibility(View.GONE);
+
+
+                    Dialog dialog = new Dialog(Checkout.this, R.style.DialogCustomTheme);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setCancelable(true);
+                    dialog.setContentView(R.layout.success_popup);
+                    dialog.show();
+
+
+                    TextView oi = dialog.findViewById(R.id.textView57);
+                    TextView au = dialog.findViewById(R.id.textView58);
+
+                    oi.setText(s);
+                    au.setText("₹ " + gtotal);
+
+
+                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+
+                            dialog.dismiss();
+                            finish();
+
+                        }
+                    });
+
+
+                }
+
+                @Override
+                public void onFailure(Call<checkoutBean> call, Throwable t) {
+                    progress.setVisibility(View.GONE);
+                }
+            });
+
+        } catch (Exception e) {
+            Log.e("TAG", "Exception in onPaymentSuccess", e);
+        }
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+        Log.e("TAG", "Exception in onPaymentError" + s);
+        try {
+            Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("TAG", "Exception in onPaymentError", e);
+        }
+    }
+
 }

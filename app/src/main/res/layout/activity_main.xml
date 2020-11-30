@@ -134,6 +134,7 @@
                                 android:background="@drawable/white_round"
                                 android:gravity="center"
                                 android:maxLines="1"
+                                android:text="Getting location..."
                                 android:ellipsize="end"
                                 android:paddingStart="22dp"
                                 android:paddingTop="8dp"

@@ -499,6 +499,11 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         super.onResume();
 
 
+
+    }
+
+    void loaddata()
+    {
         progress.setVisibility(View.VISIBLE);
 
         Bean b = (Bean) getApplicationContext();
@@ -753,7 +758,6 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
         loadCart();
     }
-
 
     class BannerAdapter extends FragmentStatePagerAdapter {
 
@@ -1338,8 +1342,11 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
                         SharePreferenceUtils.getInstance().saveString("lng", lng);
 
                         Log.d("lat123", lat);
+                        Log.d("lat123", lng);
 
                         LocationServices.getFusedLocationProviderClient(MainActivity.this).removeLocationUpdates(this);
+
+                        loaddata();
 
                     }
                 }

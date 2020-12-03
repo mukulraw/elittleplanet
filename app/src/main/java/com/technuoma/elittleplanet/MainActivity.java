@@ -501,12 +501,11 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     protected void onResume() {
         super.onResume();
 
-
+        loadCart();
 
     }
 
-    void loaddata()
-    {
+    void loaddata() {
         progress.setVisibility(View.VISIBLE);
 
         Bean b = (Bean) getApplicationContext();

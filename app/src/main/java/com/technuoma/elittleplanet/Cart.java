@@ -259,9 +259,19 @@ public class Cart extends AppCompatActivity {
             //viewHolder.setIsRecyclable(false);
 
 
-            viewHolder.title.setText(item.getName());
-            viewHolder.brand.setText(item.getBrand());
 
+
+            if (item.getColor().length() > 0)
+            {
+                viewHolder.title.setText(item.getName() + " (" + item.getColor() + ")");
+            }
+            else
+            {
+                viewHolder.title.setText(item.getName());
+            }
+
+
+            viewHolder.brand.setText(item.getBrand());
 
             viewHolder.quantity.setText(item.getQuantity());
 

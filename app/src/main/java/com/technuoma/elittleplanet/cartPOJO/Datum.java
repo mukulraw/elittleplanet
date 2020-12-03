@@ -28,6 +28,9 @@ public class Datum {
     @SerializedName("created")
     @Expose
     private String created;
+    @SerializedName("color")
+    @Expose
+    private String color;
 
     public String getPid() {
         return pid;
@@ -91,5 +94,13 @@ public class Datum {
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

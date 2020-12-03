@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ import com.technuoma.elittleplanet.seingleProductPOJO.Data;
 import com.technuoma.elittleplanet.seingleProductPOJO.singleProductBean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -105,103 +108,6 @@ public class SingleProduct extends AppCompatActivity {
                 finish();
             }
 
-        });
-
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if (pid.length() > 0) {
-                    String uid = SharePreferenceUtils.getInstance().getString("userId");
-
-                    if (uid.length() > 0) {
-
-                        final Dialog dialog = new Dialog(SingleProduct.this);
-                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        dialog.setCancelable(true);
-                        dialog.setContentView(R.layout.add_cart_dialog);
-                        dialog.show();
-
-                        final StepperTouch stepperTouch = dialog.findViewById(R.id.stepperTouch);
-                        Button add = dialog.findViewById(R.id.button8);
-                        final ProgressBar progressBar = dialog.findViewById(R.id.progressBar2);
-
-
-                        stepperTouch.setMinValue(1);
-                        stepperTouch.setMaxValue(99);
-                        stepperTouch.setSideTapEnabled(true);
-                        stepperTouch.setCount(1);
-
-                        add.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                                progressBar.setVisibility(View.VISIBLE);
-
-                                Bean b = (Bean) getApplicationContext();
-
-
-                                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                                logging.level(HttpLoggingInterceptor.Level.HEADERS);
-                                logging.level(HttpLoggingInterceptor.Level.BODY);
-
-                                OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
-
-                                Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl(b.baseurl)
-                                        .client(client)
-                                        .addConverterFactory(ScalarsConverterFactory.create())
-                                        .addConverterFactory(GsonConverterFactory.create())
-                                        .build();
-                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
-
-                                Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
-                                Log.d("pid", pid);
-                                Log.d("quantity", String.valueOf(stepperTouch.getCount()));
-                                Log.d("price", nv1);
-
-                                int versionCode = BuildConfig.VERSION_CODE;
-                                String versionName = BuildConfig.VERSION_NAME;
-
-                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName);
-
-                                call.enqueue(new Callback<singleProductBean>() {
-                                    @Override
-                                    public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
-
-                                        if (response.body().getStatus().equals("1")) {
-                                            //loadCart();
-                                            dialog.dismiss();
-                                        }
-
-                                        Toast.makeText(SingleProduct.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                                        progressBar.setVisibility(View.GONE);
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<singleProductBean> call, Throwable t) {
-                                        progressBar.setVisibility(View.GONE);
-                                    }
-                                });
-
-
-                            }
-                        });
-
-                    } else {
-                        Toast.makeText(SingleProduct.this, "Please login to continue", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SingleProduct.this, Login.class);
-                        startActivity(intent);
-
-                    }
-                }
-
-
-            }
         });
 
 
@@ -296,6 +202,121 @@ public class SingleProduct extends AppCompatActivity {
 
                     stock.setText(item.getStock());
 
+                    add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+
+                            if (pid.length() > 0) {
+                                String uid = SharePreferenceUtils.getInstance().getString("userId");
+
+                                if (uid.length() > 0) {
+
+                                    final Dialog dialog = new Dialog(SingleProduct.this);
+                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.setCancelable(true);
+                                    dialog.setContentView(R.layout.add_cart_dialog);
+                                    dialog.show();
+
+                                    final StepperTouch stepperTouch = dialog.findViewById(R.id.stepperTouch);
+                                    Button add = dialog.findViewById(R.id.button8);
+                                    final ProgressBar progressBar = dialog.findViewById(R.id.progressBar2);
+                                    TextView colortitle = dialog.findViewById(R.id.textView5);
+                                    Spinner color = dialog.findViewById(R.id.color);
+
+                                    if (item.getUnit().length() > 0) {
+                                        color.setVisibility(View.VISIBLE);
+                                        colortitle.setVisibility(View.VISIBLE);
+
+                                        String[] dd = item.getUnit().split(",");
+
+                                        List<String> clist = Arrays.asList(dd);
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(SingleProduct.this,
+                                                android.R.layout.simple_list_item_1, clist);
+
+                                        color.setAdapter(adapter);
+
+                                    } else {
+                                        color.setVisibility(View.GONE);
+                                        colortitle.setVisibility(View.GONE);
+                                    }
+
+                                    stepperTouch.setMinValue(1);
+                                    stepperTouch.setMaxValue(99);
+                                    stepperTouch.setSideTapEnabled(true);
+                                    stepperTouch.setCount(1);
+
+                                    add.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+                                            progressBar.setVisibility(View.VISIBLE);
+
+                                            Bean b = (Bean) getApplicationContext();
+
+
+                                            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                                            logging.level(HttpLoggingInterceptor.Level.HEADERS);
+                                            logging.level(HttpLoggingInterceptor.Level.BODY);
+
+                                            OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
+                                            Retrofit retrofit = new Retrofit.Builder()
+                                                    .baseUrl(b.baseurl)
+                                                    .client(client)
+                                                    .addConverterFactory(ScalarsConverterFactory.create())
+                                                    .addConverterFactory(GsonConverterFactory.create())
+                                                    .build();
+                                            AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                            Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
+                                            Log.d("pid", pid);
+                                            Log.d("quantity", String.valueOf(stepperTouch.getCount()));
+                                            Log.d("price", nv1);
+
+                                            int versionCode = BuildConfig.VERSION_CODE;
+                                            String versionName = BuildConfig.VERSION_NAME;
+
+                                            String cl = String.valueOf(color.getSelectedItem());
+
+                                            Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, cl);
+
+                                            call.enqueue(new Callback<singleProductBean>() {
+                                                @Override
+                                                public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
+
+                                                    if (response.body().getStatus().equals("1")) {
+                                                        //loadCart();
+                                                        dialog.dismiss();
+                                                    }
+
+                                                    Toast.makeText(SingleProduct.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                    progressBar.setVisibility(View.GONE);
+
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<singleProductBean> call, Throwable t) {
+                                                    progressBar.setVisibility(View.GONE);
+                                                }
+                                            });
+
+
+                                        }
+                                    });
+
+                                } else {
+                                    Toast.makeText(SingleProduct.this, "Please login to continue", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SingleProduct.this, Login.class);
+                                    startActivity(intent);
+
+                                }
+                            }
+
+
+                        }
+                    });
 
                 }
 

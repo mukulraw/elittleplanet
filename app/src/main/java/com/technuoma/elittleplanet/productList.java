@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import com.technuoma.elittleplanet.productsPOJO.productsBean;
 import com.technuoma.elittleplanet.seingleProductPOJO.singleProductBean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -232,7 +235,25 @@ public class productList extends Fragment {
                         final StepperTouch stepperTouch  = dialog.findViewById(R.id.stepperTouch);
                         Button add = dialog.findViewById(R.id.button8);
                         final ProgressBar progressBar = dialog.findViewById(R.id.progressBar2);
+                        TextView colortitle = dialog.findViewById(R.id.textView5);
+                        Spinner color = dialog.findViewById(R.id.color);
 
+                        if (item.getUnit().length() > 0) {
+                            color.setVisibility(View.VISIBLE);
+                            colortitle.setVisibility(View.VISIBLE);
+
+                            String[] dd = item.getUnit().split(",");
+
+                            List<String> clist = Arrays.asList(dd);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_list_item_1, clist);
+
+                            color.setAdapter(adapter);
+
+                        } else {
+                            color.setVisibility(View.GONE);
+                            colortitle.setVisibility(View.GONE);
+                        }
 
 
                         stepperTouch.setMinValue(1);
@@ -271,7 +292,9 @@ public class productList extends Fragment {
                                 int versionCode = BuildConfig.VERSION_CODE;
                                 String versionName = BuildConfig.VERSION_NAME;
 
-                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId") , item.getId() , String.valueOf(stepperTouch.getCount()), finalNv , versionName);
+                                String cl = String.valueOf(color.getSelectedItem());
+
+                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId") , item.getId() , String.valueOf(stepperTouch.getCount()), finalNv , versionName, cl);
 
                                 call.enqueue(new Callback<singleProductBean>() {
                                     @Override

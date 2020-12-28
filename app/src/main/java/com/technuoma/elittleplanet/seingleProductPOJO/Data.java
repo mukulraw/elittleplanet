@@ -58,6 +58,9 @@ public class Data {
     @SerializedName("disclaimer")
     @Expose
     private String disclaimer;
+    @SerializedName("wishlist")
+    @Expose
+    private String wishlist;
     @SerializedName("status")
     @Expose
     private String status;
@@ -202,6 +205,14 @@ public class Data {
 
     public void setDisclaimer(String disclaimer) {
         this.disclaimer = disclaimer;
+    }
+
+    public String getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(String wishlist) {
+        this.wishlist = wishlist;
     }
 
     public String getStatus() {

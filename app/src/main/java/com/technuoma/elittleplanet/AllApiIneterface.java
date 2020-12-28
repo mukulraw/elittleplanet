@@ -55,7 +55,22 @@ public interface AllApiIneterface {
     @Multipart
     @POST("elittleplanet/api/getProductById.php")
     Call<singleProductBean> getProductById(
-            @Part("id") String cat
+            @Part("id") String cat,
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/addWishlist.php")
+    Call<singleProductBean> addWishlist(
+            @Part("user_id") String user_id,
+            @Part("product_id") String product_id
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/removeWishlist.php")
+    Call<singleProductBean> removeWishlist(
+            @Part("user_id") String user_id,
+            @Part("product_id") String product_id
     );
 
     @Multipart

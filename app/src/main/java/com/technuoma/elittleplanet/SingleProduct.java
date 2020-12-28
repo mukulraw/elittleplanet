@@ -190,8 +190,6 @@ public class SingleProduct extends AppCompatActivity {
         });
 
 
-
-
         cart1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -715,63 +713,119 @@ public class SingleProduct extends AppCompatActivity {
                         stepperTouch.setSideTapEnabled(true);
                         stepperTouch.setCount(1);
 
-                        /*add.setOnClickListener(new View.OnClickListener() {
+                        final String finalNv = nv1;
+                        holder.add.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
-                                progressBar.setVisibility(View.VISIBLE);
+                                String uid = SharePreferenceUtils.getInstance().getString("userId");
 
-                                Bean b = (Bean) getApplicationContext();
+                                if (uid.length() > 0) {
+
+                                    final Dialog dialog = new Dialog(context);
+                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.setCancelable(true);
+                                    dialog.setContentView(R.layout.add_cart_dialog);
+                                    dialog.show();
+
+                                    final StepperTouch stepperTouch = dialog.findViewById(R.id.stepperTouch);
+                                    Button add = dialog.findViewById(R.id.button8);
+                                    final ProgressBar progressBar = dialog.findViewById(R.id.progressBar2);
+                                    TextView colortitle = dialog.findViewById(R.id.textView5);
+                                    Spinner color = dialog.findViewById(R.id.color);
+
+                                    if (item.getUnit().length() > 0) {
+                                        color.setVisibility(View.VISIBLE);
+                                        colortitle.setVisibility(View.VISIBLE);
+
+                                        String[] dd = item.getUnit().split(",");
+
+                                        List<String> clist = Arrays.asList(dd);
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+                                                android.R.layout.simple_list_item_1, clist);
+
+                                        color.setAdapter(adapter);
+
+                                    } else {
+                                        color.setVisibility(View.GONE);
+                                        colortitle.setVisibility(View.GONE);
+                                    }
 
 
-                                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                                logging.level(HttpLoggingInterceptor.Level.HEADERS);
-                                logging.level(HttpLoggingInterceptor.Level.BODY);
+                                    stepperTouch.setMinValue(1);
+                                    stepperTouch.setMaxValue(99);
+                                    stepperTouch.setSideTapEnabled(true);
+                                    stepperTouch.setCount(1);
 
-                                OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+                                    add.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
 
-                                Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl(b.baseurl)
-                                        .client(client)
-                                        .addConverterFactory(ScalarsConverterFactory.create())
-                                        .addConverterFactory(GsonConverterFactory.create())
-                                        .build();
-                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+                                            progressBar.setVisibility(View.VISIBLE);
 
-                                Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
-                                Log.d("pid", item.getId());
-                                Log.d("quantity", String.valueOf(stepperTouch.getCount()));
-                                Log.d("price", nv1);
+                                            Bean b = (Bean) context.getApplicationContext();
 
-                                int versionCode = com.nostra13.universalimageloader.BuildConfig.VERSION_CODE;
-                                String versionName = com.nostra13.universalimageloader.BuildConfig.VERSION_NAME;
 
-                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), item.getId(), String.valueOf(stepperTouch.getCount()), nv1, versionName);
+                                            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                                            logging.level(HttpLoggingInterceptor.Level.HEADERS);
+                                            logging.level(HttpLoggingInterceptor.Level.BODY);
 
-                                call.enqueue(new Callback<singleProductBean>() {
-                                    @Override
-                                    public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
+                                            OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
 
-                                        if (response.body().getStatus().equals("1")) {
-                                            loadCart();
-                                            dialog.dismiss();
+                                            Retrofit retrofit = new Retrofit.Builder()
+                                                    .baseUrl(b.baseurl)
+                                                    .client(client)
+                                                    .addConverterFactory(ScalarsConverterFactory.create())
+                                                    .addConverterFactory(GsonConverterFactory.create())
+                                                    .build();
+                                            AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                            Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
+                                            Log.d("pid", item.getId());
+                                            Log.d("quantity", String.valueOf(stepperTouch.getCount()));
+                                            Log.d("price", finalNv);
+
+                                            int versionCode = BuildConfig.VERSION_CODE;
+                                            String versionName = BuildConfig.VERSION_NAME;
+
+                                            String cl = String.valueOf(color.getSelectedItem());
+
+                                            Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), item.getId(), String.valueOf(stepperTouch.getCount()), finalNv, versionName, cl);
+
+                                            call.enqueue(new Callback<singleProductBean>() {
+                                                @Override
+                                                public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
+
+                                                    if (response.body().getStatus().equals("1")) {
+                                                        //loadCart();
+                                                        dialog.dismiss();
+                                                    }
+
+                                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                    progressBar.setVisibility(View.GONE);
+
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<singleProductBean> call, Throwable t) {
+                                                    progressBar.setVisibility(View.GONE);
+                                                }
+                                            });
+
+
                                         }
+                                    });
 
-                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Please login to continue", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(context, Login.class);
+                                    context.startActivity(intent);
 
-                                        progressBar.setVisibility(View.GONE);
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<singleProductBean> call, Throwable t) {
-                                        progressBar.setVisibility(View.GONE);
-                                    }
-                                });
-
+                                }
 
                             }
-                        });*/
+                        });
 
                     } else {
                         Toast.makeText(context, "Please login to continue", Toast.LENGTH_SHORT).show();

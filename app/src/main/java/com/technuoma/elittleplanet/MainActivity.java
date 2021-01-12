@@ -26,6 +26,7 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     ImageButton cart1;
     EditText search;
     OfferAdapter adapter;
-    ImageView offerzone;
+    ImageView offerzone, janatha;
 
 
     private FusedLocationProviderClient fusedLocationClient;
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
         toolbar = findViewById(R.id.toolbar);
         offerzone = findViewById(R.id.offerzone);
+        janatha = findViewById(R.id.janatha);
 
         addresstext = findViewById(R.id.textView8);
         cattop = findViewById(R.id.cattop);
@@ -234,6 +236,17 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
             public void onClick(View v) {
 
                 Intent intent = new Intent(MainActivity.this, OfferZone.class);
+                startActivity(intent);
+
+            }
+        });
+
+        janatha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("market://details?id=com.technuoma.JanathaBazaar"));
                 startActivity(intent);
 
             }

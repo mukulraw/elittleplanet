@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/shade"
+    tools:openDrawer="start"
     tools:context=".MainActivity">
 
     <RelativeLayout
@@ -248,7 +249,7 @@
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY"
-                            android:src="@drawable/banner01" />
+                            android:src="@drawable/offer" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -305,10 +306,11 @@
 
                         <ImageView
                             android:layout_width="match_parent"
+                            android:id="@+id/janatha"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY"
-                            android:src="@drawable/member" />
+                            android:src="@drawable/janatha" />
                     </androidx.cardview.widget.CardView>
 
                 </LinearLayout>

@@ -16,9 +16,12 @@ public class loginBean {
     @SerializedName("phone")
     @Expose
     private String phone;
-    @SerializedName("rewards")
+    @SerializedName("email")
     @Expose
-    private String rewards;
+    private String email;
+    @SerializedName("name")
+    @Expose
+    private String name;
 
     public String getStatus() {
         return status;
@@ -52,11 +55,19 @@ public class loginBean {
         this.phone = phone;
     }
 
-    public String getRewards() {
-        return rewards;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRewards(String rewards) {
-        this.rewards = rewards;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

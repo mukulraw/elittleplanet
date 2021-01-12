@@ -28,11 +28,14 @@ public class OTP extends AppCompatActivity {
     EditText phone;
     Button login;
     ProgressBar progress;
+    String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
+
+        userid = getIntent().getStringExtra("userid");
 
         phone = findViewById(R.id.editText);
         login = findViewById(R.id.button);
@@ -45,8 +48,7 @@ public class OTP extends AppCompatActivity {
 
                 String p = phone.getText().toString();
 
-                if (p.length() == 4)
-                {
+                if (p.length() == 4) {
 
 
                     progress.setVisibility(View.VISIBLE);
@@ -68,21 +70,21 @@ public class OTP extends AppCompatActivity {
 
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                    Call<loginBean> call = cr.verify(SharePreferenceUtils.getInstance().getString("phone") , p);
+                    Call<loginBean> call = cr.verify(userid, p);
 
                     call.enqueue(new Callback<loginBean>() {
                         @Override
                         public void onResponse(@NotNull Call<loginBean> call, @NotNull Response<loginBean> response) {
 
                             assert response.body() != null;
-                            if (response.body().getStatus().equals("1"))
-                            {
-                                SharePreferenceUtils.getInstance().saveString("userId" , response.body().getUserId());
-                                SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
-                                SharePreferenceUtils.getInstance().saveString("rewards" , response.body().getRewards());
+                            if (response.body().getStatus().equals("1")) {
+                                SharePreferenceUtils.getInstance().saveString("userId", response.body().getUserId());
+                                SharePreferenceUtils.getInstance().saveString("phone", response.body().getPhone());
+                                SharePreferenceUtils.getInstance().saveString("email", response.body().getEmail());
+                                SharePreferenceUtils.getInstance().saveString("name", response.body().getName());
                                 Toast.makeText(OTP.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
-                                Intent intent = new Intent(OTP.this , MainActivity.class);
+                                Intent intent = new Intent(OTP.this, MainActivity.class);
                                 startActivity(intent);
                                 finishAffinity();
 
@@ -99,9 +101,7 @@ public class OTP extends AppCompatActivity {
                     });
 
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(OTP.this, "Please enter a valid OTP", Toast.LENGTH_SHORT).show();
                 }
 

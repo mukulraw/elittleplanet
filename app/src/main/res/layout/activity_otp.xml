@@ -92,7 +92,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/white_shade_transparent"
+        android:background="@drawable/white_back_round2"
         android:digits="0123456789"
         android:ems="4"
         android:maxEms="4"

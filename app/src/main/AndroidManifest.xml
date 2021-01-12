@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.technuoma.elittleplanet">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -13,7 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name="com.technuoma.elittleplanet.Bean"
+        android:name=".Bean"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".Register"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -35,53 +34,53 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.technuoma.elittleplanet.MapsActivity"
+            android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Address"
+            android:name=".Address"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Web"
+            android:name=".Web"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.OrderDetails"
+            android:name=".OrderDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.OTP"
+            android:name=".OTP"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Location"
+            android:name=".Location"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Search"
+            android:name=".Search"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Orders"
+            android:name=".Orders"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Checkout"
+            android:name=".Checkout"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Cart"
+            android:name=".Cart"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.SingleProduct"
+            android:name=".SingleProduct"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Products"
+            android:name=".Products"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.SubCat"
+            android:name=".SubCat"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Category"
+            android:name=".Category"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Login"
+            android:name=".Login"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.technuoma.elittleplanet.Spalsh"
+            android:name=".Spalsh"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -89,11 +88,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.technuoma.elittleplanet.MainActivity" />
-        <activity android:name="com.technuoma.elittleplanet.WebViewActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".WebViewActivity" />
 
         <service
-            android:name="com.technuoma.elittleplanet.MyFirebaseMessagingService"
+            android:name=".MyFirebaseMessagingService"
             android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

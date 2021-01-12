@@ -80,11 +80,25 @@ public interface AllApiIneterface {
             @Part("location_id") String location_id
     );
 
+
     @Multipart
     @POST("elittleplanet/api/login.php")
     Call<loginBean> login(
-            @Part("phone") String phone,
+            @Part("email") String email,
+            @Part("password") String password,
+            @Part("token") String token
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/register.php")
+    Call<loginBean> register(
+            @Part("email") String email,
+            @Part("password") String password,
             @Part("token") String token,
+            @Part("phone") String phone,
+            @Part("name") String name,
+            @Part("address") String address,
+            @Part("pin_code") String pin_code,
             @Part("referrer") String referrer
     );
 

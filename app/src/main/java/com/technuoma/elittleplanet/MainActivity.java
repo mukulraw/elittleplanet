@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         final String uid = SharePreferenceUtils.getInstance().getString("userId");
 
         if (uid.length() > 0) {
-            login.setText(SharePreferenceUtils.getInstance().getString("phone"));
+            login.setText(SharePreferenceUtils.getInstance().getString("name"));
             rewards.setText("eCashback - " + SharePreferenceUtils.getInstance().getString("rewards"));
             //rewards.setVisibility(View.VISIBLE);
             getRew();

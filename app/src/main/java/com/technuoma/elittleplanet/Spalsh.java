@@ -108,7 +108,7 @@ public class Spalsh extends AppCompatActivity implements InstallReferrerStateLis
 
     void startApp() {
 
-        FirebaseMessaging.getInstance().subscribeToTopic("emart").addOnCompleteListener(task -> Log.d("task", task.toString()));
+        FirebaseMessaging.getInstance().subscribeToTopic("elittlplanet").addOnCompleteListener(task -> Log.d("task", task.toString()));
 
         t = new Timer();
 

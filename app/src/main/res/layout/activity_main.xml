@@ -114,16 +114,16 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="visible">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="9dp"
-                            android:layout_marginStart="8dp"
                             android:layout_margin="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="9dp"
                             android:layout_marginBottom="9dp"
                             app:cardCornerRadius="30dp">
 
@@ -132,14 +132,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/white_round"
+                                android:ellipsize="end"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:text="Getting location..."
-                                android:ellipsize="end"
                                 android:paddingStart="22dp"
                                 android:paddingTop="8dp"
                                 android:paddingEnd="22dp"
                                 android:paddingBottom="8dp"
+                                android:text="Getting location..."
                                 android:textColor="#FF6000">
 
                             </TextView>
@@ -151,9 +151,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="right"
-                            android:visibility="gone"
                             android:layout_marginTop="9dp"
                             android:layout_marginRight="12dp"
+                            android:visibility="gone"
                             app:cardCornerRadius="5dp">
 
                             <TextView
@@ -173,17 +173,16 @@
                     </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:id="@+id/cattop"
-                        />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
                         android:focusableInTouchMode="true"
                         app:cardCornerRadius="5dp">
 
@@ -235,29 +234,6 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="12dp"
-                        android:visibility="gone"
-                        android:text="ACCESSORIES AND MORE"
-                        android:textColor="#02425A">
-
-                    </TextView>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/categories"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -267,205 +243,13 @@
                         app:cardCornerRadius="5dp">
 
                         <ImageView
-                            android:id="@+id/banner1"
+                            android:id="@+id/offerzone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitXY" />
+                            android:scaleType="fitXY"
+                            android:src="@drawable/banner01" />
 
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:cardCornerRadius="5dp">
-
-                        <ImageView
-                            android:id="@+id/banner2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitXY" />
-
-                    </androidx.cardview.widget.CardView>
-
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:visibility="gone"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:cardCornerRadius="5dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="18dp"
-                                android:layout_marginTop="12dp"
-                                android:text="eMartIndia Credit"
-                                android:textColor="#02425A">
-
-                            </TextView>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_weight="2">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:layout_marginTop="12dp"
-                                    android:layout_weight="1"
-                                    android:text="Total approved limit">
-
-                                </TextView>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="end">
-
-                                    <ImageView
-                                        android:layout_width="13dp"
-                                        android:layout_height="13dp"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_marginTop="8dp"
-                                        android:src="@drawable/rupee" />
-
-                                    <TextView
-                                        android:id="@+id/totl_limit"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="12dp"
-                                        android:layout_marginEnd="12dp"
-                                        android:gravity="end|center_vertical"
-                                        android:text="3000">
-
-                                    </TextView>
-                                </LinearLayout>
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_weight="2">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:layout_marginTop="12dp"
-                                    android:layout_weight="1"
-                                    android:text="Utilized limit">
-
-                                </TextView>
-
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="end">
-
-                                    <ImageView
-                                        android:layout_width="13dp"
-                                        android:layout_height="13dp"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_marginTop="8dp"
-                                        android:src="@drawable/rupee2" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="12dp"
-                                        android:layout_marginEnd="12dp"
-                                        android:gravity="end"
-                                        android:text="3000"
-                                        android:textColor="@color/colorAccent">
-
-                                    </TextView>
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_weight="2">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:layout_marginTop="12dp"
-                                    android:layout_weight="1"
-                                    android:text="Available limit">
-
-                                </TextView>
-
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="end">
-
-                                    <ImageView
-                                        android:layout_width="13dp"
-                                        android:layout_height="13dp"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_marginTop="8dp"
-                                        android:src="@drawable/rupee" />
-
-                                    <TextView
-                                        android:id="@+id/avl_limit"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="12dp"
-                                        android:layout_marginEnd="12dp"
-                                        android:gravity="end"
-                                        android:text="3000">
-
-                                    </TextView>
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <Button
-                                android:id="@+id/get_details"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginEnd="12dp"
-                                android:layout_marginBottom="12dp"
-                                android:background="@drawable/round2"
-                                android:minWidth="0dp"
-                                android:minHeight="0dp"
-                                android:paddingStart="18dp"
-                                android:paddingTop="4dp"
-                                android:paddingEnd="18dp"
-                                android:paddingBottom="4dp"
-                                android:text="GET DETAILS"
-                                android:textColor="@color/colorAccent" />
-
-                        </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
 
@@ -473,12 +257,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginTop="8dp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="SHOP SMARTPHONES"
                         android:textAllCaps="true"
-                        android:text="New Launches"
-                        android:textColor="#02425A">
-
-                    </TextView>
+                        android:textColor="#02425A" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recent"
@@ -490,29 +274,13 @@
                         android:paddingEnd="4dp" />
 
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:cardCornerRadius="5dp">
-
-                        <ImageView
-                            android:id="@+id/banner3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitXY" />
-
-                    </androidx.cardview.widget.CardView>
-
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="RECENTLY BOUGHT"
+                        android:text="SHOP ACCESSORIES"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_horizontal"
                         android:textColor="#02425A">
 
                     </TextView>
@@ -526,137 +294,12 @@
                         android:paddingStart="4dp"
                         android:paddingEnd="4dp" />
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:cardCornerRadius="5dp">
-
-                        <ImageView
-                            android:id="@+id/banner4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitXY" />
-
-                    </androidx.cardview.widget.CardView>
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:visibility="gone"
-                        android:text="Stay safe &amp; protected "
-                        android:textColor="#02425A">
-
-                    </TextView>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/safe"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:visibility="gone"
-                        android:nestedScrollingEnabled="false"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp" />
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:cardCornerRadius="5dp">
-
-                        <ImageView
-                            android:id="@+id/banner5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitXY" />
-
-                    </androidx.cardview.widget.CardView>
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:visibility="gone"
-                        android:text="Save on daily essentials"
-                        android:textColor="#02425A">
-
-                    </TextView>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/essentials"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:visibility="gone"
-                        android:nestedScrollingEnabled="false"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp" />
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:cardCornerRadius="5dp">
-
-                        <ImageView
-                            android:id="@+id/banner6"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitXY" />
-
-                    </androidx.cardview.widget.CardView>
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Top brands"
-                        android:visibility="gone"
-                        android:textColor="#02425A">
-
-                    </TextView>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/top"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_marginBottom="8dp"
-                        android:nestedScrollingEnabled="false"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp" />
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:nestedScrollingEnabled="false"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp" />
-
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:visibility="gone"
                         android:layout_marginBottom="8dp"
                         app:cardCornerRadius="5dp">
 

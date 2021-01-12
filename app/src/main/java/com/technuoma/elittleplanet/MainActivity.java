@@ -95,11 +95,8 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     AutoViewPager pager;
     ProgressBar progress;
     CircleIndicator indicator;
-    RecyclerView categories, recent, loved, safe, essentails, top, banner, cattop;
+    RecyclerView recent, loved, cattop;
     BestAdapter adapter2, adapter3;
-    BestAdapter adapter4;
-    BestAdapter adapter5;
-    BestAdapter adapter7;
     CategoryAdapter adapter6;
     List<Best> list;
     List<Best> list1;
@@ -110,8 +107,8 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     ImageButton cart1;
     EditText search;
     OfferAdapter adapter;
+    ImageView offerzone;
 
-    ImageView banner1, banner2, banner3, banner4, banner5, banner6;
 
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -131,12 +128,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
 
         toolbar = findViewById(R.id.toolbar);
-        banner1 = findViewById(R.id.banner1);
-        banner2 = findViewById(R.id.banner2);
-        banner3 = findViewById(R.id.banner3);
-        banner4 = findViewById(R.id.banner4);
-        banner5 = findViewById(R.id.banner5);
-        banner6 = findViewById(R.id.banner6);
+        offerzone = findViewById(R.id.offerzone);
 
         addresstext = findViewById(R.id.textView8);
         cattop = findViewById(R.id.cattop);
@@ -145,18 +137,12 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         location = findViewById(R.id.location);
         orders = findViewById(R.id.orders);
         indicator = findViewById(R.id.indicator);
-        banner = findViewById(R.id.banner);
         pager = findViewById(R.id.viewPager);
         progress = findViewById(R.id.progress);
-        // indicator = findViewById(R.id.indicator);
-        categories = findViewById(R.id.categories);
         loved = findViewById(R.id.loved);
         recent = findViewById(R.id.recent);
         count = findViewById(R.id.count);
         rewards = findViewById(R.id.rewards);
-        safe = findViewById(R.id.safe);
-        essentails = findViewById(R.id.essentials);
-        top = findViewById(R.id.top);
         cart1 = findViewById(R.id.imageButton3);
         login = findViewById(R.id.textView3);
         terms = findViewById(R.id.terms);
@@ -183,21 +169,13 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         toggle.syncState();
 
 
-        adapter = new OfferAdapter(this, list4);
         adapter2 = new BestAdapter(this, list);
         adapter3 = new BestAdapter(this, list);
-        adapter4 = new BestAdapter(this, list1);
-        adapter5 = new BestAdapter(this, list2);
         adapter6 = new CategoryAdapter(this, list3);
-        adapter7 = new BestAdapter(this, list2);
 
         LinearLayoutManager manager1 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager manager2 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        LinearLayoutManager manager3 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        LinearLayoutManager manager4 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        LinearLayoutManager manager6 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager manager5 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        GridLayoutManager manager7 = new GridLayoutManager(this, 1);
 
         recent.setAdapter(adapter2);
         recent.setLayoutManager(manager1);
@@ -205,20 +183,9 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         loved.setAdapter(adapter3);
         loved.setLayoutManager(manager2);
 
-        essentails.setAdapter(adapter4);
-        essentails.setLayoutManager(manager3);
-
         cattop.setAdapter(adapter6);
         cattop.setLayoutManager(manager5);
 
-        safe.setAdapter(adapter4);
-        safe.setLayoutManager(manager4);
-
-        top.setAdapter(adapter7);
-        top.setLayoutManager(manager6);
-
-        banner.setAdapter(adapter);
-        banner.setLayoutManager(manager7);
 
         final String uid = SharePreferenceUtils.getInstance().getString("userId");
 
@@ -261,6 +228,17 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
             }
         });
+
+        offerzone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, OfferZone.class);
+                startActivity(intent);
+
+            }
+        });
+
 
         terms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -555,191 +533,9 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
                     adapter2.setData(response.body().getBest());
                     adapter3.setData(response.body().getToday());
-                    adapter4.setData(response.body().getBest());
-                    adapter5.setData(response.body().getToday());
-                    adapter7.setData(response.body().getToday());
                     adapter6.setData(response.body().getCat());
 
                     Log.d("ssiizzee", String.valueOf(response.body().getObanner().size()));
-
-
-                    try {
-                        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
-                        ImageLoader loader = ImageLoader.getInstance();
-                        String url = response.body().getObanner().get(0).getImage();
-                        loader.displayImage(url, banner1, options);
-
-                        String cid = response.body().getObanner().get(0).getCid();
-                        String tit = response.body().getObanner().get(0).getCname();
-                        String image = response.body().getObanner().get(0).getCatimage();
-
-                        banner1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (cid != null) {
-                                    Intent intent = new Intent(MainActivity.this, SubCat.class);
-                                    intent.putExtra("id", cid);
-                                    intent.putExtra("title", tit);
-                                    intent.putExtra("image", image);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
-                        ImageLoader loader = ImageLoader.getInstance();
-                        String url = response.body().getObanner().get(1).getImage();
-                        loader.displayImage(url, banner2, options);
-
-                        String cid = response.body().getObanner().get(1).getCid();
-                        String tit = response.body().getObanner().get(1).getCname();
-                        String image = response.body().getObanner().get(1).getCatimage();
-
-                        banner2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (cid != null) {
-                                    Intent intent = new Intent(MainActivity.this, SubCat.class);
-                                    intent.putExtra("id", cid);
-                                    intent.putExtra("title", tit);
-                                    intent.putExtra("image", image);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
-                        ImageLoader loader = ImageLoader.getInstance();
-                        String url = response.body().getObanner().get(2).getImage();
-                        loader.displayImage(url, banner3, options);
-
-                        String cid = response.body().getObanner().get(2).getCid();
-                        String tit = response.body().getObanner().get(2).getCname();
-                        String image = response.body().getObanner().get(2).getCatimage();
-
-                        banner3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (cid != null) {
-                                    Intent intent = new Intent(MainActivity.this, SubCat.class);
-                                    intent.putExtra("id", cid);
-                                    intent.putExtra("title", tit);
-                                    intent.putExtra("image", image);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
-                        ImageLoader loader = ImageLoader.getInstance();
-                        String url = response.body().getObanner().get(3).getImage();
-                        loader.displayImage(url, banner4, options);
-
-                        String cid = response.body().getObanner().get(3).getCid();
-                        String tit = response.body().getObanner().get(3).getCname();
-                        String image = response.body().getObanner().get(3).getCatimage();
-
-                        banner4.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (cid != null) {
-                                    Intent intent = new Intent(MainActivity.this, SubCat.class);
-                                    intent.putExtra("id", cid);
-                                    intent.putExtra("title", tit);
-                                    intent.putExtra("image", image);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
-                        ImageLoader loader = ImageLoader.getInstance();
-                        String url = response.body().getObanner().get(4).getImage();
-                        loader.displayImage(url, banner5, options);
-
-                        String cid = response.body().getObanner().get(4).getCid();
-                        String tit = response.body().getObanner().get(4).getCname();
-                        String image = response.body().getObanner().get(4).getCatimage();
-
-                        banner5.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (cid != null) {
-                                    Intent intent = new Intent(MainActivity.this, SubCat.class);
-                                    intent.putExtra("id", cid);
-                                    intent.putExtra("title", tit);
-                                    intent.putExtra("image", image);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
-                        ImageLoader loader = ImageLoader.getInstance();
-                        String url = response.body().getObanner().get(5).getImage();
-                        loader.displayImage(url, banner6, options);
-
-                        String cid = response.body().getObanner().get(5).getCid();
-                        String tit = response.body().getObanner().get(5).getCname();
-                        String image = response.body().getObanner().get(5).getCatimage();
-
-                        banner6.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (cid != null) {
-                                    Intent intent = new Intent(MainActivity.this, SubCat.class);
-                                    intent.putExtra("id", cid);
-                                    intent.putExtra("title", tit);
-                                    intent.putExtra("image", image);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    if (response.body().getObanner().size() > 6) {
-                        List<Banners> ll = response.body().getObanner();
-                        ll.remove(0);
-                        ll.remove(0);
-                        ll.remove(0);
-                        ll.remove(0);
-                        ll.remove(0);
-                        ll.remove(0);
-                        adapter.setData(ll);
-                    }
 
                     SharePreferenceUtils.getInstance().saveString("location", response.body().getLocation());
 
@@ -755,8 +551,6 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
                     }
 
 //                    Log.d("address", addresses.toString());
-
-
 
 
                     //location.setText(response.body().getCity());

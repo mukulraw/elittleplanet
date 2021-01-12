@@ -109,8 +109,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
+            android:drawablePadding="22dp"
+            android:drawableStart="@drawable/ic_heart2"
             android:text="My Wishlist"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/orders"

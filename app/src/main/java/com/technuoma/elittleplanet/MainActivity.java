@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     List<Best> list2;
     List<Cat> list3;
     List<Banners> list4;
-    TextView count, rewards, login, addresstext, terms, about, address, logout, cart, orders, refer, location;
+    TextView count, rewards, login, addresstext, terms, about, address, logout, cart, orders, refer, location, wishlist;
     ImageButton cart1;
     EditText search;
     OfferAdapter adapter;
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
         addresstext = findViewById(R.id.textView8);
         cattop = findViewById(R.id.cattop);
-
+        wishlist = findViewById(R.id.wishlist);
         refer = findViewById(R.id.refer);
         location = findViewById(R.id.location);
         orders = findViewById(R.id.orders);
@@ -274,6 +274,23 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
             }
         });
+
+        wishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (uid.length() > 0) {
+                    Intent intent = new Intent(MainActivity.this, Wishlist.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Please login to continue", Toast.LENGTH_SHORT).show();
+                }
+
+                drawer.closeDrawer(GravityCompat.START);
+
+            }
+        });
+
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override

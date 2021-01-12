@@ -210,4 +210,10 @@ public interface AllApiIneterface {
             @Part("order_id") String order_id
     );
 
+    @Multipart
+    @POST("elittleplanet/api/getWishlist.php")
+    Call<orderDetailsBean> getWishlist(
+            @Part("user_id") String user_id
+    );
+
 }

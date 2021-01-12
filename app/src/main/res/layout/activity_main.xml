@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/shade"
-    tools:openDrawer="start"
     tools:context=".MainActivity">
 
     <RelativeLayout
@@ -111,6 +110,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -171,6 +171,12 @@
 
 
                     </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cattop"
+                        />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -234,6 +240,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="12dp"
+                        android:visibility="gone"
                         android:text="ACCESSORIES AND MORE"
                         android:textColor="#02425A">
 
@@ -246,6 +253,7 @@
                         android:nestedScrollingEnabled="false"
                         android:paddingStart="4dp"
                         android:paddingEnd="4dp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView9" />

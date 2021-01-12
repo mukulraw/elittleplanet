@@ -22,6 +22,9 @@ public class loginBean {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("address")
+    @Expose
+    private String address;
 
     public String getStatus() {
         return status;
@@ -69,5 +72,13 @@ public class loginBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

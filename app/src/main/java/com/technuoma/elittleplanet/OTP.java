@@ -82,6 +82,7 @@ public class OTP extends AppCompatActivity {
                                 SharePreferenceUtils.getInstance().saveString("phone", response.body().getPhone());
                                 SharePreferenceUtils.getInstance().saveString("email", response.body().getEmail());
                                 SharePreferenceUtils.getInstance().saveString("name", response.body().getName());
+                                SharePreferenceUtils.getInstance().saveString("address", response.body().getAddress());
                                 Toast.makeText(OTP.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                                 Intent intent = new Intent(OTP.this, MainActivity.class);

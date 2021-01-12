@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     AutoViewPager pager;
     ProgressBar progress;
     CircleIndicator indicator;
-    RecyclerView categories, recent, loved, safe, essentails, top, banner;
+    RecyclerView categories, recent, loved, safe, essentails, top, banner, cattop;
     BestAdapter adapter2, adapter3;
     BestAdapter adapter4;
     BestAdapter adapter5;
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     List<Best> list2;
     List<Cat> list3;
     List<Banners> list4;
-    TextView count, rewards, login, terms, about, address, logout, cart, orders, refer, location;
+    TextView count, rewards, login, addresstext, terms, about, address, logout, cart, orders, refer, location;
     ImageButton cart1;
     EditText search;
     OfferAdapter adapter;
@@ -137,6 +137,9 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         banner4 = findViewById(R.id.banner4);
         banner5 = findViewById(R.id.banner5);
         banner6 = findViewById(R.id.banner6);
+
+        addresstext = findViewById(R.id.textView8);
+        cattop = findViewById(R.id.cattop);
 
         refer = findViewById(R.id.refer);
         location = findViewById(R.id.location);
@@ -193,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         LinearLayoutManager manager3 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager manager4 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager manager6 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        GridLayoutManager manager5 = new GridLayoutManager(this, 3);
+        LinearLayoutManager manager5 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         GridLayoutManager manager7 = new GridLayoutManager(this, 1);
 
         recent.setAdapter(adapter2);
@@ -205,16 +208,8 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         essentails.setAdapter(adapter4);
         essentails.setLayoutManager(manager3);
 
-        /*manager5.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int i) {
-                return Integer.parseInt(adapter6.getSpace(i));
-            }
-        });*/
-
-
-        categories.setAdapter(adapter6);
-        categories.setLayoutManager(manager5);
+        cattop.setAdapter(adapter6);
+        cattop.setLayoutManager(manager5);
 
         safe.setAdapter(adapter4);
         safe.setLayoutManager(manager4);
@@ -229,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
         if (uid.length() > 0) {
             login.setText(SharePreferenceUtils.getInstance().getString("name"));
+            addresstext.setText(SharePreferenceUtils.getInstance().getString("address"));
             rewards.setText("eCashback - " + SharePreferenceUtils.getInstance().getString("rewards"));
             //rewards.setVisibility(View.VISIBLE);
             getRew();
@@ -408,6 +404,8 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
             }
         });
 
+        loaddata();
+
         createLocationRequest();
 
     }
@@ -441,7 +439,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.category_list_model2, parent, false);
+            View view = inflater.inflate(R.layout.category_list_model3, parent, false);
             return new ViewHolder(view);
         }
 
@@ -733,14 +731,15 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
                     List<android.location.Address> addresses = null;
                     try {
                         addresses = geocoder.getFromLocation(Double.parseDouble(SharePreferenceUtils.getInstance().getString("lat")), Double.parseDouble(SharePreferenceUtils.getInstance().getString("lng")), 1);
-                    } catch (IOException e) {
+                        SharePreferenceUtils.getInstance().saveString("deliveryLocation", addresses.get(0).getAddressLine(0));
+                        location.setText(addresses.get(0).getAddressLine(0));
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                    Log.d("address", addresses.toString());
+//                    Log.d("address", addresses.toString());
 
-                    SharePreferenceUtils.getInstance().saveString("deliveryLocation", addresses.get(0).getAddressLine(0));
-                    location.setText(addresses.get(0).getAddressLine(0));
+
 
 
                     //location.setText(response.body().getCity());

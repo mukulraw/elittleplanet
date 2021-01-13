@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     List<Best> list2;
     List<Cat> list3;
     List<Banners> list4;
-    TextView count, rewards, login, addresstext, terms, about, address, logout, cart, orders, refer, location, wishlist;
+    TextView count, rewards, login, addresstext, terms, about, address, logout, cart, orders, refer, location, wishlist, contact;
     ImageButton cart1;
     EditText search;
     OfferAdapter adapter;
@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         logout = findViewById(R.id.logout);
         cart = findViewById(R.id.cart);
         search = findViewById(R.id.search);
+        contact = findViewById(R.id.contact);
 
         list = new ArrayList<>();
         list1 = new ArrayList<>();
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         if (uid.length() > 0) {
             login.setText(SharePreferenceUtils.getInstance().getString("name"));
             addresstext.setText(SharePreferenceUtils.getInstance().getString("address"));
-            rewards.setText("eCashback - " + SharePreferenceUtils.getInstance().getString("rewards"));
+            rewards.setText("LP Rewards - " + SharePreferenceUtils.getInstance().getString("rewards"));
             //rewards.setVisibility(View.VISIBLE);
             getRew();
         } else {
@@ -240,6 +241,17 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
             }
         });
+
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, Contact.class);
+                startActivity(intent);
+
+            }
+        });
+
 
         janatha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1076,13 +1088,13 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Call<String> call = cr.getRew(SharePreferenceUtils.getInstance().getString("user_id"));
+        Call<String> call = cr.getRew(SharePreferenceUtils.getInstance().getString("userId"));
 
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-                rewards.setText("eCashback - " + response.body());
+                rewards.setText("LP Rewards - " + response.body());
 
                 progress.setVisibility(View.GONE);
 

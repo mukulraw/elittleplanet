@@ -87,7 +87,7 @@ public class Search extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (s.length() > 0)
+                if (s.length() > 2)
                 {
 
 

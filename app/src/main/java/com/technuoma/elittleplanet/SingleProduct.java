@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.jsibbold.zoomage.ZoomageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.technuoma.elittleplanet.homePOJO.Best;
@@ -600,6 +601,18 @@ public class SingleProduct extends AppCompatActivity {
             ImageLoader loader = ImageLoader.getInstance();
             loader.displayImage(url, image, options);
 
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Dialog dialog = new Dialog(getActivity(), android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setCancelable(true);
+                    dialog.setContentView(R.layout.zoom);
+                    dialog.show();
+                    ZoomageView zoom = dialog.findViewById(R.id.zoom);
+                    loader.displayImage(url, zoom, options);
+                }
+            });
 
             return view;
         }

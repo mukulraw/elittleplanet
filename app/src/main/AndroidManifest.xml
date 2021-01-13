@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".OfferZone"></activity>
+        <activity android:name=".Contact"></activity>
+        <activity android:name=".OfferZone" />
         <activity android:name=".Wishlist" />
         <activity android:name=".Register" />
         <!--

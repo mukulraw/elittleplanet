@@ -85,7 +85,6 @@ public interface AllApiIneterface {
     @POST("elittleplanet/api/login.php")
     Call<loginBean> login(
             @Part("email") String email,
-            @Part("password") String password,
             @Part("token") String token
     );
 

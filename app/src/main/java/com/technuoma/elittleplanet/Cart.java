@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +40,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class Cart extends AppCompatActivity {
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
+public class Cart extends Fragment {
 
     private Toolbar toolbar;
     ProgressBar bar;
@@ -59,39 +63,27 @@ public class Cart extends AppCompatActivity {
 
     String client, txn;
 
+    MainActivity mainActivity;
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_cart, container, false);
+        mainActivity = (MainActivity) getActivity();
 
         list = new ArrayList<>();
 
-        toolbar = findViewById(R.id.toolbar3);
-        bar = findViewById(R.id.progressBar3);
-        bottom = findViewById(R.id.cart_bottom);
-        btotal = findViewById(R.id.textView9);
-        bproceed = findViewById(R.id.textView10);
-        grid = findViewById(R.id.grid);
-        clear = findViewById(R.id.textView12);
-        setSupportActionBar(toolbar);
+        toolbar = view.findViewById(R.id.toolbar3);
+        bar = view.findViewById(R.id.progressBar3);
+        bottom = view.findViewById(R.id.cart_bottom);
+        btotal = view.findViewById(R.id.textView9);
+        bproceed = view.findViewById(R.id.textView10);
+        grid = view.findViewById(R.id.grid);
+        clear = view.findViewById(R.id.textView12);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        adapter = new CartAdapter(list, mainActivity);
 
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle("Cart");
-
-        adapter = new CartAdapter(list, this);
-
-        manager = new GridLayoutManager(this, 1);
+        manager = new GridLayoutManager(mainActivity, 1);
 
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager);
@@ -102,7 +94,7 @@ public class Cart extends AppCompatActivity {
 
                 bar.setVisibility(View.VISIBLE);
 
-                Bean b = (Bean) getApplicationContext();
+                Bean b = (Bean) mainActivity.getApplicationContext();
 
                 base = b.baseurl;
 
@@ -121,10 +113,10 @@ public class Cart extends AppCompatActivity {
                     public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
 
                         if (response.body().getStatus().equals("1")) {
-                            finish();
+                            mainActivity.navigation.setSelectedItemId(R.id.action_home);
                         }
 
-                        Toast.makeText(Cart.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mainActivity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                         bar.setVisibility(View.GONE);
 
@@ -144,26 +136,23 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (amm > 0)
-                {
-                    Intent intent = new Intent(Cart.this , Checkout.class);
-                    intent.putExtra("amount" , String.valueOf(amm));
+                if (amm > 0) {
+                    Intent intent = new Intent(mainActivity, Checkout.class);
+                    intent.putExtra("amount", String.valueOf(amm));
                     startActivity(intent);
+                } else {
+                    Toast.makeText(mainActivity, "Invalid amount", Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    Toast.makeText(Cart.this, "Invalid amount", Toast.LENGTH_SHORT).show();
-                }
-
 
 
             }
         });
 
+        return view;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         loadCart();
@@ -173,7 +162,7 @@ public class Cart extends AppCompatActivity {
     void loadCart() {
         bar.setVisibility(View.VISIBLE);
 
-        Bean b = (Bean) getApplicationContext();
+        Bean b = (Bean) mainActivity.getApplicationContext();
 
         base = b.baseurl;
 
@@ -207,8 +196,8 @@ public class Cart extends AppCompatActivity {
                 } else {
                     adapter.setgrid(response.body().getData());
                     bottom.setVisibility(View.GONE);
-                    Toast.makeText(Cart.this, "Cart is empty", Toast.LENGTH_SHORT).show();
-                    finish();
+                    Toast.makeText(mainActivity, "Cart is empty", Toast.LENGTH_SHORT).show();
+                    mainActivity.navigation.setSelectedItemId(R.id.action_home);
                 }
 
                 bar.setVisibility(View.GONE);
@@ -259,14 +248,9 @@ public class Cart extends AppCompatActivity {
             //viewHolder.setIsRecyclable(false);
 
 
-
-
-            if (item.getColor().length() > 0)
-            {
+            if (item.getColor().length() > 0) {
                 viewHolder.title.setText(item.getName() + " (" + item.getColor() + ")");
-            }
-            else
-            {
+            } else {
                 viewHolder.title.setText(item.getName());
             }
 
@@ -289,7 +273,7 @@ public class Cart extends AppCompatActivity {
 
                         bar.setVisibility(View.VISIBLE);
 
-                        Bean b = (Bean) getApplicationContext();
+                        Bean b = (Bean) context.getApplicationContext();
 
                         base = b.baseurl;
 
@@ -344,7 +328,7 @@ public class Cart extends AppCompatActivity {
 
                         bar.setVisibility(View.VISIBLE);
 
-                        Bean b = (Bean) getApplicationContext();
+                        Bean b = (Bean) context.getApplicationContext();
 
                         base = b.baseurl;
 
@@ -385,10 +369,6 @@ public class Cart extends AppCompatActivity {
             });
 
 
-
-
-
-
             viewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -396,7 +376,7 @@ public class Cart extends AppCompatActivity {
 
                     bar.setVisibility(View.VISIBLE);
 
-                    Bean b = (Bean) getApplicationContext();
+                    Bean b = (Bean) context.getApplicationContext();
 
                     base = b.baseurl;
 
@@ -440,7 +420,7 @@ public class Cart extends AppCompatActivity {
 
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
             ImageLoader loader = ImageLoader.getInstance();
-            loader.displayImage(item.getImage() , viewHolder.imageView , options);
+            loader.displayImage(item.getImage(), viewHolder.imageView, options);
 
         }
 
@@ -455,7 +435,7 @@ public class Cart extends AppCompatActivity {
             ImageButton delete;
 
             Button add, remove;
-            TextView quantity , title , brand , price;
+            TextView quantity, title, brand, price;
 
 
             ViewHolder(@NonNull View itemView) {

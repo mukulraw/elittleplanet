@@ -195,8 +195,7 @@ public class SingleProduct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(SingleProduct.this, Cart.class);
-                startActivity(intent);
+                //navigation.setSelectedItemId(R.id.action_cart);
 
 
             }

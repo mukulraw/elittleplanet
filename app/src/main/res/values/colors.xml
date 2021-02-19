@@ -7,4 +7,5 @@
     <color name="white">#000000</color>
     <color name="red">#b71c1c</color>
     <color name="transparent">#00000000</color>
+    <color name="menu_color">#5F7D95</color>
 </resources>

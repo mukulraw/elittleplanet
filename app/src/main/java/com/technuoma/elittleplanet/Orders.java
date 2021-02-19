@@ -12,8 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,53 +33,40 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class Orders extends AppCompatActivity {
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-    Toolbar toolbar;
+public class Orders extends Fragment {
+
     ProgressBar progress;
     RecyclerView grid;
     OrdersAdapter adapter;
     List<Datum> list;
     GridLayoutManager manager;
+    MainActivity mainActivity;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_orders);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_orders, container, false);
+        mainActivity = (MainActivity) getActivity();
 
         list = new ArrayList<>();
 
-        toolbar = findViewById(R.id.toolbar3);
-        progress = findViewById(R.id.progressBar3);
-        grid = findViewById(R.id.grid);
+        progress = view.findViewById(R.id.progressBar3);
+        grid = view.findViewById(R.id.grid);
 
-        setSupportActionBar(toolbar);
+        adapter = new OrdersAdapter(list, mainActivity);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle("My Orders");
-
-        adapter = new OrdersAdapter(list, this);
-
-        manager = new GridLayoutManager(this, 1);
+        manager = new GridLayoutManager(mainActivity, 1);
 
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager);
 
+        return view;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         loadCart();
@@ -87,7 +76,7 @@ public class Orders extends AppCompatActivity {
     void loadCart() {
         progress.setVisibility(View.VISIBLE);
 
-        Bean b = (Bean) getApplicationContext();
+        Bean b = (Bean) mainActivity.getApplicationContext();
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -97,7 +86,6 @@ public class Orders extends AppCompatActivity {
                 .build();
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
-
 
 
         Call<ordersBean> call = cr.getOrders(SharePreferenceUtils.getInstance().getString("userId"));
@@ -112,8 +100,8 @@ public class Orders extends AppCompatActivity {
 
                 } else {
                     adapter.setgrid(response.body().getData());
-                    finish();
-                    Toast.makeText(Orders.this, "No order found", Toast.LENGTH_SHORT).show();
+                    //finish();
+                    Toast.makeText(mainActivity, "No order found", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -180,9 +168,9 @@ public class Orders extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(context , OrderDetails.class);
-                    intent.putExtra("oid" , item.getId());
-                    intent.putExtra("status" , item.getStatus());
+                    Intent intent = new Intent(context, OrderDetails.class);
+                    intent.putExtra("oid", item.getId());
+                    intent.putExtra("status", item.getStatus());
                     startActivity(intent);
 
                 }
@@ -197,7 +185,7 @@ public class Orders extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            TextView txn , date , status , name , address , amount , pay , slot , deldate;
+            TextView txn, date, status, name, address, amount, pay, slot, deldate;
 
 
             ViewHolder(@NonNull View itemView) {

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#ffffff"
     android:clickable="true"
-    android:focusable="true"
-    android:layout_height="match_parent">
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -29,14 +29,14 @@
         android:id="@+id/rewards"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
-        android:visibility="visible"
-        android:text="LP Rewards - "
+        android:layout_marginEnd="16dp"
         android:gravity="end"
+        android:padding="10dp"
+        android:text="LP Rewards - "
         android:textColor="#ffffff"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_wallet"
             android:drawablePadding="22dp"
-            android:padding="15dp"
+            android:padding="12dp"
             android:text="eCash - 0"
             android:visibility="gone" />
 
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_pin"
             android:drawablePadding="22dp"
-            android:padding="15dp"
+            android:padding="12dp"
             android:text="West Delhi"
             android:visibility="gone" />
 
@@ -101,17 +101,25 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_shopping_bag"
             android:drawablePadding="22dp"
-            android:padding="15dp"
-            android:text="My Cart" />
+            android:drawableTint="@color/menu_color"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:text="My Cart"
+            android:textColor="@color/menu_color" />
 
         <TextView
             android:id="@+id/wishlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:drawablePadding="22dp"
             android:drawableStart="@drawable/ic_heart2"
+            android:drawablePadding="22dp"
+            android:drawableTint="@color/menu_color"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
             android:text="My Wishlist"
+            android:textColor="@color/menu_color"
             android:visibility="visible" />
 
         <TextView
@@ -120,8 +128,12 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_format_list_bulleted_black_24dp"
             android:drawablePadding="22dp"
-            android:padding="15dp"
-            android:text="My Orders" />
+            android:drawableTint="@color/menu_color"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:text="My Orders"
+            android:textColor="@color/menu_color" />
 
         <TextView
             android:id="@+id/exchange"
@@ -129,8 +141,12 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_exchange"
             android:drawablePadding="22dp"
-            android:padding="15dp"
-            android:text="Exchange Mobile" />
+            android:drawableTint="@color/menu_color"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:text="Exchange Mobile"
+            android:textColor="@color/menu_color" />
 
 
         <TextView
@@ -139,15 +155,19 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_home_black_24dp"
             android:drawablePadding="22dp"
-            android:padding="15dp"
-            android:text="My Addresses" />
+            android:drawableTint="@color/menu_color"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:text="My Addresses"
+            android:textColor="@color/menu_color" />
 
 
         <TextView
             android:id="@+id/profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="12dp"
             android:text="My Profile"
             android:visibility="gone" />
 
@@ -161,7 +181,7 @@
             android:id="@+id/lachcha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="12dp"
             android:text="For Lachcha order, click here"
             android:visibility="gone" />
 
@@ -172,7 +192,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_assignment_black_24dp"
             android:drawablePadding="22dp"
-            android:padding="15dp"
+            android:padding="12dp"
             android:text="Terms &amp; Conditions"
             android:visibility="gone" />
 
@@ -183,8 +203,12 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_help_black_24dp"
             android:drawablePadding="22dp"
-            android:padding="15dp"
+            android:drawableTint="@color/menu_color"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
             android:text="FAQs"
+            android:textColor="@color/menu_color"
             android:visibility="visible" />
 
         <TextView
@@ -193,8 +217,12 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_phone_contact"
             android:drawablePadding="22dp"
-            android:padding="15dp"
+            android:drawableTint="@color/menu_color"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
             android:text="Contact Us"
+            android:textColor="@color/menu_color"
             android:visibility="visible" />
 
 
@@ -204,8 +232,12 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_rupee"
             android:drawablePadding="22dp"
-            android:padding="15dp"
+            android:drawableTint="@color/menu_color"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
             android:text="Refer and Earn (upto 5 persons)"
+            android:textColor="@color/menu_color"
             android:visibility="visible" />
 
 
@@ -221,8 +253,12 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_power_settings_new_black_24dp"
             android:drawablePadding="22dp"
-            android:padding="15dp"
-            android:text="Logout" />
+            android:drawableTint="@color/menu_color"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:text="Logout"
+            android:textColor="@color/menu_color" />
 
     </LinearLayout>
 
@@ -232,13 +268,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="10dp"
-        android:layout_marginBottom="8dp"
         android:text="Address"
-        android:textSize="16sp"
         android:textColor="@color/white2"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

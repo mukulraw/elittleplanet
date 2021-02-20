@@ -32,6 +32,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -236,11 +237,20 @@ public class Home extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(context, SubCat.class);
-                    intent.putExtra("id", item.getId());
-                    intent.putExtra("title", item.getName());
-                    intent.putExtra("image", item.getImage());
-                    context.startActivity(intent);
+                    FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+
+                    FragmentTransaction ft4 = fm4.beginTransaction();
+                    ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    SubCat frag14 = new SubCat();
+                    Bundle b = new Bundle();
+                    b.putString("id", item.getId());
+                    b.putString("title", item.getName());
+                    b.putString("image", item.getImage());
+                    frag14.setArguments(b);
+                    ft4.replace(R.id.replace, frag14);
+                    ft4.addToBackStack(null);
+                    //ft.addToBackStack(null);
+                    ft4.commit();
 
                 }
             });
@@ -566,10 +576,18 @@ public class Home extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(context, SingleProduct.class);
-                    intent.putExtra("id", item.getId());
-                    intent.putExtra("title", item.getName());
-                    context.startActivity(intent);
+                    FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+
+                    FragmentTransaction ft4 = fm4.beginTransaction();
+                    ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    SingleProduct frag14 = new SingleProduct();
+                    Bundle b = new Bundle();
+                    b.putString("id", item.getId());
+                    b.putString("title", item.getName());
+                    frag14.setArguments(b);
+                    ft4.replace(R.id.replace, frag14);
+                    ft4.addToBackStack(null);
+                    ft4.commit();
 
                 }
             });

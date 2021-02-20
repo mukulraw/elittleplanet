@@ -3,6 +3,8 @@ package com.technuoma.elittleplanet;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -162,10 +164,18 @@ public class Wishlist extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(context, SingleProduct.class);
-                    intent.putExtra("id", item.getProductId());
-                    intent.putExtra("title", item.getName());
-                    context.startActivity(intent);
+                    FragmentManager fm4 = getSupportFragmentManager();
+
+                    FragmentTransaction ft4 = fm4.beginTransaction();
+                    ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    SingleProduct frag14 = new SingleProduct();
+                    Bundle b = new Bundle();
+                    b.putString("id", item.getProductId());
+                    b.putString("title", item.getName());
+                    frag14.setArguments(b);
+                    ft4.replace(R.id.replace, frag14);
+                    ft4.addToBackStack(null);
+                    ft4.commit();
 
                 }
             });

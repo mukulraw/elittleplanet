@@ -2,9 +2,12 @@ package com.technuoma.elittleplanet;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -30,7 +33,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class Products extends AppCompatActivity {
+public class Products extends Fragment {
 
     Toolbar toolbar;
     ProgressBar progress;
@@ -38,38 +41,29 @@ public class Products extends AppCompatActivity {
     TabLayout tabs;
     ViewPager pager;
 
+    MainActivity mainActivity;
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_products, container, false);
 
-        id = getIntent().getStringExtra("id");
-        title = getIntent().getStringExtra("title");
+        mainActivity = (MainActivity) getActivity();
+
+        id = getArguments().getString("id");
+        title = getArguments().getString("title");
 
 
-        toolbar = findViewById(R.id.toolbar2);
-        tabs = findViewById(R.id.tabs);
-        progress = findViewById(R.id.progressBar2);
-        pager = findViewById(R.id.pager);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle(title);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-
-        });
+        toolbar = view.findViewById(R.id.toolbar2);
+        tabs = view.findViewById(R.id.tabs);
+        progress = view.findViewById(R.id.progressBar2);
+        pager = view.findViewById(R.id.pager);
 
         //PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
 
         progress.setVisibility(View.VISIBLE);
 
-        Bean b = (Bean) getApplicationContext();
+        Bean b = (Bean) mainActivity.getApplicationContext();
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.level(HttpLoggingInterceptor.Level.HEADERS);
@@ -94,7 +88,7 @@ public class Products extends AppCompatActivity {
                 if (response.body().getStatus().equals("1"))
                 {
 
-                    PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager() , response.body().getData());
+                    PagerAdapter adapter = new PagerAdapter(getChildFragmentManager() , response.body().getData());
                     pager.setAdapter(adapter);
                     tabs.setupWithViewPager(pager);
 
@@ -111,10 +105,11 @@ public class Products extends AppCompatActivity {
             }
         });
 
+        return view;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
 

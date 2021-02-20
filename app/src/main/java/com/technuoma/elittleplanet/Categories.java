@@ -88,7 +88,7 @@ public class Categories extends Fragment {
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Call<homeBean> call = cr.getHome(SharePreferenceUtils.getInstance().getString("lat") , SharePreferenceUtils.getInstance().getString("lng"));
+        Call<homeBean> call = cr.getHome(SharePreferenceUtils.getInstance().getString("lat"), SharePreferenceUtils.getInstance().getString("lng"));
         call.enqueue(new Callback<homeBean>() {
             @Override
             public void onResponse(Call<homeBean> call, Response<homeBean> response) {
@@ -158,9 +158,10 @@ public class Categories extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    /*FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+                    FragmentManager fm4 = mainActivity.getSupportFragmentManager();
 
                     FragmentTransaction ft4 = fm4.beginTransaction();
+                    ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     SubCat frag14 = new SubCat();
                     Bundle b = new Bundle();
                     b.putString("id", item.getId());
@@ -170,7 +171,7 @@ public class Categories extends Fragment {
                     ft4.replace(R.id.replace, frag14);
                     ft4.addToBackStack(null);
                     //ft.addToBackStack(null);
-                    ft4.commit();*/
+                    ft4.commit();
 
                 }
             });

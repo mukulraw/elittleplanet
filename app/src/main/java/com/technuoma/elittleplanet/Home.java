@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +49,6 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.nostra13.universalimageloader.BuildConfig;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.santalu.autoviewpager.AutoViewPager;
@@ -600,7 +600,7 @@ public class Home extends Fragment {
 
                     if (uid.length() > 0) {
 
-                        final Dialog dialog = new Dialog(context);
+                        final Dialog dialog = new Dialog(mainActivity, R.style.MyDialogTheme);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setCancelable(true);
                         dialog.setContentView(R.layout.add_cart_dialog);
@@ -609,24 +609,49 @@ public class Home extends Fragment {
                         final StepperTouch stepperTouch = dialog.findViewById(R.id.stepperTouch);
                         Button add = dialog.findViewById(R.id.button8);
                         final ProgressBar progressBar = dialog.findViewById(R.id.progressBar2);
-                        TextView colortitle = dialog.findViewById(R.id.textView5);
+                        TextView sizetitle = dialog.findViewById(R.id.textView5);
+                        TextView colortitle = dialog.findViewById(R.id.textView67);
+                        Spinner size = dialog.findViewById(R.id.size);
                         Spinner color = dialog.findViewById(R.id.color);
 
-                        if (item.getUnit().length() > 0) {
+                        if (item.getSize().size() > 0) {
                             color.setVisibility(View.VISIBLE);
+                            size.setVisibility(View.VISIBLE);
+                            sizetitle.setVisibility(View.VISIBLE);
                             colortitle.setVisibility(View.VISIBLE);
 
-                            String[] dd = item.getUnit().split(",");
+                            List<String> ll = new ArrayList<>();
+                            for (int i = 0; i < item.getSize().size(); i++) {
+                                ll.add(item.getSize().get(i).getSize());
+                            }
 
-                            List<String> clist = Arrays.asList(dd);
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity,
-                                    android.R.layout.simple_list_item_1, clist);
+                                    android.R.layout.simple_list_item_1, ll);
 
-                            color.setAdapter(adapter);
+                            size.setAdapter(adapter);
+
+                            size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    String clr = item.getSize().get(position).getColor();
+                                    List<String> list = new ArrayList<>(Arrays.asList(clr.split(",")));
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity,
+                                            android.R.layout.simple_list_item_1, list);
+
+                                    color.setAdapter(adapter);
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
 
                         } else {
                             color.setVisibility(View.GONE);
+                            size.setVisibility(View.GONE);
                             colortitle.setVisibility(View.GONE);
+                            sizetitle.setVisibility(View.GONE);
                         }
 
                         stepperTouch.setMinValue(1);
@@ -658,28 +683,27 @@ public class Home extends Fragment {
                                 AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
                                 Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
-                                Log.d("pid", item.getId());
                                 Log.d("quantity", String.valueOf(stepperTouch.getCount()));
                                 Log.d("price", nv1);
 
-                                int versionCode = com.nostra13.universalimageloader.BuildConfig.VERSION_CODE;
+                                int versionCode = com.technuoma.elittleplanet.BuildConfig.VERSION_CODE;
                                 String versionName = BuildConfig.VERSION_NAME;
 
                                 String cl = String.valueOf(color.getSelectedItem());
+                                String sz = String.valueOf(size.getSelectedItem());
 
-                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), item.getId(), String.valueOf(stepperTouch.getCount()), nv1, versionName, cl);
+                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), item.getId(), String.valueOf(stepperTouch.getCount()), nv1, versionName, sz, cl);
 
                                 call.enqueue(new Callback<singleProductBean>() {
                                     @Override
                                     public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
 
                                         if (response.body().getStatus().equals("1")) {
-                                            //loadCart();
-                                            dialog.dismiss();
                                             mainActivity.loadCart();
+                                            dialog.dismiss();
                                         }
 
-                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mainActivity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                                         progressBar.setVisibility(View.GONE);
 
@@ -696,11 +720,12 @@ public class Home extends Fragment {
                         });
 
                     } else {
-                        Toast.makeText(context, "Please login to continue", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context, Login.class);
-                        context.startActivity(intent);
+                        Toast.makeText(mainActivity, "Please login to continue", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mainActivity, Login.class);
+                        startActivity(intent);
 
                     }
+
 
                 }
             });

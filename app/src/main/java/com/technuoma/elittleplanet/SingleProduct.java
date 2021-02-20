@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -39,6 +40,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.technuoma.elittleplanet.homePOJO.Best;
 import com.technuoma.elittleplanet.homePOJO.homeBean;
 import com.technuoma.elittleplanet.seingleProductPOJO.Data;
+import com.technuoma.elittleplanet.seingleProductPOJO.Related;
 import com.technuoma.elittleplanet.seingleProductPOJO.singleProductBean;
 
 import java.util.ArrayList;
@@ -70,6 +72,8 @@ public class SingleProduct extends Fragment {
     TextView descriptiontitle, key_featurestitle, packagingtitle, lifetitle;
     ProgressBar progress;
 
+    TextView relatedtitle, save;
+
     String id, name;
 
     String pid, nv1;
@@ -77,8 +81,10 @@ public class SingleProduct extends Fragment {
     CircleIndicator indicator;
 
     RecyclerView recent, loved;
-    List<Best> list;
-    BestAdapter adapter2, adapter3;
+    List<Related> list;
+    List<Best> list2;
+    BestAdapter adapter2;
+    RelatedAdapter adapter3;
 
     ImageButton wishlist;
 
@@ -94,11 +100,14 @@ public class SingleProduct extends Fragment {
         mainActivity = (MainActivity) getActivity();
 
         list = new ArrayList<>();
+        list2 = new ArrayList<>();
 
         id = getArguments().getString("id");
         name = getArguments().getString("title");
 
         loved = view.findViewById(R.id.loved);
+        relatedtitle = view.findViewById(R.id.relatedtitle);
+        save = view.findViewById(R.id.save);
         count = view.findViewById(R.id.count);
         cart1 = view.findViewById(R.id.imageButton3);
         wishlist = view.findViewById(R.id.wishlist);
@@ -125,8 +134,8 @@ public class SingleProduct extends Fragment {
         progress = view.findViewById(R.id.progress);
         stock = view.findViewById(R.id.stock);
 
-        adapter2 = new BestAdapter(mainActivity, list);
-        adapter3 = new BestAdapter(mainActivity, list);
+        adapter2 = new BestAdapter(mainActivity, list2);
+        adapter3 = new RelatedAdapter(mainActivity, list);
         LinearLayoutManager manager1 = new LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager manager2 = new LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false);
 
@@ -237,6 +246,17 @@ public class SingleProduct extends Fragment {
                     image.setAdapter(adapter);
                     indicator.setViewPager(image);
 
+                    if (item.getRelated().size() > 0) {
+                        adapter3.setData(item.getRelated());
+                        loved.setVisibility(View.VISIBLE);
+                        relatedtitle.setVisibility(View.VISIBLE);
+                    } else {
+                        adapter3.setData(item.getRelated());
+                        loved.setVisibility(View.GONE);
+                        relatedtitle.setVisibility(View.GONE);
+                    }
+
+
                     float dis = Float.parseFloat(item.getDiscount());
 
                     if (dis > 0) {
@@ -251,11 +271,16 @@ public class SingleProduct extends Fragment {
                         discount.setVisibility(View.VISIBLE);
                         discount.setText(item.getDiscount() + "% OFF");
                         price.setText(Html.fromHtml("Selling Price:  <font color=\"#000000\"><b>\u20B9" + String.valueOf(nv) + " </b></font><strike>\u20B9" + item.getPrice() + "</strike>"));
+
+                        save.setText("You save - \u20B9" + dv);
+                        save.setVisibility(View.VISIBLE);
+
                     } else {
 
                         nv1 = item.getPrice();
                         discount.setVisibility(View.GONE);
                         price.setText(Html.fromHtml("Selling Price:  <font color=\"#000000\"><b>\u20B9" + String.valueOf(item.getPrice()) + " </b></font>"));
+                        save.setVisibility(View.GONE);
                     }
 
                     if (item.getWishlist().equals("1")) {
@@ -375,14 +400,14 @@ public class SingleProduct extends Fragment {
                     title.setText(item.getName());
 
                     brand.setText(item.getBrand());
-                    unit.setText(item.getSize());
+                    //unit.setText(item.getSize());
                     seller.setText(item.getSeller());
 
-                    description.setText(item.getDescription());
-                    key_features.setText(item.getKeyFeatures());
-                    packaging.setText(item.getPackagingType());
-                    life.setText(item.getShelfLife());
-                    disclaimer.setText(item.getDisclaimer());
+                    description.setText(Html.fromHtml(item.getDescription()));
+                    key_features.setText(Html.fromHtml(item.getKeyFeatures()));
+                    packaging.setText(Html.fromHtml(item.getPackagingType()));
+                    life.setText(Html.fromHtml(item.getShelfLife()));
+                    disclaimer.setText(Html.fromHtml(item.getDisclaimer()));
 
 
                     if (item.getStock().equals("In stock")) {
@@ -403,7 +428,7 @@ public class SingleProduct extends Fragment {
 
                                 if (uid.length() > 0) {
 
-                                    final Dialog dialog = new Dialog(mainActivity);
+                                    final Dialog dialog = new Dialog(mainActivity, R.style.MyDialogTheme);
                                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                     dialog.setCancelable(true);
                                     dialog.setContentView(R.layout.add_cart_dialog);
@@ -412,24 +437,49 @@ public class SingleProduct extends Fragment {
                                     final StepperTouch stepperTouch = dialog.findViewById(R.id.stepperTouch);
                                     Button add = dialog.findViewById(R.id.button8);
                                     final ProgressBar progressBar = dialog.findViewById(R.id.progressBar2);
-                                    TextView colortitle = dialog.findViewById(R.id.textView5);
+                                    TextView sizetitle = dialog.findViewById(R.id.textView5);
+                                    TextView colortitle = dialog.findViewById(R.id.textView67);
+                                    Spinner size = dialog.findViewById(R.id.size);
                                     Spinner color = dialog.findViewById(R.id.color);
 
-                                    if (item.getUnit().length() > 0) {
+                                    if (item.getSize().size() > 0) {
                                         color.setVisibility(View.VISIBLE);
+                                        size.setVisibility(View.VISIBLE);
+                                        sizetitle.setVisibility(View.VISIBLE);
                                         colortitle.setVisibility(View.VISIBLE);
 
-                                        String[] dd = item.getUnit().split(",");
+                                        List<String> ll = new ArrayList<>();
+                                        for (int i = 0; i < item.getSize().size(); i++) {
+                                            ll.add(item.getSize().get(i).getSize());
+                                        }
 
-                                        List<String> clist = Arrays.asList(dd);
                                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity,
-                                                android.R.layout.simple_list_item_1, clist);
+                                                android.R.layout.simple_list_item_1, ll);
 
-                                        color.setAdapter(adapter);
+                                        size.setAdapter(adapter);
+
+                                        size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                String clr = item.getSize().get(position).getColor();
+                                                List<String> list = new ArrayList<>(Arrays.asList(clr.split(",")));
+                                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity,
+                                                        android.R.layout.simple_list_item_1, list);
+
+                                                color.setAdapter(adapter);
+                                            }
+
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> parent) {
+
+                                            }
+                                        });
 
                                     } else {
                                         color.setVisibility(View.GONE);
+                                        size.setVisibility(View.GONE);
                                         colortitle.setVisibility(View.GONE);
+                                        sizetitle.setVisibility(View.GONE);
                                     }
 
                                     stepperTouch.setMinValue(1);
@@ -469,15 +519,16 @@ public class SingleProduct extends Fragment {
                                             String versionName = BuildConfig.VERSION_NAME;
 
                                             String cl = String.valueOf(color.getSelectedItem());
+                                            String sz = String.valueOf(size.getSelectedItem());
 
-                                            Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, cl);
+                                            Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, sz, cl);
 
                                             call.enqueue(new Callback<singleProductBean>() {
                                                 @Override
                                                 public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
 
                                                     if (response.body().getStatus().equals("1")) {
-                                                        //loadCart();
+                                                        mainActivity.loadCart();
                                                         dialog.dismiss();
                                                     }
 
@@ -529,8 +580,8 @@ public class SingleProduct extends Fragment {
 
                 if (response.body().getStatus().equals("1")) {
 
-                    adapter2.setData(response.body().getBest());
-                    adapter3.setData(response.body().getToday());
+
+                    adapter2.setData(response.body().getToday());
 
                 }
                 progress.setVisibility(View.GONE);
@@ -656,7 +707,7 @@ public class SingleProduct extends Fragment {
             }
 
             holder.stock.setText(item.getStock());
-            holder.size.setText(item.getSize());
+            //holder.size.setText(item.getSize());
 
             if (dis > 0) {
 
@@ -711,7 +762,7 @@ public class SingleProduct extends Fragment {
 
                     if (uid.length() > 0) {
 
-                        final Dialog dialog = new Dialog(context);
+                        final Dialog dialog = new Dialog(mainActivity, R.style.MyDialogTheme);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setCancelable(true);
                         dialog.setContentView(R.layout.add_cart_dialog);
@@ -720,123 +771,373 @@ public class SingleProduct extends Fragment {
                         final StepperTouch stepperTouch = dialog.findViewById(R.id.stepperTouch);
                         Button add = dialog.findViewById(R.id.button8);
                         final ProgressBar progressBar = dialog.findViewById(R.id.progressBar2);
+                        TextView sizetitle = dialog.findViewById(R.id.textView5);
+                        TextView colortitle = dialog.findViewById(R.id.textView67);
+                        Spinner size = dialog.findViewById(R.id.size);
+                        Spinner color = dialog.findViewById(R.id.color);
 
+                        if (item.getSize().size() > 0) {
+                            color.setVisibility(View.VISIBLE);
+                            size.setVisibility(View.VISIBLE);
+                            sizetitle.setVisibility(View.VISIBLE);
+                            colortitle.setVisibility(View.VISIBLE);
+
+                            List<String> ll = new ArrayList<>();
+                            for (int i = 0; i < item.getSize().size(); i++) {
+                                ll.add(item.getSize().get(i).getSize());
+                            }
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity,
+                                    android.R.layout.simple_list_item_1, ll);
+
+                            size.setAdapter(adapter);
+
+                            size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    String clr = item.getSize().get(position).getColor();
+                                    List<String> list = new ArrayList<>(Arrays.asList(clr.split(",")));
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity,
+                                            android.R.layout.simple_list_item_1, list);
+
+                                    color.setAdapter(adapter);
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+
+                        } else {
+                            color.setVisibility(View.GONE);
+                            size.setVisibility(View.GONE);
+                            colortitle.setVisibility(View.GONE);
+                            sizetitle.setVisibility(View.GONE);
+                        }
 
                         stepperTouch.setMinValue(1);
                         stepperTouch.setMaxValue(99);
                         stepperTouch.setSideTapEnabled(true);
                         stepperTouch.setCount(1);
 
-                        final String finalNv = nv1;
-                        holder.add.setOnClickListener(new View.OnClickListener() {
+                        add.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
-                                String uid = SharePreferenceUtils.getInstance().getString("userId");
+                                progressBar.setVisibility(View.VISIBLE);
 
-                                if (uid.length() > 0) {
+                                Bean b = (Bean) mainActivity.getApplicationContext();
 
-                                    final Dialog dialog = new Dialog(context);
-                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                    dialog.setCancelable(true);
-                                    dialog.setContentView(R.layout.add_cart_dialog);
-                                    dialog.show();
 
-                                    final StepperTouch stepperTouch = dialog.findViewById(R.id.stepperTouch);
-                                    Button add = dialog.findViewById(R.id.button8);
-                                    final ProgressBar progressBar = dialog.findViewById(R.id.progressBar2);
-                                    TextView colortitle = dialog.findViewById(R.id.textView5);
-                                    Spinner color = dialog.findViewById(R.id.color);
+                                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                                logging.level(HttpLoggingInterceptor.Level.HEADERS);
+                                logging.level(HttpLoggingInterceptor.Level.BODY);
 
-                                    if (item.getUnit().length() > 0) {
-                                        color.setVisibility(View.VISIBLE);
-                                        colortitle.setVisibility(View.VISIBLE);
+                                OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
 
-                                        String[] dd = item.getUnit().split(",");
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(b.baseurl)
+                                        .client(client)
+                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                                        List<String> clist = Arrays.asList(dd);
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-                                                android.R.layout.simple_list_item_1, clist);
+                                Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
+                                Log.d("pid", pid);
+                                Log.d("quantity", String.valueOf(stepperTouch.getCount()));
+                                Log.d("price", nv1);
 
-                                        color.setAdapter(adapter);
+                                int versionCode = BuildConfig.VERSION_CODE;
+                                String versionName = BuildConfig.VERSION_NAME;
 
-                                    } else {
-                                        color.setVisibility(View.GONE);
-                                        colortitle.setVisibility(View.GONE);
+                                String cl = String.valueOf(color.getSelectedItem());
+                                String sz = String.valueOf(size.getSelectedItem());
+
+                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, sz, cl);
+
+                                call.enqueue(new Callback<singleProductBean>() {
+                                    @Override
+                                    public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
+
+                                        if (response.body().getStatus().equals("1")) {
+                                            mainActivity.loadCart();
+                                            dialog.dismiss();
+                                        }
+
+                                        Toast.makeText(mainActivity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                        progressBar.setVisibility(View.GONE);
+
                                     }
 
-
-                                    stepperTouch.setMinValue(1);
-                                    stepperTouch.setMaxValue(99);
-                                    stepperTouch.setSideTapEnabled(true);
-                                    stepperTouch.setCount(1);
-
-                                    add.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-
-                                            progressBar.setVisibility(View.VISIBLE);
-
-                                            Bean b = (Bean) context.getApplicationContext();
+                                    @Override
+                                    public void onFailure(Call<singleProductBean> call, Throwable t) {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
 
 
-                                            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                                            logging.level(HttpLoggingInterceptor.Level.HEADERS);
-                                            logging.level(HttpLoggingInterceptor.Level.BODY);
+                            }
+                        });
 
-                                            OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+                    } else {
+                        Toast.makeText(context, "Please login to continue", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, Login.class);
+                        context.startActivity(intent);
 
-                                            Retrofit retrofit = new Retrofit.Builder()
-                                                    .baseUrl(b.baseurl)
-                                                    .client(client)
-                                                    .addConverterFactory(ScalarsConverterFactory.create())
-                                                    .addConverterFactory(GsonConverterFactory.create())
-                                                    .build();
-                                            AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+                    }
 
-                                            Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
-                                            Log.d("pid", item.getId());
-                                            Log.d("quantity", String.valueOf(stepperTouch.getCount()));
-                                            Log.d("price", finalNv);
+                }
+            });
 
-                                            int versionCode = BuildConfig.VERSION_CODE;
-                                            String versionName = BuildConfig.VERSION_NAME;
+        }
 
-                                            String cl = String.valueOf(color.getSelectedItem());
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
 
-                                            Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), item.getId(), String.valueOf(stepperTouch.getCount()), finalNv, versionName, cl);
+        class ViewHolder extends RecyclerView.ViewHolder {
 
-                                            call.enqueue(new Callback<singleProductBean>() {
-                                                @Override
-                                                public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
+            ImageView image;
+            TextView price, title, discount, stock, newamount, size;
+            Button add;
 
-                                                    if (response.body().getStatus().equals("1")) {
-                                                        //loadCart();
-                                                        dialog.dismiss();
-                                                    }
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
 
-                                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                                                    progressBar.setVisibility(View.GONE);
-
-                                                }
-
-                                                @Override
-                                                public void onFailure(Call<singleProductBean> call, Throwable t) {
-                                                    progressBar.setVisibility(View.GONE);
-                                                }
-                                            });
+                image = itemView.findViewById(R.id.imageView4);
+                price = itemView.findViewById(R.id.textView11);
+                title = itemView.findViewById(R.id.textView12);
+                discount = itemView.findViewById(R.id.textView10);
+                add = itemView.findViewById(R.id.button5);
+                stock = itemView.findViewById(R.id.textView63);
+                newamount = itemView.findViewById(R.id.textView6);
+                size = itemView.findViewById(R.id.textView7);
 
 
-                                        }
-                                    });
+            }
+        }
+    }
 
-                                } else {
-                                    Toast.makeText(context, "Please login to continue", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(context, Login.class);
-                                    context.startActivity(intent);
+    class RelatedAdapter extends RecyclerView.Adapter<RelatedAdapter.ViewHolder> {
+
+        Context context;
+        List<Related> list = new ArrayList<>();
+
+        public RelatedAdapter(Context context, List<Related> list) {
+            this.context = context;
+            this.list = list;
+        }
+
+        public void setData(List<Related> list) {
+            this.list = list;
+            notifyDataSetChanged();
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.best_list_model3, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+            holder.setIsRecyclable(false);
+
+            final Related item = list.get(position);
+
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+            ImageLoader loader = ImageLoader.getInstance();
+            loader.displayImage(item.getImage(), holder.image, options);
+
+            float dis = Float.parseFloat(item.getDiscount());
+
+            final String nv1;
+
+            if (item.getStock().equals("In stock")) {
+                holder.add.setEnabled(true);
+            } else {
+                holder.add.setEnabled(false);
+            }
+
+            holder.stock.setText(item.getStock());
+            //holder.size.setText(item.getSize());
+
+            if (dis > 0) {
+
+                float pri = Float.parseFloat(item.getPrice());
+                float dv = (dis / 100) * pri;
+
+                float nv = pri - dv;
+
+                nv1 = String.valueOf(nv);
+
+                holder.discount.setVisibility(View.VISIBLE);
+                holder.discount.setText(item.getDiscount() + "% OFF");
+                holder.price.setText(Html.fromHtml("\u20B9 " + String.valueOf(nv)));
+                holder.newamount.setText(Html.fromHtml("<strike>\u20B9 " + item.getPrice() + "</strike>"));
+                holder.newamount.setVisibility(View.VISIBLE);
+            } else {
+
+                nv1 = item.getPrice();
+                holder.discount.setVisibility(View.GONE);
+                holder.price.setText("\u20B9 " + item.getPrice());
+                holder.newamount.setVisibility(View.GONE);
+            }
+
+
+            holder.title.setText(item.getName());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+
+                    FragmentTransaction ft4 = fm4.beginTransaction();
+                    ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    SingleProduct frag14 = new SingleProduct();
+                    Bundle b = new Bundle();
+                    b.putString("id", item.getId());
+                    b.putString("title", item.getName());
+                    frag14.setArguments(b);
+                    ft4.replace(R.id.replace, frag14);
+                    ft4.addToBackStack(null);
+                    ft4.commit();
+
+                }
+            });
+
+            holder.add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    String uid = SharePreferenceUtils.getInstance().getString("userId");
+
+                    if (uid.length() > 0) {
+
+                        final Dialog dialog = new Dialog(mainActivity, R.style.MyDialogTheme);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setCancelable(true);
+                        dialog.setContentView(R.layout.add_cart_dialog);
+                        dialog.show();
+
+                        final StepperTouch stepperTouch = dialog.findViewById(R.id.stepperTouch);
+                        Button add = dialog.findViewById(R.id.button8);
+                        final ProgressBar progressBar = dialog.findViewById(R.id.progressBar2);
+                        TextView sizetitle = dialog.findViewById(R.id.textView5);
+                        TextView colortitle = dialog.findViewById(R.id.textView67);
+                        Spinner size = dialog.findViewById(R.id.size);
+                        Spinner color = dialog.findViewById(R.id.color);
+
+                        if (item.getSize().size() > 0) {
+                            color.setVisibility(View.VISIBLE);
+                            size.setVisibility(View.VISIBLE);
+                            sizetitle.setVisibility(View.VISIBLE);
+                            colortitle.setVisibility(View.VISIBLE);
+
+                            List<String> ll = new ArrayList<>();
+                            for (int i = 0; i < item.getSize().size(); i++) {
+                                ll.add(item.getSize().get(i).getSize());
+                            }
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity,
+                                    android.R.layout.simple_list_item_1, ll);
+
+                            size.setAdapter(adapter);
+
+                            size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    String clr = item.getSize().get(position).getColor();
+                                    List<String> list = new ArrayList<>(Arrays.asList(clr.split(",")));
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity,
+                                            android.R.layout.simple_list_item_1, list);
+
+                                    color.setAdapter(adapter);
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
 
                                 }
+                            });
+
+                        } else {
+                            color.setVisibility(View.GONE);
+                            size.setVisibility(View.GONE);
+                            colortitle.setVisibility(View.GONE);
+                            sizetitle.setVisibility(View.GONE);
+                        }
+
+                        stepperTouch.setMinValue(1);
+                        stepperTouch.setMaxValue(99);
+                        stepperTouch.setSideTapEnabled(true);
+                        stepperTouch.setCount(1);
+
+                        add.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                progressBar.setVisibility(View.VISIBLE);
+
+                                Bean b = (Bean) mainActivity.getApplicationContext();
+
+
+                                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                                logging.level(HttpLoggingInterceptor.Level.HEADERS);
+                                logging.level(HttpLoggingInterceptor.Level.BODY);
+
+                                OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(b.baseurl)
+                                        .client(client)
+                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
+                                Log.d("pid", pid);
+                                Log.d("quantity", String.valueOf(stepperTouch.getCount()));
+                                Log.d("price", nv1);
+
+                                int versionCode = BuildConfig.VERSION_CODE;
+                                String versionName = BuildConfig.VERSION_NAME;
+
+                                String cl = String.valueOf(color.getSelectedItem());
+                                String sz = String.valueOf(size.getSelectedItem());
+
+                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, sz, cl);
+
+                                call.enqueue(new Callback<singleProductBean>() {
+                                    @Override
+                                    public void onResponse(Call<singleProductBean> call, Response<singleProductBean> response) {
+
+                                        if (response.body().getStatus().equals("1")) {
+                                            mainActivity.loadCart();
+                                            dialog.dismiss();
+                                        }
+
+                                        Toast.makeText(mainActivity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                        progressBar.setVisibility(View.GONE);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<singleProductBean> call, Throwable t) {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
+
 
                             }
                         });

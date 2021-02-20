@@ -116,6 +116,7 @@ public interface AllApiIneterface {
             @Part("quantity") String quantity,
             @Part("unit_price") String unit_price,
             @Part("version") String version,
+            @Part("size") String size,
             @Part("color") String color
     );
 

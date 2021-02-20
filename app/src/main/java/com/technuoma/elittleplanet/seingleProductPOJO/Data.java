@@ -33,7 +33,7 @@ public class Data {
     private String discount;
     @SerializedName("size")
     @Expose
-    private String size;
+    private List<Size> size = null;
     @SerializedName("description")
     @Expose
     private String description;
@@ -61,6 +61,9 @@ public class Data {
     @SerializedName("wishlist")
     @Expose
     private String wishlist;
+    @SerializedName("related")
+    @Expose
+    private List<Related> related = null;
     @SerializedName("status")
     @Expose
     private String status;
@@ -135,11 +138,11 @@ public class Data {
         this.discount = discount;
     }
 
-    public String getSize() {
+    public List<Size> getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(List<Size> size) {
         this.size = size;
     }
 
@@ -213,6 +216,14 @@ public class Data {
 
     public void setWishlist(String wishlist) {
         this.wishlist = wishlist;
+    }
+
+    public List<Related> getRelated() {
+        return related;
+    }
+
+    public void setRelated(List<Related> related) {
+        this.related = related;
     }
 
     public String getStatus() {

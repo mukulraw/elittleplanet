@@ -2,6 +2,9 @@ package com.technuoma.elittleplanet.productsPOJO;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.technuoma.elittleplanet.seingleProductPOJO.Size;
+
+import java.util.List;
 
 public class Datum {
     @SerializedName("id")
@@ -30,7 +33,7 @@ public class Datum {
     private String discount;
     @SerializedName("size")
     @Expose
-    private String size;
+    private List<Size> size = null;
     @SerializedName("description")
     @Expose
     private String description;
@@ -129,11 +132,11 @@ public class Datum {
         this.discount = discount;
     }
 
-    public String getSize() {
+    public List<Size> getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(List<Size> size) {
         this.size = size;
     }
 

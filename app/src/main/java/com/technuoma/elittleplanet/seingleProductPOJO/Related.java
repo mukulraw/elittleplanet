@@ -1,12 +1,11 @@
-package com.technuoma.elittleplanet.homePOJO;
+package com.technuoma.elittleplanet.seingleProductPOJO;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.technuoma.elittleplanet.seingleProductPOJO.Size;
 
 import java.util.List;
 
-public class Best {
+public class Related {
     @SerializedName("id")
     @Expose
     private String id;
@@ -61,12 +60,12 @@ public class Best {
     @SerializedName("status")
     @Expose
     private String status;
-    @SerializedName("created")
-    @Expose
-    private String created;
     @SerializedName("stock")
     @Expose
     private String stock;
+    @SerializedName("created")
+    @Expose
+    private String created;
 
     public String getId() {
         return id;
@@ -212,19 +211,19 @@ public class Best {
         this.status = status;
     }
 
-    public String getCreated() {
-        return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
-    }
-
     public String getStock() {
         return stock;
     }
 
     public void setStock(String stock) {
         this.stock = stock;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
     }
 }

@@ -247,15 +247,17 @@ public class Cart extends Fragment {
 
             //viewHolder.setIsRecyclable(false);
 
-
-            if (item.getColor().length() > 0) {
-                viewHolder.title.setText(item.getName() + " (" + item.getColor() + ")");
+            viewHolder.title.setText(item.getName());
+            if (!item.getColor().equals("null")) {
+                viewHolder.brand.setText(item.getSize() + " (" + item.getColor() + ")");
+                viewHolder.brand.setVisibility(View.VISIBLE);
             } else {
-                viewHolder.title.setText(item.getName());
+                viewHolder.brand.setText(item.getSize() + " (" + item.getColor() + ")");
+                viewHolder.brand.setVisibility(View.GONE);
             }
 
 
-            viewHolder.brand.setText(item.getBrand());
+
 
             viewHolder.quantity.setText(item.getQuantity());
 

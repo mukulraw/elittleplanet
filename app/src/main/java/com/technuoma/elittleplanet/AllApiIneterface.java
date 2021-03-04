@@ -1,6 +1,7 @@
 package com.technuoma.elittleplanet;
 
 import com.technuoma.elittleplanet.addressPOJO.addressBean;
+import com.technuoma.elittleplanet.brandPOJO.brandBean;
 import com.technuoma.elittleplanet.cartPOJO.cartBean;
 import com.technuoma.elittleplanet.checkPromoPOJO.checkPromoBean;
 import com.technuoma.elittleplanet.checkoutPOJO.checkoutBean;
@@ -14,11 +15,15 @@ import com.technuoma.elittleplanet.seingleProductPOJO.singleProductBean;
 import com.technuoma.elittleplanet.subCat1POJO.subCat1Bean;
 
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface AllApiIneterface {
+
+    @GET("elittleplanet/api/getBrands.php")
+    Call<brandBean> getBrands();
 
     @Multipart
     @POST("elittleplanet/api/getHome2.php")
@@ -51,6 +56,14 @@ public interface AllApiIneterface {
     Call<productsBean> getProducts(
             @Part("subcat2") String cat,
             @Part("location_id") String location_id
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/findPhone.php")
+    Call<productsBean> findPhone(
+            @Part("min") String min,
+            @Part("max") String max,
+            @Part("brand") String brand
     );
 
     @Multipart

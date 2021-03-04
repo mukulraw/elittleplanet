@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     Toolbar toolbar;
     DrawerLayout drawer;
     BottomNavigationView navigation;
-    TextView count, rewards, login, terms, about, address, logout, cart, orders, refer, location, wishlist, contact;
+    TextView count, rewards, login, terms, about, address, logout, cart, orders, refer, location, wishlist, contact, find;
     ImageView cart2, notification;
 
 
@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         logout = findViewById(R.id.logout);
         cart = findViewById(R.id.cart);
         notification = findViewById(R.id.imageView10);
+        find = findViewById(R.id.find);
 
         contact = findViewById(R.id.contact);
 
@@ -444,6 +445,24 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
             }
         });
+
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fm31 = getSupportFragmentManager();
+                FragmentTransaction ft31 = fm31.beginTransaction();
+                ft31.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                Find frag131 = new Find();
+                ft31.replace(R.id.replace, frag131);
+                ft31.addToBackStack(null);
+                ft31.commit();
+                drawer.closeDrawer(GravityCompat.START);
+
+
+            }
+        });
+
 
         navigation.setSelectedItemId(R.id.action_home);
 

@@ -5,6 +5,7 @@ import com.technuoma.elittleplanet.cartPOJO.cartBean;
 import com.technuoma.elittleplanet.checkPromoPOJO.checkPromoBean;
 import com.technuoma.elittleplanet.checkoutPOJO.checkoutBean;
 import com.technuoma.elittleplanet.homePOJO.homeBean;
+import com.technuoma.elittleplanet.notiPOJO.notiBeam;
 import com.technuoma.elittleplanet.orderDetailsPOJO.orderDetailsBean;
 import com.technuoma.elittleplanet.ordersPOJO.ordersBean;
 import com.technuoma.elittleplanet.productsPOJO.productsBean;
@@ -177,6 +178,12 @@ public interface AllApiIneterface {
     @Multipart
     @POST("elittleplanet/api/getCart.php")
     Call<cartBean> getCart(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/getNotification.php")
+    Call<notiBeam> getNotification(
             @Part("user_id") String user_id
     );
 

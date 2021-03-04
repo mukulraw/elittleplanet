@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,6 +48,7 @@ public class OrderDetails extends AppCompatActivity {
     CategoryAdapter adapter;
     String oid, status;
     FloatingActionButton track;
+    WebView web;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class OrderDetails extends AppCompatActivity {
         grid = findViewById(R.id.grid);
         progress = findViewById(R.id.progressBar2);
         track = findViewById(R.id.floatingActionButton);
+        web = findViewById(R.id.web);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -98,6 +102,9 @@ public class OrderDetails extends AppCompatActivity {
 
             }
         });
+
+        web.loadUrl("https://technuoma.com/elittleplanet/admin/app_print.php?id=" + oid);
+        web.setWebViewClient(new WebViewClient());
 
 
     }

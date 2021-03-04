@@ -64,6 +64,7 @@ public class Cart extends Fragment {
     String client, txn;
 
     MainActivity mainActivity;
+    ImageView nodata;
 
     @Nullable
     @Override
@@ -80,6 +81,7 @@ public class Cart extends Fragment {
         bproceed = view.findViewById(R.id.textView10);
         grid = view.findViewById(R.id.grid);
         clear = view.findViewById(R.id.textView12);
+        nodata = view.findViewById(R.id.imageView5);
 
         adapter = new CartAdapter(list, mainActivity);
 
@@ -184,7 +186,7 @@ public class Cart extends Fragment {
 
                 if (response.body().getData().size() > 0) {
 
-
+                    nodata.setVisibility(View.GONE);
                     adapter.setgrid(response.body().getData());
 
                     amm = Float.parseFloat(response.body().getTotal());
@@ -193,11 +195,14 @@ public class Cart extends Fragment {
                     btotal.setText("Total: \u20B9 " + response.body().getTotal());
 
                     bottom.setVisibility(View.VISIBLE);
+                    clear.setVisibility(View.VISIBLE);
                 } else {
+                    nodata.setVisibility(View.VISIBLE);
                     adapter.setgrid(response.body().getData());
                     bottom.setVisibility(View.GONE);
+                    clear.setVisibility(View.GONE);
                     Toast.makeText(mainActivity, "Cart is empty", Toast.LENGTH_SHORT).show();
-                    mainActivity.navigation.setSelectedItemId(R.id.action_home);
+                    //mainActivity.navigation.setSelectedItemId(R.id.action_home);
                 }
 
                 bar.setVisibility(View.GONE);

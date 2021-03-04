@@ -1,40 +1,32 @@
 package com.technuoma.elittleplanet;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class Contact extends AppCompatActivity {
+public class Contact extends Fragment {
 
     TextView whatsapp;
     Toolbar toolbar;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_contact, container, false);
 
-        whatsapp = findViewById(R.id.textView7);
-        toolbar = findViewById(R.id.toolbar5);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle("Contact Us");
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-
-        });
+        whatsapp = view.findViewById(R.id.textView7);
+        toolbar = view.findViewById(R.id.toolbar5);
 
         whatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +43,7 @@ public class Contact extends AppCompatActivity {
             }
         });
 
-
+        return view;
     }
+
 }

@@ -98,16 +98,13 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     DrawerLayout drawer;
     BottomNavigationView navigation;
     TextView count, rewards, login, terms, about, address, logout, cart, orders, refer, location, wishlist, contact;
-    ImageView cart2;
-
+    ImageView cart2, notification;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
 
         toolbar = findViewById(R.id.toolbar);
@@ -125,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         address = findViewById(R.id.address);
         logout = findViewById(R.id.logout);
         cart = findViewById(R.id.cart);
+        notification = findViewById(R.id.imageView10);
 
         contact = findViewById(R.id.contact);
 
@@ -185,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
                         FragmentTransaction ft1 = fm1.beginTransaction();
                         ft1.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        Categories frag11 = new Categories();
+                        Contact frag11 = new Contact();
                         ft1.replace(R.id.replace, frag11);
                         //ft.addToBackStack(null);
                         ft1.commit();
@@ -237,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
                         FragmentTransaction ft31 = fm31.beginTransaction();
                         ft31.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        Orders frag131 = new Orders();
+                        Profile frag131 = new Profile();
                         ft31.replace(R.id.replace, frag131);
                         //ft.addToBackStack(null);
                         ft31.commit();
@@ -263,6 +261,15 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
             }
         });
 
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Notifications.class);
+                startActivity(intent);
+            }
+        });
+
+
         cart2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -283,8 +290,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, Contact.class);
-                startActivity(intent);
+                navigation.setSelectedItemId(R.id.action_search);
 
             }
         });
@@ -426,13 +432,15 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
             @Override
             public void onClick(View view) {
 
-                if (uid.length() > 0) {
-                    navigation.setSelectedItemId(R.id.action_orders);
-                } else {
-                    Toast.makeText(MainActivity.this, "Please login to continue", Toast.LENGTH_SHORT).show();
-                }
-
+                FragmentManager fm31 = getSupportFragmentManager();
+                FragmentTransaction ft31 = fm31.beginTransaction();
+                ft31.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                Orders frag131 = new Orders();
+                ft31.replace(R.id.replace, frag131);
+                ft31.addToBackStack(null);
+                ft31.commit();
                 drawer.closeDrawer(GravityCompat.START);
+
 
             }
         });
@@ -595,8 +603,6 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         });
 
     }
-
-
 
 
 }

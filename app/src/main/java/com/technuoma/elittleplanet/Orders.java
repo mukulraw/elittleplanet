@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class Orders extends Fragment {
     List<Datum> list;
     GridLayoutManager manager;
     MainActivity mainActivity;
+    ImageView nodata;
 
     @Nullable
     @Override
@@ -54,6 +56,7 @@ public class Orders extends Fragment {
 
         progress = view.findViewById(R.id.progressBar3);
         grid = view.findViewById(R.id.grid);
+        nodata = view.findViewById(R.id.imageView5);
 
         adapter = new OrdersAdapter(list, mainActivity);
 
@@ -95,10 +98,11 @@ public class Orders extends Fragment {
 
                 if (response.body().getData().size() > 0) {
 
-
+                    nodata.setVisibility(View.GONE);
                     adapter.setgrid(response.body().getData());
 
                 } else {
+                    nodata.setVisibility(View.VISIBLE);
                     adapter.setgrid(response.body().getData());
                     //finish();
                     Toast.makeText(mainActivity, "No order found", Toast.LENGTH_SHORT).show();

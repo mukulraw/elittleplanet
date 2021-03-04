@@ -11,9 +11,9 @@
         />
 
     <item
-        android:title="CATEGORIES"
+        android:title="CONTACT US"
         app:showAsAction="always"
-        android:icon="@drawable/ic_list"
+        android:icon="@drawable/ic_phone_contact"
         android:id="@+id/action_search"
         android:enabled="true"
         />
@@ -35,9 +35,9 @@
         />
 
     <item
-        android:title="ORDERS"
+        android:title="PROFILE"
         app:showAsAction="always"
-        android:icon="@drawable/ic_order"
+        android:icon="@drawable/ic_user"
         android:id="@+id/action_orders"
         android:enabled="true"
         />

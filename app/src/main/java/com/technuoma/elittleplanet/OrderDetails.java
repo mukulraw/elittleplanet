@@ -186,6 +186,14 @@ public class OrderDetails extends AppCompatActivity {
             holder.title.setText(item.getName());
             holder.price.setText("Price - " + item.getPrice());
 
+            if (!item.getColor().equals("null")) {
+                holder.size.setText(item.getSize() + " (" + item.getColor() + ")");
+                holder.size.setVisibility(View.VISIBLE);
+            } else {
+                holder.size.setText(item.getSize() + " (" + item.getColor() + ")");
+                holder.size.setVisibility(View.GONE);
+            }
+
 
         }
 
@@ -197,7 +205,7 @@ public class OrderDetails extends AppCompatActivity {
         class ViewHolder extends RecyclerView.ViewHolder {
 
             ImageView image;
-            TextView quantity, title, price;
+            TextView quantity, title, price, size;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -206,6 +214,7 @@ public class OrderDetails extends AppCompatActivity {
                 title = itemView.findViewById(R.id.textView17);
                 quantity = itemView.findViewById(R.id.textView18);
                 price = itemView.findViewById(R.id.textView19);
+                size = itemView.findViewById(R.id.textView70);
 
 
             }

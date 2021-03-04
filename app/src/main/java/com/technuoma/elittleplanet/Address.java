@@ -1,6 +1,7 @@
 package com.technuoma.elittleplanet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.technuoma.elittleplanet.addressPOJO.Datum;
 import com.technuoma.elittleplanet.addressPOJO.addressBean;
 
@@ -44,6 +46,7 @@ public class Address extends AppCompatActivity {
     GridLayoutManager manager;
 
     RecyclerView grid;
+    FloatingActionButton add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class Address extends AppCompatActivity {
         progress = findViewById(R.id.progressBar3);
         grid = findViewById(R.id.grid);
         setSupportActionBar(toolbar);
+        add = findViewById(R.id.floatingActionButton);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
@@ -79,6 +83,15 @@ public class Address extends AppCompatActivity {
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager);
 
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Address.this, AddAddress.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -218,6 +231,18 @@ public class Address extends AppCompatActivity {
                         }
                     });
 
+                }
+            });
+
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, EditAddress.class);
+                    intent.putExtra("id", item.getId());
+                    intent.putExtra("name", item.getName());
+                    intent.putExtra("house", item.getHouse());
+                    intent.putExtra("pin", item.getPin());
+                    startActivity(intent);
                 }
             });
 

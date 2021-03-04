@@ -121,6 +121,28 @@ public interface AllApiIneterface {
     );
 
     @Multipart
+    @POST("elittleplanet/api/addAddress.php")
+    Call<singleProductBean> addAddress(
+            @Part("user_id") String user_id,
+            @Part("house") String house,
+            @Part("area") String area,
+            @Part("city") String city,
+            @Part("pin") String pin,
+            @Part("name") String name
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/editAddress.php")
+    Call<singleProductBean> editAddress(
+            @Part("id") String id,
+            @Part("house") String house,
+            @Part("area") String area,
+            @Part("city") String city,
+            @Part("pin") String pin,
+            @Part("name") String name
+    );
+
+    @Multipart
     @POST("elittleplanet/api/updateCart.php")
     Call<singleProductBean> updateCart(
             @Part("id") String id,

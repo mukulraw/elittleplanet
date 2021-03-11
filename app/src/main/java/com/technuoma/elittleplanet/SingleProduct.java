@@ -184,11 +184,11 @@ public class SingleProduct extends Fragment {
         lifetitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (life.getVisibility() == View.GONE) {
-                    life.setVisibility(View.VISIBLE);
-                } else {
-                    life.setVisibility(View.GONE);
-                }
+
+                Intent intent = new Intent(mainActivity, Ratings.class);
+                intent.putExtra("id", id);
+                mainActivity.startActivity(intent);
+
             }
         });
 

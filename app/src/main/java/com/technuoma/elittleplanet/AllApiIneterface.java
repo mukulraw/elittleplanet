@@ -10,6 +10,7 @@ import com.technuoma.elittleplanet.notiPOJO.notiBeam;
 import com.technuoma.elittleplanet.orderDetailsPOJO.orderDetailsBean;
 import com.technuoma.elittleplanet.ordersPOJO.ordersBean;
 import com.technuoma.elittleplanet.productsPOJO.productsBean;
+import com.technuoma.elittleplanet.ratingsPOJO.ratingsBean;
 import com.technuoma.elittleplanet.searchPOJO.searchBean;
 import com.technuoma.elittleplanet.seingleProductPOJO.singleProductBean;
 import com.technuoma.elittleplanet.subCat1POJO.subCat1Bean;
@@ -255,6 +256,28 @@ public interface AllApiIneterface {
     @Multipart
     @POST("elittleplanet/api/getWishlist.php")
     Call<orderDetailsBean> getWishlist(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/getRating.php")
+    Call<ratingsBean> getRating(
+            @Part("product_id") String product_id
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/checkPurchase.php")
+    Call<ratingsBean> checkPurchase(
+            @Part("product_id") String product_id,
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/addRating.php")
+    Call<ratingsBean> addRating(
+            @Part("product_id") String product_id,
+            @Part("rating") String rating,
+            @Part("review") String review,
             @Part("user_id") String user_id
     );
 

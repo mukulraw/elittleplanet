@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Notifications"></activity>
+        <activity android:name=".Ratings"></activity>
+        <activity android:name=".Notifications" />
         <activity android:name=".EditAddress" />
         <activity android:name=".AddAddress" />
         <activity android:name=".OfferZone" />

@@ -58,12 +58,12 @@ public class result extends Fragment {
     BestAdapter adapter;
     MainActivity mainActivity;
 
-    String min, max, brand;
+    String min, max, brand, ram, internal_storage, network, os, camera, battery;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.product_layout, container, false);
+        View view = inflater.inflate(R.layout.result_layout, container, false);
         mainActivity = (MainActivity) getActivity();
 
         list = new ArrayList<>();
@@ -71,6 +71,12 @@ public class result extends Fragment {
         min = getArguments().getString("min");
         max = getArguments().getString("max");
         brand = getArguments().getString("brand");
+        ram = getArguments().getString("ram");
+        internal_storage = getArguments().getString("internal_storage");
+        network = getArguments().getString("network");
+        os = getArguments().getString("os");
+        camera = getArguments().getString("camera");
+        battery = getArguments().getString("battery");
 
         grid = view.findViewById(R.id.grid);
         progress = view.findViewById(R.id.progress);
@@ -99,7 +105,17 @@ public class result extends Fragment {
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Call<productsBean> call = cr.findPhone(min, max, brand);
+        Call<productsBean> call = cr.findPhone(
+                min,
+                max,
+                brand,
+                ram,
+                internal_storage,
+                network,
+                os,
+                camera,
+                battery
+        );
         call.enqueue(new Callback<productsBean>() {
             @Override
             public void onResponse(Call<productsBean> call, Response<productsBean> response) {

@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.technuoma.elittleplanet.cartPOJO.Datum;
@@ -50,6 +51,7 @@ public class Cart extends Fragment {
     TextView btotal, bproceed, clear;
 
     float amm = 0;
+    float del = 0;
 
     View bottom;
 
@@ -141,6 +143,7 @@ public class Cart extends Fragment {
                 if (amm > 0) {
                     Intent intent = new Intent(mainActivity, Checkout.class);
                     intent.putExtra("amount", String.valueOf(amm));
+                    intent.putExtra("del", String.valueOf(del));
                     startActivity(intent);
                 } else {
                     Toast.makeText(mainActivity, "Invalid amount", Toast.LENGTH_SHORT).show();
@@ -191,6 +194,7 @@ public class Cart extends Fragment {
 
                     amm = Float.parseFloat(response.body().getTotal());
 
+                    del = Float.parseFloat(response.body().getDelcharges());
 
                     btotal.setText("Total: \u20B9 " + response.body().getTotal());
 

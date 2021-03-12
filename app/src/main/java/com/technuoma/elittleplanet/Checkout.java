@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.razorpay.PaymentResultListener;
 import com.technuoma.elittleplanet.addressPOJO.Datum;
 import com.technuoma.elittleplanet.addressPOJO.addressBean;
@@ -63,7 +64,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
     String paymode;
     RadioGroup group;
     String oid;
-    TextView date;
+    TextView date, delivery;
     TextView amount, grand;
     String dd = "";
     List<String> ts;
@@ -74,6 +75,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
     List<Datum> adlist;
 
     String isnew = "1";
+    String del;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         adlist = new ArrayList<>();
 
         amm = getIntent().getStringExtra("amount");
+        del = getIntent().getStringExtra("del");
 
         toolbar = findViewById(R.id.toolbar4);
         name = findViewById(R.id.editText2);
@@ -105,6 +108,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         grand = findViewById(R.id.textView51);
         promo = findViewById(R.id.editText8);
         apply = findViewById(R.id.button9);
+        delivery = findViewById(R.id.textView50);
 
 
         setSupportActionBar(toolbar);
@@ -126,9 +130,10 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
         amount.setText("₹ " + amm);
 
-        float gt = Float.parseFloat(amm) + 0;
+        float gt = Float.parseFloat(amm) + Float.parseFloat(del);
 
         grand.setText("₹ " + gt);
+        delivery.setText("₹ " + del);
 
         gtotal = String.valueOf(gt);
 
@@ -459,6 +464,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                                                     SharePreferenceUtils.getInstance().getString("lng"),
                                                     gtotal,
                                                     oid,
+                                                    del,
                                                     n,
                                                     adr,
                                                     paymode,
@@ -642,6 +648,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     SharePreferenceUtils.getInstance().getString("lng"),
                     gtotal,
                     oid,
+                    del,
                     n,
                     adr,
                     "online",
@@ -882,6 +889,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     SharePreferenceUtils.getInstance().getString("lng"),
                     gtotal,
                     s,
+                    del,
                     n,
                     adr,
                     "online",

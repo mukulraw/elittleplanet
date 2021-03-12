@@ -5,6 +5,7 @@ import com.technuoma.elittleplanet.brandPOJO.brandBean;
 import com.technuoma.elittleplanet.cartPOJO.cartBean;
 import com.technuoma.elittleplanet.checkPromoPOJO.checkPromoBean;
 import com.technuoma.elittleplanet.checkoutPOJO.checkoutBean;
+import com.technuoma.elittleplanet.filtersPOJO.filtersBean;
 import com.technuoma.elittleplanet.homePOJO.homeBean;
 import com.technuoma.elittleplanet.notiPOJO.notiBeam;
 import com.technuoma.elittleplanet.orderDetailsPOJO.orderDetailsBean;
@@ -25,6 +26,9 @@ public interface AllApiIneterface {
 
     @GET("elittleplanet/api/getBrands.php")
     Call<brandBean> getBrands();
+
+    @GET("elittleplanet/api/getFilters.php")
+    Call<filtersBean> getFilters();
 
     @Multipart
     @POST("elittleplanet/api/getHome2.php")
@@ -64,7 +68,13 @@ public interface AllApiIneterface {
     Call<productsBean> findPhone(
             @Part("min") String min,
             @Part("max") String max,
-            @Part("brand") String brand
+            @Part("brand") String brand,
+            @Part("ram") String ram,
+            @Part("internal_storage") String internal_storage,
+            @Part("network") String network,
+            @Part("os") String os,
+            @Part("camera") String camera,
+            @Part("battery") String battery
     );
 
     @Multipart
@@ -234,6 +244,7 @@ public interface AllApiIneterface {
             @Part("lng") String lng,
             @Part("amount") String amount,
             @Part("txn") String txn,
+            @Part("del_charges") String del_charges,
             @Part("name") String name,
             @Part("address") String address,
             @Part("pay_mode") String pay_mode,

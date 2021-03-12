@@ -202,7 +202,10 @@ public interface AllApiIneterface {
     @Multipart
     @POST("elittleplanet/api/getCart.php")
     Call<cartBean> getCart(
-            @Part("user_id") String user_id
+            @Part("user_id") String user_id,
+            @Part("location") String location,
+            @Part("latitude") String latitude,
+            @Part("longitude") String longitude
     );
 
     @Multipart

@@ -552,7 +552,12 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
             AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-            Call<cartBean> call2 = cr.getCart(SharePreferenceUtils.getInstance().getString("userId"));
+            Call<cartBean> call2 = cr.getCart(
+                    SharePreferenceUtils.getInstance().getString("userId"),
+                    SharePreferenceUtils.getInstance().getString("location"),
+                    SharePreferenceUtils.getInstance().getString("lat"),
+                    SharePreferenceUtils.getInstance().getString("lng")
+            );
             call2.enqueue(new Callback<cartBean>() {
                 @Override
                 public void onResponse(Call<cartBean> call, Response<cartBean> response) {

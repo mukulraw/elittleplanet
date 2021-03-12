@@ -182,7 +182,13 @@ public class Cart extends Fragment {
         Log.d("userid", SharePreferenceUtils.getInstance().getString("userId"));
 
 
-        Call<cartBean> call = cr.getCart(SharePreferenceUtils.getInstance().getString("userId"));
+        Call<cartBean> call = cr.getCart(
+                SharePreferenceUtils.getInstance().getString("userId"),
+                SharePreferenceUtils.getInstance().getString("location"),
+                SharePreferenceUtils.getInstance().getString("lat"),
+                SharePreferenceUtils.getInstance().getString("lng")
+
+        );
         call.enqueue(new Callback<cartBean>() {
             @Override
             public void onResponse(Call<cartBean> call, Response<cartBean> response) {

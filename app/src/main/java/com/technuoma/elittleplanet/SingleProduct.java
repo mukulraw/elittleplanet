@@ -41,6 +41,7 @@ import com.technuoma.elittleplanet.homePOJO.Best;
 import com.technuoma.elittleplanet.homePOJO.homeBean;
 import com.technuoma.elittleplanet.seingleProductPOJO.Data;
 import com.technuoma.elittleplanet.seingleProductPOJO.Related;
+import com.technuoma.elittleplanet.seingleProductPOJO.Size;
 import com.technuoma.elittleplanet.seingleProductPOJO.singleProductBean;
 
 import java.util.ArrayList;
@@ -93,6 +94,12 @@ public class SingleProduct extends Fragment {
 
     MainActivity mainActivity;
 
+    RecyclerView variants, colors;
+
+    String siz = "", col = "";
+
+    TextView sizetitle, colorstitle;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -105,6 +112,10 @@ public class SingleProduct extends Fragment {
         id = getArguments().getString("id");
         name = getArguments().getString("title");
 
+        sizetitle = view.findViewById(R.id.sizetitle);
+        colorstitle = view.findViewById(R.id.colorstitle);
+        variants = view.findViewById(R.id.variants);
+        colors = view.findViewById(R.id.colors);
         loved = view.findViewById(R.id.loved);
         relatedtitle = view.findViewById(R.id.relatedtitle);
         save = view.findViewById(R.id.save);
@@ -254,6 +265,28 @@ public class SingleProduct extends Fragment {
                         adapter3.setData(item.getRelated());
                         loved.setVisibility(View.GONE);
                         relatedtitle.setVisibility(View.GONE);
+                    }
+
+                    if (item.getSize().size() > 0) {
+
+                        variants.setVisibility(View.VISIBLE);
+                        sizetitle.setVisibility(View.VISIBLE);
+                        colors.setVisibility(View.VISIBLE);
+                        colorstitle.setVisibility(View.VISIBLE);
+
+
+                        SizeAdapter adapter1 = new SizeAdapter(mainActivity, item.getSize());
+                        LinearLayoutManager manager = new LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false);
+                        variants.setAdapter(adapter1);
+                        variants.setLayoutManager(manager);
+
+                        adapter1.selectPos(0);
+
+                    } else {
+                        variants.setVisibility(View.GONE);
+                        sizetitle.setVisibility(View.GONE);
+                        colors.setVisibility(View.GONE);
+                        colorstitle.setVisibility(View.GONE);
                     }
 
 
@@ -442,13 +475,18 @@ public class SingleProduct extends Fragment {
                                     Spinner size = dialog.findViewById(R.id.size);
                                     Spinner color = dialog.findViewById(R.id.color);
 
-                                    if (item.getSize().size() > 0) {
+                                    color.setVisibility(View.GONE);
+                                    size.setVisibility(View.GONE);
+                                    colortitle.setVisibility(View.GONE);
+                                    sizetitle.setVisibility(View.GONE);
+
+                                    /*if (item.getSize().size() > 0) {
                                         color.setVisibility(View.VISIBLE);
                                         size.setVisibility(View.VISIBLE);
                                         sizetitle.setVisibility(View.VISIBLE);
                                         colortitle.setVisibility(View.VISIBLE);
 
-                                        List<String> ll = new ArrayList<>();
+                                        *//*List<String> ll = new ArrayList<>();
                                         for (int i = 0; i < item.getSize().size(); i++) {
                                             ll.add(item.getSize().get(i).getSize());
                                         }
@@ -473,14 +511,14 @@ public class SingleProduct extends Fragment {
                                             public void onNothingSelected(AdapterView<?> parent) {
 
                                             }
-                                        });
+                                        });*//*
 
                                     } else {
                                         color.setVisibility(View.GONE);
                                         size.setVisibility(View.GONE);
                                         colortitle.setVisibility(View.GONE);
                                         sizetitle.setVisibility(View.GONE);
-                                    }
+                                    }*/
 
                                     stepperTouch.setMinValue(1);
                                     stepperTouch.setMaxValue(99);
@@ -518,10 +556,10 @@ public class SingleProduct extends Fragment {
                                             int versionCode = BuildConfig.VERSION_CODE;
                                             String versionName = BuildConfig.VERSION_NAME;
 
-                                            String cl = String.valueOf(color.getSelectedItem());
-                                            String sz = String.valueOf(size.getSelectedItem());
+                                            /*String cl = String.valueOf(color.getSelectedItem());
+                                            String sz = String.valueOf(size.getSelectedItem());*/
 
-                                            Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, sz, cl);
+                                            Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, siz, col);
 
                                             call.enqueue(new Callback<singleProductBean>() {
                                                 @Override
@@ -593,6 +631,154 @@ public class SingleProduct extends Fragment {
             }
         });
 
+    }
+
+    class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
+        Context context;
+        List<Size> list = new ArrayList<>();
+        int pos = -1;
+
+        public SizeAdapter(Context context, List<Size> list) {
+            this.context = context;
+            this.list = list;
+        }
+
+        public void selectPos(int pos) {
+            this.pos = pos;
+            notifyDataSetChanged();
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.tags, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+            holder.setIsRecyclable(false);
+            Size item = list.get(position);
+
+            holder.tag.setText(item.getSize());
+
+            if (position == pos) {
+
+                siz = item.getSize();
+
+                holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.accent_back_round2));
+                holder.tag.setTextColor(Color.BLACK);
+
+                String clr = item.getColor();
+                String[] arr = clr.split(",");
+
+                ColorAdapter adapter = new ColorAdapter(context, Arrays.asList(arr));
+                LinearLayoutManager manager = new LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false);
+                colors.setAdapter(adapter);
+                colors.setLayoutManager(manager);
+
+                adapter.selectPos(0);
+
+            } else {
+                holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.dotted_back_stroke));
+                holder.tag.setTextColor(Color.LTGRAY);
+            }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectPos(position);
+                }
+            });
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            TextView tag;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                tag = itemView.findViewById(R.id.tag);
+
+            }
+        }
+    }
+
+    class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> {
+        Context context;
+        List<String> list = new ArrayList<>();
+        int pos = -1;
+
+        public ColorAdapter(Context context, List<String> list) {
+            this.context = context;
+            this.list = list;
+        }
+
+        public void selectPos(int pos) {
+            this.pos = pos;
+            notifyDataSetChanged();
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.tags, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+            holder.setIsRecyclable(false);
+            String item = list.get(position);
+
+            holder.tag.setText(item);
+
+            if (position == pos) {
+                col = item;
+
+                holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.accent_back_round2));
+                holder.tag.setTextColor(Color.BLACK);
+            } else {
+                holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.dotted_back_stroke));
+                holder.tag.setTextColor(Color.LTGRAY);
+            }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectPos(position);
+                }
+            });
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            TextView tag;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                tag = itemView.findViewById(R.id.tag);
+
+            }
+        }
     }
 
     class BannerAdapter extends FragmentStatePagerAdapter {

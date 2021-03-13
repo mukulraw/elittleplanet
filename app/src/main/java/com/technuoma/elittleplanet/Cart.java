@@ -263,7 +263,7 @@ public class Cart extends Fragment {
             //viewHolder.setIsRecyclable(false);
 
             viewHolder.title.setText(item.getName());
-            if (!item.getColor().equals("null")) {
+            if (!item.getColor().equals("")) {
                 viewHolder.brand.setText(item.getSize() + " (" + item.getColor() + ")");
                 viewHolder.brand.setVisibility(View.VISIBLE);
             } else {

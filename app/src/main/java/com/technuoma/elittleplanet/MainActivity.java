@@ -315,8 +315,14 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
             public void onClick(View view) {
 
                 if (uid.length() > 0) {
-                    Intent intent = new Intent(MainActivity.this, Wishlist.class);
-                    startActivity(intent);
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    Wishlist frag1 = new Wishlist();
+                    ft.replace(R.id.replace, frag1);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                    //drawer.closeDrawer(GravityCompat.START);
                 } else {
                     Toast.makeText(MainActivity.this, "Please login to continue", Toast.LENGTH_SHORT).show();
                 }

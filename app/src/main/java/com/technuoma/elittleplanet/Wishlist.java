@@ -1,8 +1,10 @@
 package com.technuoma.elittleplanet;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -37,26 +39,31 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class Wishlist extends AppCompatActivity {
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
+public class Wishlist extends Fragment {
 
     Toolbar toolbar;
     RecyclerView grid;
     ProgressBar progress;
     List<Datum> list;
     CategoryAdapter adapter;
+    MainActivity mainActivity;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wishlist);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_wishlist, container, false);
+
+        mainActivity = (MainActivity) getActivity();
 
         list = new ArrayList<>();
 
-        toolbar = findViewById(R.id.toolbar2);
-        grid = findViewById(R.id.grid);
-        progress = findViewById(R.id.progressBar2);
+        toolbar = view.findViewById(R.id.toolbar2);
+        grid = view.findViewById(R.id.grid);
+        progress = view.findViewById(R.id.progressBar2);
 
-        setSupportActionBar(toolbar);
+        /*setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle("My Wishlist");
@@ -67,23 +74,25 @@ public class Wishlist extends AppCompatActivity {
                 finish();
             }
 
-        });
+        });*/
 
 
-        adapter = new CategoryAdapter(this, list);
-        GridLayoutManager manager = new GridLayoutManager(this, 1);
+        adapter = new CategoryAdapter(mainActivity, list);
+        GridLayoutManager manager = new GridLayoutManager(mainActivity, 1);
 
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager);
-
+        return view;
     }
+
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         progress.setVisibility(View.VISIBLE);
 
-        Bean b = (Bean) getApplicationContext();
+        Bean b = (Bean) mainActivity.getApplicationContext();
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.level(HttpLoggingInterceptor.Level.HEADERS);
@@ -164,7 +173,7 @@ public class Wishlist extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    FragmentManager fm4 = getSupportFragmentManager();
+                    FragmentManager fm4 = mainActivity.getSupportFragmentManager();
 
                     FragmentTransaction ft4 = fm4.beginTransaction();
                     ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

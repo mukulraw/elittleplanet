@@ -20,13 +20,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Ratings"></activity>
-        <activity android:name=".Notifications" />
-        <activity android:name=".EditAddress" />
-        <activity android:name=".AddAddress" />
-        <activity android:name=".OfferZone" />
-        <activity android:name=".Wishlist" />
-        <activity android:name=".Register" />
+        <activity android:name=".Ratings"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Notifications"
+            android:screenOrientation="portrait" />
+        <activity android:name=".EditAddress"
+            android:screenOrientation="portrait" />
+        <activity android:name=".AddAddress"
+            android:screenOrientation="portrait" />
+        <activity android:name=".OfferZone"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Register"
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -58,26 +63,9 @@
         <activity
             android:name=".Location"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Search"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Orders"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Checkout"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Cart"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SingleProduct"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Products"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SubCat"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Category"

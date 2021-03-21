@@ -27,9 +27,9 @@
         android:layout_marginBottom="8dp"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="CHECKOUT"
+        android:text="PROCEED TO PAYMENT"
         android:textColor="#ffffff"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -92,7 +92,7 @@ public class SingleProduct extends Fragment {
     ImageButton cart1;
     TextView count;
 
-    MainActivity mainActivity;
+    static MainActivity mainActivity;
 
     RecyclerView variants, colors;
 
@@ -798,7 +798,7 @@ public class SingleProduct extends Fragment {
         @Override
         public Fragment getItem(int position) {
             page frag = new page();
-            frag.setData(blist.get(position));
+            frag.setData(blist.get(position), blist, position);
             return frag;
         }
 
@@ -813,11 +813,14 @@ public class SingleProduct extends Fragment {
     public static class page extends Fragment {
 
         String url, tit, cid = "", image2;
-
+        int pos;
         ImageView image;
+        List<String> blist = new ArrayList<>();
 
-        void setData(String url) {
+        void setData(String url, List<String> blist, int pos) {
             this.url = url;
+            this.blist = blist;
+            this.pos = pos;
         }
 
         @Nullable
@@ -834,19 +837,24 @@ public class SingleProduct extends Fragment {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Dialog dialog = new Dialog(getActivity(), android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setCancelable(true);
-                    dialog.setContentView(R.layout.zoom);
-                    dialog.show();
-                    ZoomageView zoom = dialog.findViewById(R.id.zoom);
-                    loader.displayImage(url, zoom, options);
+                    FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+
+                    FragmentTransaction ft4 = fm4.beginTransaction();
+                    ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    zoomFragment frag14 = new zoomFragment();
+                    frag14.setData(blist, pos);
+                    ft4.replace(R.id.replace, frag14);
+                    ft4.addToBackStack(null);
+                    ft4.commit();
                 }
             });
 
             return view;
         }
     }
+
+
+
 
     class BestAdapter extends RecyclerView.Adapter<BestAdapter.ViewHolder> {
 

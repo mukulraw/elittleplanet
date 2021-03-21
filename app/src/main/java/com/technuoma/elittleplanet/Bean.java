@@ -3,6 +3,7 @@ package com.technuoma.elittleplanet;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.FacebookSdk;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -21,7 +22,6 @@ public class Bean extends Application {
         super.onCreate();
 
         context = getApplicationContext();
-
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
 
     }

@@ -3,6 +3,7 @@ package com.technuoma.elittleplanet;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.technuoma.elittleplanet.filtersPOJO.O;
 import com.technuoma.elittleplanet.orderDetailsPOJO.Datum;
 import com.technuoma.elittleplanet.orderDetailsPOJO.orderDetailsBean;
 
@@ -49,6 +51,7 @@ public class OrderDetails extends AppCompatActivity {
     String oid, status;
     FloatingActionButton track;
     WebView web;
+    TextView download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class OrderDetails extends AppCompatActivity {
         progress = findViewById(R.id.progressBar2);
         track = findViewById(R.id.floatingActionButton);
         web = findViewById(R.id.web);
+        download = findViewById(R.id.download);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -106,6 +110,15 @@ public class OrderDetails extends AppCompatActivity {
         web.loadUrl("https://technuoma.com/elittleplanet/admin/app_print.php?id=" + oid);
         web.setWebViewClient(new WebViewClient());
 
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://technuoma.com/elittleplanet/admin/print_view2.php?id=" + oid)));
+
+            }
+        });
 
     }
 

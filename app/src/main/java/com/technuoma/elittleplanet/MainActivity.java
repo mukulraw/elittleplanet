@@ -46,6 +46,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -432,6 +433,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
                         .addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                LoginManager.getInstance().logOut();
                                 SharePreferenceUtils.getInstance().deletePref();
 
                                 Intent intent = new Intent(MainActivity.this, Spalsh.class);

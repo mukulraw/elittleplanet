@@ -473,22 +473,23 @@ public class productList extends Fragment {
 
             holder.stock.setText(item.getStock());
 
-
-            float dis = Float.parseFloat(item.getDiscount());
+            float pri = Float.parseFloat(item.getPrice());
+            float dv1 = Float.parseFloat(item.getDiscount());
+            float dv = pri - dv1;
+            float dis = (dv/ pri) * 100;
             String nv1 = null;
 
 
             if (dis > 0) {
 
-                float pri = Float.parseFloat(item.getPrice());
-                float dv = (dis / 100) * pri;
+                //float dv = (dis / 100) * pri;
 
                 float nv = pri - dv;
 
                 nv1 = String.valueOf(nv);
 
                 holder.discount.setVisibility(View.VISIBLE);
-                holder.discount.setText(item.getDiscount() + "% OFF");
+                holder.discount.setText(Math.round(dis) + "% OFF");
                 holder.price.setText(Html.fromHtml("<font color=\"#000000\"><b>\u20B9 " + String.valueOf(nv) + " </b></font><strike>\u20B9 " + item.getPrice() + "</strike>"));
             } else {
                 nv1 = item.getPrice();

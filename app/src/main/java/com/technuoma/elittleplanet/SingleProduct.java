@@ -289,8 +289,34 @@ public class SingleProduct extends Fragment {
                         colorstitle.setVisibility(View.GONE);
                     }
 
+                    float pri = Float.parseFloat(item.getPrice());
+                    float dv1 = Float.parseFloat(item.getDiscount());
+                    float dv = pri - dv1;
+                    float dis = (dv/ pri) * 100;
+                    String nv1 = null;
 
-                    float dis = Float.parseFloat(item.getDiscount());
+
+                    if (dis > 0) {
+
+                        //float dv = (dis / 100) * pri;
+
+                        float nv = pri - dv;
+
+                        nv1 = String.valueOf(nv);
+
+                        discount.setVisibility(View.VISIBLE);
+                        discount.setText(Math.round(dis) + "% OFF");
+                        price.setText(Html.fromHtml("<font color=\"#000000\"><b>\u20B9 " + String.valueOf(nv) + " </b></font><strike>\u20B9 " + item.getPrice() + "</strike>"));
+                        save.setText(Html.fromHtml("You save - <b>\u20B9" + dv + "</b>"));
+                        save.setVisibility(View.VISIBLE);
+                    } else {
+                        nv1 = item.getPrice();
+                        discount.setVisibility(View.GONE);
+                        price.setText(Html.fromHtml("<font color=\"#000000\"><b>\u20B9 " + String.valueOf(item.getPrice()) + " </b></font>"));
+                        save.setVisibility(View.GONE);
+                    }
+
+                    /*float dis = Float.parseFloat(item.getDiscount());
 
                     if (dis > 0) {
 
@@ -314,7 +340,7 @@ public class SingleProduct extends Fragment {
                         discount.setVisibility(View.GONE);
                         price.setText(Html.fromHtml("Selling Price:  <font color=\"#000000\"><b>\u20B9" + String.valueOf(item.getPrice()) + " </b></font>"));
                         save.setVisibility(View.GONE);
-                    }
+                    }*/
 
                     if (item.getWishlist().equals("1")) {
                         wishlist.setBackground(mainActivity.getDrawable(R.drawable.ic_heart1));
@@ -451,6 +477,7 @@ public class SingleProduct extends Fragment {
 
                     stock.setText(item.getStock());
 
+                    String finalNv = nv1;
                     add.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -551,7 +578,7 @@ public class SingleProduct extends Fragment {
                                             Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
                                             Log.d("pid", pid);
                                             Log.d("quantity", String.valueOf(stepperTouch.getCount()));
-                                            Log.d("price", nv1);
+                                            Log.d("price", finalNv);
 
                                             int versionCode = BuildConfig.VERSION_CODE;
                                             String versionName = BuildConfig.VERSION_NAME;
@@ -559,7 +586,7 @@ public class SingleProduct extends Fragment {
                                             /*String cl = String.valueOf(color.getSelectedItem());
                                             String sz = String.valueOf(size.getSelectedItem());*/
 
-                                            Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, siz, col);
+                                            Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), finalNv, versionName, siz, col);
 
                                             call.enqueue(new Callback<singleProductBean>() {
                                                 @Override
@@ -890,10 +917,6 @@ public class SingleProduct extends Fragment {
             ImageLoader loader = ImageLoader.getInstance();
             loader.displayImage(item.getImage(), holder.image, options);
 
-            float dis = Float.parseFloat(item.getDiscount());
-
-            final String nv1;
-
             if (item.getStock().equals("In stock")) {
                 holder.add.setEnabled(true);
             } else {
@@ -903,7 +926,31 @@ public class SingleProduct extends Fragment {
             holder.stock.setText(item.getStock());
             //holder.size.setText(item.getSize());
 
+            float pri = Float.parseFloat(item.getPrice());
+            float dv1 = Float.parseFloat(item.getDiscount());
+            float dv = pri - dv1;
+            float dis = (dv/ pri) * 100;
+            String nv1 = null;
+
+
             if (dis > 0) {
+
+                //float dv = (dis / 100) * pri;
+
+                float nv = pri - dv;
+
+                nv1 = String.valueOf(nv);
+
+                holder.discount.setVisibility(View.VISIBLE);
+                holder.discount.setText(Math.round(dis) + "% OFF");
+                holder.price.setText(Html.fromHtml("<font color=\"#000000\"><b>\u20B9 " + String.valueOf(nv) + " </b></font><strike>\u20B9 " + item.getPrice() + "</strike>"));
+            } else {
+                nv1 = item.getPrice();
+                holder.discount.setVisibility(View.GONE);
+                holder.price.setText(Html.fromHtml("<font color=\"#000000\"><b>\u20B9 " + String.valueOf(item.getPrice()) + " </b></font>"));
+            }
+
+            /*if (dis > 0) {
 
                 float pri = Float.parseFloat(item.getPrice());
                 float dv = (dis / 100) * pri;
@@ -923,7 +970,7 @@ public class SingleProduct extends Fragment {
                 holder.discount.setVisibility(View.GONE);
                 holder.price.setText("\u20B9 " + item.getPrice());
                 holder.newamount.setVisibility(View.GONE);
-            }
+            }*/
 
 
             holder.title.setText(item.getName());
@@ -948,6 +995,7 @@ public class SingleProduct extends Fragment {
                 }
             });
 
+            String finalNv = nv1;
             holder.add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -1041,7 +1089,7 @@ public class SingleProduct extends Fragment {
                                 Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
                                 Log.d("pid", pid);
                                 Log.d("quantity", String.valueOf(stepperTouch.getCount()));
-                                Log.d("price", nv1);
+                                Log.d("price", finalNv);
 
                                 int versionCode = BuildConfig.VERSION_CODE;
                                 String versionName = BuildConfig.VERSION_NAME;
@@ -1049,7 +1097,7 @@ public class SingleProduct extends Fragment {
                                 String cl = String.valueOf(color.getSelectedItem());
                                 String sz = String.valueOf(size.getSelectedItem());
 
-                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, sz, cl);
+                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), finalNv, versionName, sz, cl);
 
                                 call.enqueue(new Callback<singleProductBean>() {
                                     @Override
@@ -1150,9 +1198,6 @@ public class SingleProduct extends Fragment {
             ImageLoader loader = ImageLoader.getInstance();
             loader.displayImage(item.getImage(), holder.image, options);
 
-            float dis = Float.parseFloat(item.getDiscount());
-
-            final String nv1;
 
             if (item.getStock().equals("In stock")) {
                 holder.add.setEnabled(true);
@@ -1163,26 +1208,28 @@ public class SingleProduct extends Fragment {
             holder.stock.setText(item.getStock());
             //holder.size.setText(item.getSize());
 
+            float pri = Float.parseFloat(item.getPrice());
+            float dv1 = Float.parseFloat(item.getDiscount());
+            float dv = pri - dv1;
+            float dis = (dv/ pri) * 100;
+            String nv1 = null;
+
+
             if (dis > 0) {
 
-                float pri = Float.parseFloat(item.getPrice());
-                float dv = (dis / 100) * pri;
+                //float dv = (dis / 100) * pri;
 
                 float nv = pri - dv;
 
                 nv1 = String.valueOf(nv);
 
                 holder.discount.setVisibility(View.VISIBLE);
-                holder.discount.setText(item.getDiscount() + "% OFF");
-                holder.price.setText(Html.fromHtml("\u20B9 " + String.valueOf(nv)));
-                holder.newamount.setText(Html.fromHtml("<strike>\u20B9 " + item.getPrice() + "</strike>"));
-                holder.newamount.setVisibility(View.VISIBLE);
+                holder.discount.setText(Math.round(dis) + "% OFF");
+                holder.price.setText(Html.fromHtml("<font color=\"#000000\"><b>\u20B9 " + String.valueOf(nv) + " </b></font><strike>\u20B9 " + item.getPrice() + "</strike>"));
             } else {
-
                 nv1 = item.getPrice();
                 holder.discount.setVisibility(View.GONE);
-                holder.price.setText("\u20B9 " + item.getPrice());
-                holder.newamount.setVisibility(View.GONE);
+                holder.price.setText(Html.fromHtml("<font color=\"#000000\"><b>\u20B9 " + String.valueOf(item.getPrice()) + " </b></font>"));
             }
 
 
@@ -1208,6 +1255,7 @@ public class SingleProduct extends Fragment {
                 }
             });
 
+            String finalNv = nv1;
             holder.add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -1301,7 +1349,7 @@ public class SingleProduct extends Fragment {
                                 Log.d("userid", SharePreferenceUtils.getInstance().getString("userid"));
                                 Log.d("pid", pid);
                                 Log.d("quantity", String.valueOf(stepperTouch.getCount()));
-                                Log.d("price", nv1);
+                                Log.d("price", finalNv);
 
                                 int versionCode = BuildConfig.VERSION_CODE;
                                 String versionName = BuildConfig.VERSION_NAME;
@@ -1309,7 +1357,7 @@ public class SingleProduct extends Fragment {
                                 String cl = String.valueOf(color.getSelectedItem());
                                 String sz = String.valueOf(size.getSelectedItem());
 
-                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), nv1, versionName, sz, cl);
+                                Call<singleProductBean> call = cr.addCart(SharePreferenceUtils.getInstance().getString("userId"), pid, String.valueOf(stepperTouch.getCount()), finalNv, versionName, sz, cl);
 
                                 call.enqueue(new Callback<singleProductBean>() {
                                     @Override

@@ -65,7 +65,7 @@ public class Login extends AppCompatActivity {
 
                     progress.setVisibility(View.VISIBLE);
 
-                    Bean b = (Bean) getApplicationContext();
+                    /*Bean b = (Bean) getApplicationContext();
 
                     HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                     logging.level(HttpLoggingInterceptor.Level.HEADERS);
@@ -122,7 +122,7 @@ public class Login extends AppCompatActivity {
                         public void onFailure(@NotNull Call<loginBean> call, @NotNull Throwable t) {
                             progress.setVisibility(View.GONE);
                         }
-                    });
+                    });*/
 
                 } else {
                     Toast.makeText(Login.this, "Invalid phone", Toast.LENGTH_SHORT).show();

@@ -107,9 +107,11 @@ public interface AllApiIneterface {
 
 
     @Multipart
-    @POST("elittleplanet/api/login.php")
+    @POST("elittleplanet/api/login4.php")
     Call<loginBean> login(
             @Part("email") String email,
+            @Part("password") String password,
+            @Part("name") String name,
             @Part("token") String token
     );
 

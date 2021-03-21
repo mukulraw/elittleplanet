@@ -46,6 +46,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -57,10 +60,12 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.technuoma.elittleplanet.cartPOJO.cartBean;
 import com.technuoma.elittleplanet.homePOJO.Banners;
 import com.technuoma.elittleplanet.homePOJO.Best;
@@ -99,13 +104,24 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     BottomNavigationView navigation;
     TextView count, rewards, login, terms, about, address, logout, cart, orders, refer, location, wishlist, contact, find;
     ImageView cart2, notification;
-
+    private FirebaseAuth mAuth;
+    GoogleSignInClient mGoogleSignInClient;
+    TextView email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         toolbar = findViewById(R.id.toolbar);
         navigation = findViewById(R.id.bottomNavigationView);
@@ -124,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         cart = findViewById(R.id.cart);
         notification = findViewById(R.id.imageView10);
         find = findViewById(R.id.find);
+        email = findViewById(R.id.textView8);
 
         contact = findViewById(R.id.contact);
 
@@ -143,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
         if (uid.length() > 0) {
             login.setText(SharePreferenceUtils.getInstance().getString("name"));
-
+            email.setText(SharePreferenceUtils.getInstance().getString("email"));
             rewards.setText("LP Rewards - " + SharePreferenceUtils.getInstance().getString("rewards"));
             //rewards.setVisibility(View.VISIBLE);
             getRew();
@@ -411,11 +428,23 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
             @Override
             public void onClick(View view) {
 
-                SharePreferenceUtils.getInstance().deletePref();
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                SharePreferenceUtils.getInstance().deletePref();
+
+                                Intent intent = new Intent(MainActivity.this, Spalsh.class);
+                                startActivity(intent);
+                                finishAffinity();
+                            }
+                        });
+
+                /*SharePreferenceUtils.getInstance().deletePref();
 
                 Intent intent = new Intent(MainActivity.this, Spalsh.class);
                 startActivity(intent);
-                finishAffinity();
+                finishAffinity();*/
 
             }
         });

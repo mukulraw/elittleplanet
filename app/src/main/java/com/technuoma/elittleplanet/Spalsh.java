@@ -123,7 +123,7 @@ public class Spalsh extends AppCompatActivity implements InstallReferrerStateLis
                     startActivity(intent);
                     finish();
                 } else {
-                    Intent intent = new Intent(Spalsh.this, Login.class);
+                    Intent intent = new Intent(Spalsh.this, Login2.class);
                     startActivity(intent);
                     finish();
                 }

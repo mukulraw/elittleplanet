@@ -305,7 +305,7 @@ public class SingleProduct extends Fragment {
                         discount.setText(item.getDiscount() + "% OFF");
                         price.setText(Html.fromHtml("Selling Price:  <font color=\"#000000\"><b>\u20B9" + String.valueOf(nv) + " </b></font><strike>\u20B9" + item.getPrice() + "</strike>"));
 
-                        save.setText("You save - \u20B9" + dv);
+                        save.setText(Html.fromHtml("You save - <b>\u20B9" + dv + "</b>"));
                         save.setVisibility(View.VISIBLE);
 
                     } else {

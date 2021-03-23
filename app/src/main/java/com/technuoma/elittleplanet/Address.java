@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ public class Address extends AppCompatActivity {
 
     RecyclerView grid;
     FloatingActionButton add;
+    ImageView nodata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class Address extends AppCompatActivity {
         grid = findViewById(R.id.grid);
         setSupportActionBar(toolbar);
         add = findViewById(R.id.floatingActionButton);
+        nodata = findViewById(R.id.imageView5);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
@@ -124,14 +127,13 @@ public class Address extends AppCompatActivity {
             public void onResponse(Call<addressBean> call, Response<addressBean> response) {
 
                 if (response.body().getData().size() > 0) {
-
-
+                    nodata.setVisibility(View.GONE);
                     adapter.setgrid(response.body().getData());
-
                 } else {
+                    nodata.setVisibility(View.VISIBLE);
                     adapter.setgrid(response.body().getData());
                     Toast.makeText(Address.this, "No address found", Toast.LENGTH_SHORT).show();
-                    finish();
+                    //finish();
                 }
 
                 progress.setVisibility(View.GONE);

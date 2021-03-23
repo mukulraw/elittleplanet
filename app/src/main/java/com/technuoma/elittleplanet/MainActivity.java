@@ -67,12 +67,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.hsalf.smileyrating.SmileyRating;
 import com.technuoma.elittleplanet.cartPOJO.cartBean;
 import com.technuoma.elittleplanet.homePOJO.Banners;
 import com.technuoma.elittleplanet.homePOJO.Best;
 import com.technuoma.elittleplanet.homePOJO.Cat;
 import com.technuoma.elittleplanet.homePOJO.Member;
 import com.technuoma.elittleplanet.homePOJO.homeBean;
+import com.technuoma.elittleplanet.ratingsPOJO.ratingsBean;
 import com.technuoma.elittleplanet.seingleProductPOJO.singleProductBean;
 import com.nostra13.universalimageloader.BuildConfig;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -665,5 +667,97 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        Bean b = (Bean) getApplicationContext();
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.level(HttpLoggingInterceptor.Level.HEADERS);
+        logging.level(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .client(client)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<ratingsBean> call = cr.checkLoaderRating(
+                SharePreferenceUtils.getInstance().getString("userId")
+        );
+
+        call.enqueue(new Callback<ratingsBean>() {
+            @Override
+            public void onResponse(Call<ratingsBean> call, final Response<ratingsBean> response) {
+
+                if (response.body().getStatus().equals("1")) {
+                    final Dialog dialog = new Dialog(MainActivity.this, R.style.MyDialogTheme);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setCancelable(false);
+                    dialog.setContentView(R.layout.rating_dialog);
+                    dialog.show();
+
+                    TextView title = dialog.findViewById(R.id.textView143);
+                    final SmileyRating rating = dialog.findViewById(R.id.textView142);
+                    Button submit = dialog.findViewById(R.id.button18);
+                    title.setText("Please rate Order #" + response.body().getMessage());
+
+                    rating.setRating(5);
+
+                    submit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            SmileyRating.Type smiley = rating.getSelectedSmiley();
+
+                            // You can get the user rating too
+                            // rating will between 1 to 5, but -1 is none selected
+                            int rating2 = smiley.getRating();
+
+                            Call<ratingsBean> call2 = cr.submitLoaderRating(
+                                    response.body().getMessage(),
+                                    String.valueOf(rating2)
+                            );
+
+                            call2.enqueue(new Callback<ratingsBean>() {
+                                @Override
+                                public void onResponse(Call<ratingsBean> call, Response<ratingsBean> response) {
+
+                                    if (response.body().getStatus().equals("1")) {
+                                        dialog.dismiss();
+                                    }
+
+                                    Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<ratingsBean> call, Throwable t) {
+
+                                }
+                            });
+
+                        }
+                    });
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ratingsBean> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
 }

@@ -251,6 +251,7 @@ public interface AllApiIneterface {
             @Part("txn") String txn,
             @Part("del_charges") String del_charges,
             @Part("name") String name,
+            @Part("phone") String phone,
             @Part("address") String address,
             @Part("pay_mode") String pay_mode,
             @Part("slot") String slot,
@@ -295,6 +296,19 @@ public interface AllApiIneterface {
             @Part("rating") String rating,
             @Part("review") String review,
             @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/checkLoaderRating.php")
+    Call<ratingsBean> checkLoaderRating(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("elittleplanet/api/submitLoaderRating.php")
+    Call<ratingsBean> submitLoaderRating(
+            @Part("id") String id,
+            @Part("loader_rating") String loader_rating
     );
 
 }

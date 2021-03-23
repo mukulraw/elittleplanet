@@ -1,8 +1,12 @@
 package com.technuoma.elittleplanet;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,25 +42,30 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class OfferZone extends AppCompatActivity {
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
+public class OfferZone extends Fragment {
     private Toolbar toolbar;
     OfferAdapter adapter;
     List<Banners> list4;
     ProgressBar progress;
     RecyclerView grid;
+    MainActivity mainActivity;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offer_zone);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_offer_zone, container, false);
+
+        mainActivity = (MainActivity) getActivity();
 
         list4 = new ArrayList<>();
 
-        toolbar = findViewById(R.id.toolbar3);
-        progress = findViewById(R.id.progressBar6);
-        grid = findViewById(R.id.grid);
+        toolbar = view.findViewById(R.id.toolbar3);
+        progress = view.findViewById(R.id.progressBar6);
+        grid = view.findViewById(R.id.grid);
 
-        setSupportActionBar(toolbar);
+        /*setSupportActionBar(toolbar);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
@@ -70,16 +79,17 @@ public class OfferZone extends AppCompatActivity {
         });
 
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle("Offer Zone");
+        toolbar.setTitle("Offer Zone");*/
 
-        adapter = new OfferAdapter(this, list4);
-        GridLayoutManager manager7 = new GridLayoutManager(this, 1);
+        adapter = new OfferAdapter(mainActivity, list4);
+        GridLayoutManager manager7 = new GridLayoutManager(mainActivity, 1);
 
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager7);
 
         loaddata();
 
+        return view;
     }
 
     class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> {
@@ -119,11 +129,20 @@ public class OfferZone extends AppCompatActivity {
                 public void onClick(View v) {
 
                     if (item.getCid() != null) {
-                        Intent intent = new Intent(context, SubCat.class);
-                        intent.putExtra("id", item.getCid());
-                        intent.putExtra("title", item.getCname());
-                        intent.putExtra("image", item.getCatimage());
-                        startActivity(intent);
+                        FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+
+                        FragmentTransaction ft4 = fm4.beginTransaction();
+                        ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        SubCat frag14 = new SubCat();
+                        Bundle b = new Bundle();
+                        b.putString("id", item.getCid());
+                        b.putString("title", item.getCname());
+                        b.putString("image", item.getCatimage());
+                        frag14.setArguments(b);
+                        ft4.replace(R.id.replace, frag14);
+                        ft4.addToBackStack(null);
+                        //ft.addToBackStack(null);
+                        ft4.commit();
                     }
 
 
@@ -155,7 +174,7 @@ public class OfferZone extends AppCompatActivity {
     void loaddata() {
         progress.setVisibility(View.VISIBLE);
 
-        Bean b = (Bean) getApplicationContext();
+        Bean b = (Bean) mainActivity.getApplicationContext();
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.level(HttpLoggingInterceptor.Level.HEADERS);

@@ -155,8 +155,18 @@ public class Home extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(mainActivity, OfferZone.class);
-                startActivity(intent);
+                FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+
+                FragmentTransaction ft4 = fm4.beginTransaction();
+                ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                OfferZone frag14 = new OfferZone();
+                ft4.replace(R.id.replace, frag14);
+                ft4.addToBackStack(null);
+                //ft.addToBackStack(null);
+                ft4.commit();
+
+                /*Intent intent = new Intent(mainActivity, OfferZone.class);
+                startActivity(intent);*/
 
             }
         });
@@ -395,7 +405,7 @@ public class Home extends Fragment {
         String url, tit, cid = "", image2;
 
         ImageView image;
-
+        MainActivity mainActivity;
         void setData(String url, String tit, String cid, String image2) {
             this.url = url;
             this.tit = tit;
@@ -407,7 +417,7 @@ public class Home extends Fragment {
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.banner_layout, container, false);
-
+            mainActivity = (MainActivity) getActivity();
             image = view.findViewById(R.id.imageView3);
 
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
@@ -420,11 +430,27 @@ public class Home extends Fragment {
                 public void onClick(View v) {
 
                     if (cid != null) {
-                        Intent intent = new Intent(getContext(), SubCat.class);
+
+                        FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+
+                        FragmentTransaction ft4 = fm4.beginTransaction();
+                        ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        SubCat frag14 = new SubCat();
+                        Bundle b = new Bundle();
+                        b.putString("id", cid);
+                        b.putString("title", tit);
+                        b.putString("image", image2);
+                        frag14.setArguments(b);
+                        ft4.replace(R.id.replace, frag14);
+                        ft4.addToBackStack(null);
+                        //ft.addToBackStack(null);
+                        ft4.commit();
+
+                        /*Intent intent = new Intent(getContext(), SubCat.class);
                         intent.putExtra("id", cid);
                         intent.putExtra("title", tit);
                         intent.putExtra("image", image2);
-                        startActivity(intent);
+                        startActivity(intent);*/
                     }
 
 

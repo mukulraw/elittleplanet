@@ -20,7 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Login2"></activity>
+        <activity
+            android:name=".Login2"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Ratings"
             android:screenOrientation="portrait" />
@@ -32,9 +34,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AddAddress"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".OfferZone"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Register"

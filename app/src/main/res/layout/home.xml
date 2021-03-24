@@ -177,13 +177,7 @@
             android:paddingBottom="8dp"
             android:text="SEARCH FOR PRODUCTS"
             android:textColor="#cdcdcd"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toTopOf="@+id/textView5"
-            app:layout_constraintVertical_bias="0.0" />
-
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

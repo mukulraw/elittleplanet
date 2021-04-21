@@ -3,9 +3,7 @@ package com.technuoma.elittleplanet.seingleProductPOJO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class Related {
+public class AdditionalColor {
     @SerializedName("id")
     @Expose
     private String id;

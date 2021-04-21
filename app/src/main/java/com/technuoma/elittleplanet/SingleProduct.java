@@ -267,20 +267,83 @@ public class SingleProduct extends Fragment {
                         relatedtitle.setVisibility(View.GONE);
                     }
 
-                    if (item.getSize().size() > 0) {
+                    /*String clr = item.getColor();
+                    String[] arr = clr.split(",");
+
+                    ColorAdapter adapter1 = new ColorAdapter(mainActivity, Arrays.asList(arr));
+                    LinearLayoutManager manager = new LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false);
+                    colors.setAdapter(adapter1);
+                    colors.setLayoutManager(manager);
+
+                    adapter1.selectPos(0);*/
+
+                    if (item.getColor().length() > 0) {
+
+                        colors.setVisibility(View.VISIBLE);
+                        colorstitle.setVisibility(View.VISIBLE);
+
+                        List<sizeBean> lis = new ArrayList<>();
+
+                        sizeBean bean1 = new sizeBean();
+                        bean1.setId(pid);
+                        bean1.setSize(item.getColor());
+                        bean1.setType("current");
+                        bean1.setName(item.getName());
+                        lis.add(bean1);
+
+                        for (int i = 0; i < response.body().getData().getAdditionalColor().size(); i++) {
+                            sizeBean bean2 = new sizeBean();
+                            bean2.setId(response.body().getData().getAdditionalColor().get(i).getId());
+                            bean2.setSize(response.body().getData().getAdditionalColor().get(i).getColor());
+                            bean2.setName(response.body().getData().getAdditionalColor().get(i).getName());
+                            bean2.setType("new");
+                            lis.add(bean2);
+                        }
+
+                        ColorAdapter adapter2 = new ColorAdapter(mainActivity, lis);
+                        LinearLayoutManager manage2 = new LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false);
+                        colors.setAdapter(adapter2);
+                        colors.setLayoutManager(manage2);
+
+                        adapter2.selectPos(0);
+
+                    } else {
+                        colors.setVisibility(View.GONE);
+                        colorstitle.setVisibility(View.GONE);
+                    }
+
+
+                    if (item.getSize().length() > 0) {
 
                         variants.setVisibility(View.VISIBLE);
                         sizetitle.setVisibility(View.VISIBLE);
                         colors.setVisibility(View.VISIBLE);
                         colorstitle.setVisibility(View.VISIBLE);
 
+                        List<sizeBean> lis = new ArrayList<>();
 
-                        SizeAdapter adapter1 = new SizeAdapter(mainActivity, item.getSize());
-                        LinearLayoutManager manager = new LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false);
-                        variants.setAdapter(adapter1);
-                        variants.setLayoutManager(manager);
+                        sizeBean bean1 = new sizeBean();
+                        bean1.setId(pid);
+                        bean1.setSize(item.getSize());
+                        bean1.setType("current");
+                        bean1.setName(item.getName());
+                        lis.add(bean1);
 
-                        adapter1.selectPos(0);
+                        for (int i = 0; i < response.body().getData().getAdditionalSize().size(); i++) {
+                            sizeBean bean2 = new sizeBean();
+                            bean2.setId(response.body().getData().getAdditionalSize().get(i).getId());
+                            bean2.setSize(response.body().getData().getAdditionalSize().get(i).getSize());
+                            bean2.setName(response.body().getData().getAdditionalSize().get(i).getName());
+                            bean2.setType("new");
+                            lis.add(bean2);
+                        }
+
+                        SizeAdapter adapter2 = new SizeAdapter(mainActivity, lis);
+                        LinearLayoutManager manage2 = new LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false);
+                        variants.setAdapter(adapter2);
+                        variants.setLayoutManager(manage2);
+
+                        adapter2.selectPos(0);
 
                     } else {
                         variants.setVisibility(View.GONE);
@@ -662,10 +725,10 @@ public class SingleProduct extends Fragment {
 
     class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
         Context context;
-        List<Size> list = new ArrayList<>();
+        List<sizeBean> list = new ArrayList<>();
         int pos = -1;
 
-        public SizeAdapter(Context context, List<Size> list) {
+        public SizeAdapter(Context context, List<sizeBean> list) {
             this.context = context;
             this.list = list;
         }
@@ -687,7 +750,7 @@ public class SingleProduct extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
             holder.setIsRecyclable(false);
-            Size item = list.get(position);
+            sizeBean item = list.get(position);
 
             holder.tag.setText(item.getSize());
 
@@ -698,15 +761,7 @@ public class SingleProduct extends Fragment {
                 holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.accent_back_round2));
                 holder.tag.setTextColor(Color.BLACK);
 
-                String clr = item.getColor();
-                String[] arr = clr.split(",");
 
-                ColorAdapter adapter = new ColorAdapter(context, Arrays.asList(arr));
-                LinearLayoutManager manager = new LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false);
-                colors.setAdapter(adapter);
-                colors.setLayoutManager(manager);
-
-                adapter.selectPos(0);
 
             } else {
                 holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.dotted_back_stroke));
@@ -716,7 +771,26 @@ public class SingleProduct extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectPos(position);
+                    if (item.getType().equals("new"))
+                    {
+                        FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+
+                        FragmentTransaction ft4 = fm4.beginTransaction();
+                        ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        SingleProduct frag14 = new SingleProduct();
+                        Bundle b = new Bundle();
+                        b.putString("id", item.getId());
+                        b.putString("title", item.getName());
+                        frag14.setArguments(b);
+                        ft4.replace(R.id.replace, frag14);
+                        ft4.addToBackStack(null);
+                        ft4.commit();
+                    }
+                    else
+                    {
+                        selectPos(position);
+                    }
+
                 }
             });
 
@@ -742,10 +816,10 @@ public class SingleProduct extends Fragment {
 
     class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> {
         Context context;
-        List<String> list = new ArrayList<>();
+        List<sizeBean> list = new ArrayList<>();
         int pos = -1;
 
-        public ColorAdapter(Context context, List<String> list) {
+        public ColorAdapter(Context context, List<sizeBean> list) {
             this.context = context;
             this.list = list;
         }
@@ -767,11 +841,25 @@ public class SingleProduct extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
             holder.setIsRecyclable(false);
-            String item = list.get(position);
+            sizeBean item = list.get(position);
 
-            holder.tag.setText(item);
+            holder.tag.setText(item.getSize());
 
             if (position == pos) {
+
+                col = item.getSize();
+
+                holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.accent_back_round2));
+                holder.tag.setTextColor(Color.BLACK);
+
+
+
+            } else {
+                holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.dotted_back_stroke));
+                holder.tag.setTextColor(Color.LTGRAY);
+            }
+
+            /*if (position == pos) {
                 col = item;
 
                 holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.accent_back_round2));
@@ -779,12 +867,31 @@ public class SingleProduct extends Fragment {
             } else {
                 holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.dotted_back_stroke));
                 holder.tag.setTextColor(Color.LTGRAY);
-            }
+            }*/
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectPos(position);
+                    if (item.getType().equals("new"))
+                    {
+                        FragmentManager fm4 = mainActivity.getSupportFragmentManager();
+
+                        FragmentTransaction ft4 = fm4.beginTransaction();
+                        ft4.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        SingleProduct frag14 = new SingleProduct();
+                        Bundle b = new Bundle();
+                        b.putString("id", item.getId());
+                        b.putString("title", item.getName());
+                        frag14.setArguments(b);
+                        ft4.replace(R.id.replace, frag14);
+                        ft4.addToBackStack(null);
+                        ft4.commit();
+                    }
+                    else
+                    {
+                        selectPos(position);
+                    }
+
                 }
             });
 
@@ -1256,7 +1363,7 @@ public class SingleProduct extends Fragment {
             });
 
             String finalNv = nv1;
-            holder.add.setOnClickListener(new View.OnClickListener() {
+            /*holder.add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -1392,7 +1499,7 @@ public class SingleProduct extends Fragment {
                     }
 
                 }
-            });
+            });*/
 
         }
 

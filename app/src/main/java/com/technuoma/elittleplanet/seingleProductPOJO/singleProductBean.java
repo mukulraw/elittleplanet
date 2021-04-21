@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class singleProductBean {
+
     @SerializedName("status")
     @Expose
     private String status;
@@ -37,4 +38,5 @@ public class singleProductBean {
     public void setData(Data data) {
         this.data = data;
     }
+
 }

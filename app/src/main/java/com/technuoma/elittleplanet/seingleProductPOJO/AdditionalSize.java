@@ -3,9 +3,8 @@ package com.technuoma.elittleplanet.seingleProductPOJO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+public class AdditionalSize {
 
-public class Related {
     @SerializedName("id")
     @Expose
     private String id;
@@ -237,4 +236,5 @@ public class Related {
     public void setCreated(String created) {
         this.created = created;
     }
+
 }

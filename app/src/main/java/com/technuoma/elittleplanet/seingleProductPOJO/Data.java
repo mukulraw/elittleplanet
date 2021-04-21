@@ -33,7 +33,10 @@ public class Data {
     private String discount;
     @SerializedName("size")
     @Expose
-    private List<Size> size = null;
+    private String size;
+    @SerializedName("color")
+    @Expose
+    private String color;
     @SerializedName("description")
     @Expose
     private String description;
@@ -64,6 +67,12 @@ public class Data {
     @SerializedName("related")
     @Expose
     private List<Related> related = null;
+    @SerializedName("additional_size")
+    @Expose
+    private List<AdditionalSize> additionalSize = null;
+    @SerializedName("additional_color")
+    @Expose
+    private List<AdditionalColor> additionalColor = null;
     @SerializedName("status")
     @Expose
     private String status;
@@ -138,12 +147,20 @@ public class Data {
         this.discount = discount;
     }
 
-    public List<Size> getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(List<Size> size) {
+    public void setSize(String size) {
         this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getDescription() {
@@ -226,6 +243,22 @@ public class Data {
         this.related = related;
     }
 
+    public List<AdditionalSize> getAdditionalSize() {
+        return additionalSize;
+    }
+
+    public void setAdditionalSize(List<AdditionalSize> additionalSize) {
+        this.additionalSize = additionalSize;
+    }
+
+    public List<AdditionalColor> getAdditionalColor() {
+        return additionalColor;
+    }
+
+    public void setAdditionalColor(List<AdditionalColor> additionalColor) {
+        this.additionalColor = additionalColor;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -249,4 +282,5 @@ public class Data {
     public void setCreated(String created) {
         this.created = created;
     }
+
 }

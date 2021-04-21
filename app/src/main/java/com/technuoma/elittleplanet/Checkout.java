@@ -44,7 +44,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -451,8 +454,15 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
                                                 Log.d("addd", adr);
 
+                                                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                                                logging.level(HttpLoggingInterceptor.Level.HEADERS);
+                                                logging.level(HttpLoggingInterceptor.Level.BODY);
+
+                                                OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
                                                 Retrofit retrofit = new Retrofit.Builder()
                                                         .baseUrl(b.baseurl)
+                                                        .client(client)
                                                         .addConverterFactory(ScalarsConverterFactory.create())
                                                         .addConverterFactory(GsonConverterFactory.create())
                                                         .build();

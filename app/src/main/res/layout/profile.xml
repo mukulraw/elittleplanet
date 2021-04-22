@@ -71,17 +71,6 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2">
 
         <TextView
-            android:id="@+id/wallet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_wallet"
-            android:drawablePadding="22dp"
-            android:padding="12dp"
-            android:text="eCash - 0"
-            android:visibility="gone" />
-
-
-        <TextView
             android:id="@+id/home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,6 +125,33 @@
             android:gravity="center_vertical"
             android:text="My Orders"
             android:textColor="@color/menu_color" />
+
+        <TextView
+            android:id="@+id/wallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="22dp"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:text="My Wallet"
+            android:textColor="@color/menu_color"
+            app:drawableTint="@color/menu_color"
+            app:drawableStartCompat="@drawable/ic_wallet_filled_money_tool" />
+
+        <TextView
+            android:id="@+id/coupons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="22dp"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:text="My Coupons"
+            android:textColor="@color/menu_color"
+            app:drawableStartCompat="@drawable/ic_coupon"
+            app:drawableTint="@color/menu_color" />
+
 
         <TextView
             android:id="@+id/exchange"

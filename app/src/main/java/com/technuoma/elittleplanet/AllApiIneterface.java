@@ -5,6 +5,7 @@ import com.technuoma.elittleplanet.brandPOJO.brandBean;
 import com.technuoma.elittleplanet.cartPOJO.cartBean;
 import com.technuoma.elittleplanet.checkPromoPOJO.checkPromoBean;
 import com.technuoma.elittleplanet.checkoutPOJO.checkoutBean;
+import com.technuoma.elittleplanet.couponsPOJO.couponsBean;
 import com.technuoma.elittleplanet.filtersPOJO.filtersBean;
 import com.technuoma.elittleplanet.homePOJO.homeBean;
 import com.technuoma.elittleplanet.notiPOJO.notiBeam;
@@ -188,6 +189,13 @@ public interface AllApiIneterface {
     Call<String> getRew(
             @Part("user_id") String user_id
     );
+
+    @Multipart
+    @POST("elittleplanet/api/getCoupons.php")
+    Call<couponsBean> getCoupons(
+            @Part("user_id") String user_id
+    );
+
 
     @Multipart
     @POST("elittleplanet/api/clearCart.php")

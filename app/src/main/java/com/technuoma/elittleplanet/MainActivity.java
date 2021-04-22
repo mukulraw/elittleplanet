@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
             email.setText(SharePreferenceUtils.getInstance().getString("email"));
             rewards.setText("LP Rewards - " + SharePreferenceUtils.getInstance().getString("rewards"));
             //rewards.setVisibility(View.VISIBLE);
-            getRew();
+            //getRew();
         } else {
             rewards.setVisibility(View.GONE);
         }
@@ -622,7 +622,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
                 }
             });
 
-            getRew();
+            //getRew();
 
         } else {
             count.setText("0");

@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 public class Profile extends Fragment {
 
     MainActivity mainActivity;
-    TextView terms, about, address, logout, cart, orders, refer, location, wishlist, contact;
+    TextView terms, about, address, logout, cart, orders, refer, location, wishlist, contact, wallet, coupons;
 
     @Nullable
     @Override
@@ -37,6 +37,8 @@ public class Profile extends Fragment {
         logout = view.findViewById(R.id.logout);
         cart = view.findViewById(R.id.cart);
         contact = view.findViewById(R.id.contact);
+        wallet = view.findViewById(R.id.wallet);
+        coupons = view.findViewById(R.id.coupons);
 
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,13 +66,48 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(mainActivity, Wishlist.class);
-                startActivity(intent);
+                FragmentManager fm = mainActivity.getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                Wishlist frag1 = new Wishlist();
+                ft.replace(R.id.replace, frag1);
+                ft.addToBackStack(null);
+                ft.commit();
+
+
+            }
+        });
+        wallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fm = mainActivity.getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                Wallet frag1 = new Wallet();
+                ft.replace(R.id.replace, frag1);
+                ft.addToBackStack(null);
+                ft.commit();
 
 
             }
         });
 
+        coupons.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fm = mainActivity.getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                Coupons frag1 = new Coupons();
+                ft.replace(R.id.replace, frag1);
+                ft.addToBackStack(null);
+                ft.commit();
+
+
+            }
+        });
 
         about.setOnClickListener(new View.OnClickListener() {
             @Override

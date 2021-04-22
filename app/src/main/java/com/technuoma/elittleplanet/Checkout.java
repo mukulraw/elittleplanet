@@ -12,6 +12,8 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -79,6 +81,14 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
     String isnew = "1";
     String del;
+    float promo_amount = 0;
+    int wallet_amount = 0;
+    int wallet_value = 0;
+
+    CheckBox wallettitle;
+    TextView wallet;
+
+    TextView coupon, coupontitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +106,10 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         del = getIntent().getStringExtra("del");
 
         toolbar = findViewById(R.id.toolbar4);
+        coupon = findViewById(R.id.textView512);
+        coupontitle = findViewById(R.id.textView522);
+        wallettitle = findViewById(R.id.wallettitle);
+        wallet = findViewById(R.id.wallet);
         name = findViewById(R.id.editText2);
         address = findViewById(R.id.editText3);
         proceed = findViewById(R.id.button6);
@@ -364,16 +378,18 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
                                 float amt = Float.parseFloat(amm);
                                 float dis = Float.parseFloat(response.body().getData().getDiscount());
+                                promo_amount = dis;
 
-                                float da = (dis / 100) * amt;
+                                float na = amt - dis;
 
-                                float na = amt - da;
-
-                                amm = String.valueOf(na);
+                                coupon.setText("₹ " + dis);
+                                coupon.setVisibility(View.VISIBLE);
+                                coupontitle.setVisibility(View.VISIBLE);
+                                //amm = String.valueOf(na);
 
                                 amount.setText("₹ " + amm);
 
-                                float gt = Float.parseFloat(amm) + 0;
+                                float gt = Float.parseFloat(amm) + Float.parseFloat(del) - wallet_amount - promo_amount;
 
                                 grand.setText("₹ " + gt);
 
@@ -387,9 +403,11 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                                 Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 apply.setEnabled(true);
                                 apply.setClickable(true);
-
+                                promo_amount = 0;
                                 promo.setEnabled(true);
                                 promo.setClickable(true);
+                                coupon.setVisibility(View.GONE);
+                                coupontitle.setVisibility(View.GONE);
                             }
 
                             progress.setVisibility(View.GONE);
@@ -414,6 +432,31 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         });
 
+        wallettitle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                {
+                    wallet_amount = wallet_value;
+                    wallet.setText("₹ " + wallet_amount);
+                    float gt = Float.parseFloat(amm) + Float.parseFloat(del) - wallet_amount - promo_amount;
+
+                    grand.setText("₹ " + gt);
+
+                    gtotal = String.valueOf(gt);
+                }
+                else
+                {
+                    wallet_amount = 0;
+                    wallet.setText("₹ " + wallet_amount);
+                    float gt = Float.parseFloat(amm) + Float.parseFloat(del) - wallet_amount - promo_amount;
+
+                    grand.setText("₹ " + gt);
+
+                    gtotal = String.valueOf(gt);
+                }
+            }
+        });
 
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -476,6 +519,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                                                         gtotal,
                                                         oid,
                                                         del,
+                                                        String.valueOf(wallet_amount),
                                                         n,
                                                         ph,
                                                         adr,
@@ -483,6 +527,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                                                         tslot,
                                                         dd,
                                                         pid,
+                                                        String.valueOf(promo_amount),
                                                         a,
                                                         ar,
                                                         c,
@@ -628,6 +673,12 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        getRew();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -664,6 +715,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     gtotal,
                     oid,
                     del,
+                    String.valueOf(wallet_amount),
                     n,
                     ph,
                     adr,
@@ -671,6 +723,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     tslot,
                     dd,
                     pid,
+                    String.valueOf(promo_amount),
                     a,
                     ar,
                     c,
@@ -911,6 +964,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     gtotal,
                     s,
                     del,
+                    String.valueOf(wallet_amount),
                     n,
                     ph,
                     adr,
@@ -918,6 +972,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     tslot,
                     dd,
                     pid,
+                    String.valueOf(promo_amount),
                     a,
                     ar,
                     c,
@@ -979,6 +1034,49 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         } catch (Exception e) {
             Log.e("TAG", "Exception in onPaymentError", e);
         }
+    }
+
+    void getRew() {
+
+//        progress.setVisibility(View.VISIBLE);
+
+        Bean b = (Bean) getApplicationContext();
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.level(HttpLoggingInterceptor.Level.HEADERS);
+        logging.level(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .client(client)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<String> call = cr.getRew(SharePreferenceUtils.getInstance().getString("userId"));
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                wallettitle.setText("Use Wallet - ₹ " + response.body());
+                wallet_amount = Integer.parseInt(response.body());
+                wallet_value = Integer.parseInt(response.body());
+//
+//                progress.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+//                progress.setVisibility(View.GONE);
+            }
+        });
+
     }
 
 }

@@ -671,6 +671,8 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     protected void onResume() {
         super.onResume();
 
+        loadCart();
+
         Bean b = (Bean) getApplicationContext();
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();

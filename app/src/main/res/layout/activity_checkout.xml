@@ -330,12 +330,15 @@
                 android:id="@+id/textView49"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="start|center_vertical"
                 android:text="TextView"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView54"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -351,17 +354,68 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
             <TextView
-                android:id="@+id/textView51"
+                android:id="@+id/wallet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="start|center_vertical"
+                android:text="₹ 0"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/wallettitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/wallettitle"
+                app:layout_constraintTop_toTopOf="@+id/wallettitle" />
+
+            <CheckBox
+                android:id="@+id/wallettitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:text="Use Wallet: "
+                android:minHeight="0dp"
+                app:layout_constraintEnd_toStartOf="@+id/textView51"
+                app:layout_constraintTop_toBottomOf="@+id/textView53" />
+
+            <TextView
+                android:id="@+id/textView512"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:gravity="start|center_vertical"
                 android:text="TextView"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView522"
+                app:layout_constraintTop_toTopOf="@+id/textView522" />
+
+            <TextView
+                android:id="@+id/textView522"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="gone"
+                android:text="Coupon Discount: "
+                app:layout_constraintEnd_toStartOf="@+id/textView51"
+                app:layout_constraintTop_toBottomOf="@+id/wallettitle" />
+
+            <TextView
+                android:id="@+id/textView51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="start|center_vertical"
+                android:text="TextView"
+                android:ems="6"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView50" />
+                app:layout_constraintTop_toTopOf="@+id/textView52" />
 
             <TextView
                 android:id="@+id/textView52"
@@ -370,10 +424,9 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Grand Total: "
-                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textView51"
-                app:layout_constraintTop_toBottomOf="@+id/textView53" />
+                app:layout_constraintTop_toBottomOf="@+id/textView522" />
 
             <TextView
                 android:id="@+id/textView53"
@@ -382,7 +435,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Delivery Charges: "
-                android:textColor="@color/white"
                 app:layout_constraintEnd_toStartOf="@+id/textView51"
                 app:layout_constraintTop_toBottomOf="@+id/textView54" />
 
@@ -393,7 +445,6 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:text="Amount: "
-                android:textColor="@color/white"
                 app:layout_constraintEnd_toStartOf="@+id/textView51"
                 app:layout_constraintTop_toTopOf="parent" />
 

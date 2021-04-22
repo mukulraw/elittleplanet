@@ -246,7 +246,8 @@ public interface AllApiIneterface {
     @POST("elittleplanet/api/checkPromo.php")
     Call<checkPromoBean> checkPromo(
             @Part("promo") String promo,
-            @Part("user_id") String user_id
+            @Part("user_id") String user_id,
+            @Part("amount") String amount
     );
 
     @Multipart

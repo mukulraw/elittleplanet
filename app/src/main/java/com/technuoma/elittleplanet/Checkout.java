@@ -26,13 +26,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.facebook.share.Share;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.razorpay.PaymentResultListener;
+import com.shivtechs.maplocationpicker.LocationPickerActivity;
+import com.shivtechs.maplocationpicker.MapUtility;
 import com.technuoma.elittleplanet.addressPOJO.Datum;
 import com.technuoma.elittleplanet.addressPOJO.addressBean;
 import com.technuoma.elittleplanet.checkPromoPOJO.checkPromoBean;
 import com.technuoma.elittleplanet.checkoutPOJO.checkoutBean;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
 
 import org.json.JSONObject;
 
@@ -88,7 +95,8 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
     CheckBox wallettitle;
     TextView wallet;
 
-    TextView coupon, coupontitle;
+    TextView coupon, coupontitle, change;
+    private int AUTOCOMPLETE_REQUEST_CODE = 122;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +105,8 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         com.razorpay.Checkout.preload(getApplicationContext());
 
         setContentView(R.layout.activity_checkout);
+        Places.initialize(this, getString(R.string.google_maps_key));
+        MapUtility.apiKey = getResources().getString(R.string.google_maps_key);
 
         list = new ArrayList<>();
         ts = new ArrayList<>();
@@ -127,6 +137,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         apply = findViewById(R.id.button9);
         delivery = findViewById(R.id.textView50);
         phone = findViewById(R.id.editText21);
+        change = findViewById(R.id.textView107);
 
 
         setSupportActionBar(toolbar);
@@ -368,7 +379,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
 
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                    Call<checkPromoBean> call = cr.checkPromo(pc, SharePreferenceUtils.getInstance().getString("userId"));
+                    Call<checkPromoBean> call = cr.checkPromo(pc, SharePreferenceUtils.getInstance().getString("userId"), amm);
 
                     call.enqueue(new Callback<checkPromoBean>() {
                         @Override
@@ -435,8 +446,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
         wallettitle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                {
+                if (isChecked) {
                     wallet_amount = wallet_value;
                     wallet.setText("₹ " + wallet_amount);
                     float gt = Float.parseFloat(amm) + Float.parseFloat(del) - wallet_amount - promo_amount;
@@ -444,9 +454,7 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                     grand.setText("₹ " + gt);
 
                     gtotal = String.valueOf(gt);
-                }
-                else
-                {
+                } else {
                     wallet_amount = 0;
                     wallet.setText("₹ " + wallet_amount);
                     float gt = Float.parseFloat(amm) + Float.parseFloat(del) - wallet_amount - promo_amount;
@@ -670,6 +678,16 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         });
 
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Checkout.this, LocationPickerActivity.class);
+                intent.putExtra(MapUtility.LATITUDE, Double.parseDouble(SharePreferenceUtils.getInstance().getString("lat")));
+                intent.putExtra(MapUtility.LONGITUDE, Double.parseDouble(SharePreferenceUtils.getInstance().getString("lng")));
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+            }
+        });
+
     }
 
     @Override
@@ -681,6 +699,37 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                try {
+                    if (data != null && data.getStringExtra(MapUtility.ADDRESS) != null) {
+
+                        double lat = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
+                        double lng = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
+
+                        SharePreferenceUtils.getInstance().saveString("lat", String.valueOf(lat));
+                        SharePreferenceUtils.getInstance().saveString("lng", String.valueOf(lng));
+
+                        Log.d("asdaddasd", data.getStringExtra(MapUtility.ADDRESS));
+
+                        String srcAddress = data.getStringExtra(MapUtility.ADDRESS);
+                        address.setText(srcAddress);
+
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Toast.makeText(Checkout.this, status.toString(), Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
 
         if (requestCode == 12 && resultCode == Activity.RESULT_OK) {
 

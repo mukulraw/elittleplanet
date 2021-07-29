@@ -2,6 +2,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\mukul\\StudioProjects\\elittleplanet\\elittle.jks')
+            storePassword 'elittle@123'
+            keyAlias 'elittle'
+            keyPassword 'elittle@123'
+        }
+        config {
+            storeFile file('C:\\Users\\mukul\\StudioProjects\\elittleplanet\\elittle.jks')
+            storePassword 'elittle@123'
+            keyAlias 'elittle'
+            keyPassword 'elittle@123'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -13,6 +27,7 @@ android {
         versionName "1.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
 
     buildTypes {

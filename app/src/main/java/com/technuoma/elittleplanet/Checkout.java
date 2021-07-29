@@ -598,19 +598,20 @@ public class Checkout extends AppCompatActivity implements DatePickerDialog.OnDa
                                                 AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
                                                 Call<payBean> call1 = cr.getOrderId(String.valueOf(Float.parseFloat(gtotal) * 100), oid);
+                                                //Call<payBean> call1 = cr.getOrderId(String.valueOf(1 * 100), oid);
 
                                                 call1.enqueue(new Callback<payBean>() {
                                                     @Override
                                                     public void onResponse(Call<payBean> call, Response<payBean> response) {
 
                                                         com.razorpay.Checkout checkout = new com.razorpay.Checkout();
-                                                        checkout.setKeyID("rzp_live_DkMBHh063mz5ET");
+                                                        checkout.setKeyID("rzp_live_T2s6PJ8wieW5en");
                                                         checkout.setImage(R.drawable.back);
 
                                                         try {
                                                             JSONObject options = new JSONObject();
 
-                                                            options.put("name", "Options Mobiles Pvt Ltd");
+                                                            options.put("name", "little planet");
                                                             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
                                                             options.put("order_id", response.body().getId());//from response of step 3.
                                                             options.put("theme.color", "#3399cc");

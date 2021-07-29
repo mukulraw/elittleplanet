@@ -87,7 +87,7 @@ public class SingleProduct extends Fragment {
     BestAdapter adapter2;
     RelatedAdapter adapter3;
 
-    ImageButton wishlist;
+    ImageButton wishlist, share;
 
     ImageButton cart1;
     TextView count;
@@ -144,6 +144,7 @@ public class SingleProduct extends Fragment {
         disclaimer = view.findViewById(R.id.disclaimer);
         progress = view.findViewById(R.id.progress);
         stock = view.findViewById(R.id.stock);
+        share = view.findViewById(R.id.share);
 
         adapter2 = new BestAdapter(mainActivity, list2);
         adapter3 = new RelatedAdapter(mainActivity, list);
@@ -210,6 +211,20 @@ public class SingleProduct extends Fragment {
 
                 //navigation.setSelectedItemId(R.id.action_cart);
 
+
+            }
+        });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,
+                        "Download eLittle Planet: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
 
             }
         });

@@ -111,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     GoogleSignInClient mGoogleSignInClient;
     TextView email;
 
+    ImageView facebook, twitter, instagram, youtube;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +148,10 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         email = findViewById(R.id.textView8);
 
         contact = findViewById(R.id.contact);
+        facebook = findViewById(R.id.imageView15);
+        twitter = findViewById(R.id.imageView17);
+        instagram = findViewById(R.id.imageView18);
+        youtube = findViewById(R.id.imageView16);
 
 
         setSupportActionBar(toolbar);
@@ -502,6 +508,41 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
             }
         });
 
+        facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://www.facebook.com/LittlePlanetGuntur/")));
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://twitter.com/Littleplanet_gn")));
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        instagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://www.instagram.com/littleplanet_gnt/")));
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        youtube.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://www.youtube.com/channel/UCFuPwPnWJ0fgalabPLG7luQ")));
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
 
         navigation.setSelectedItemId(R.id.action_home);
 

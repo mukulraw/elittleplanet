@@ -107,7 +107,7 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
-        web.loadUrl("https://technuoma.com/elittleplanet/admin/app_print.php?id=" + oid);
+        web.loadUrl("https://elittleplanet.com/admin/app_print.php?id=" + oid);
         web.setWebViewClient(new WebViewClient());
 
         download.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +115,7 @@ public class OrderDetails extends AppCompatActivity {
             public void onClick(View v) {
 
                 startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://technuoma.com/elittleplanet/admin/print_view2.php?id=" + oid)));
+                        Uri.parse("https://elittleplanet.com/admin/print_view2.php?id=" + oid)));
 
             }
         });

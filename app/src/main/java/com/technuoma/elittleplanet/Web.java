@@ -41,6 +41,7 @@ public class Web extends AppCompatActivity {
         toolbar.setTitle(title);
 
         webView.loadUrl(url);
+        webView.getSettings().setJavaScriptEnabled(true);
 
     }
 }

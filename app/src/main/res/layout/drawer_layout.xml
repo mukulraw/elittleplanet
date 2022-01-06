@@ -59,229 +59,251 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imageView15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2">
 
-        <TextView
-            android:id="@+id/wallet"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_wallet"
-            android:drawablePadding="22dp"
-            android:padding="12dp"
-            android:text="eCash - 0"
-            android:visibility="gone" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/wallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_wallet"
+                android:drawablePadding="22dp"
+                android:padding="12dp"
+                android:text="eCash - 0"
+                android:visibility="gone" />
 
 
-        <TextView
-            android:id="@+id/home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_pin"
-            android:drawablePadding="22dp"
-            android:padding="12dp"
-            android:text="West Delhi"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_pin"
+                android:drawablePadding="22dp"
+                android:padding="12dp"
+                android:text="West Delhi"
+                android:visibility="gone" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#cdcdcd"
-            android:visibility="gone" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#cdcdcd"
+                android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/cart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_shopping_bag"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="My Cart"
-            android:textColor="@color/menu_color" />
+            <TextView
+                android:id="@+id/cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_shopping_bag"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="My Cart"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/wishlist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_heart2"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="My Wishlist"
-            android:textColor="@color/menu_color"
-            android:visibility="visible" />
+            <TextView
+                android:id="@+id/wishlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_heart2"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="My Wishlist"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp"
+                android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/orders"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_format_list_bulleted_black_24dp"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="My Orders"
-            android:textColor="@color/menu_color" />
-
-
-
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_home_black_24dp"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="My Addresses"
-            android:textColor="@color/menu_color" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#cdcdcd" />
+            <TextView
+                android:id="@+id/orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_format_list_bulleted_black_24dp"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="My Orders"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp" />
 
 
-        <TextView
-            android:id="@+id/exchange"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_exchange"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="Exchange Mobile"
-            android:textColor="@color/menu_color" />
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_home_black_24dp"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="My Addresses"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/find"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_smartphone_call"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="Find me a Smartphone"
-            android:textColor="@color/menu_color" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#cdcdcd" />
 
 
+            <TextView
+                android:id="@+id/exchange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_exchange"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="Exchange Mobile"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="My Profile"
-            android:visibility="gone" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#cdcdcd" />
-
-
-        <TextView
-            android:id="@+id/lachcha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="For Lachcha order, click here"
-            android:visibility="gone" />
-
-
-        <TextView
-            android:id="@+id/terms"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_assignment_black_24dp"
-            android:drawablePadding="22dp"
-            android:padding="12dp"
-            android:text="Terms &amp; Conditions"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/find"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_smartphone_call"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="Find me a Smartphone"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp" />
 
 
-        <TextView
-            android:id="@+id/about"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_help_black_24dp"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="FAQs"
-            android:textColor="@color/menu_color"
-            android:visibility="visible" />
+            <TextView
+                android:id="@+id/profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="My Profile"
+                android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/contact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_phone_contact"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="Contact Us"
-            android:textColor="@color/menu_color"
-            android:visibility="visible" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#cdcdcd" />
 
 
-        <TextView
-            android:id="@+id/refer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_rupee"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="Refer and Earn (upto 5 persons)"
-            android:textColor="@color/menu_color"
-            android:visibility="visible" />
+            <TextView
+                android:id="@+id/lachcha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="For Lachcha order, click here"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/aboutus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_help_black_24dp"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="About Us"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#cdcdcd" />
+            <TextView
+                android:id="@+id/terms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_assignment_black_24dp"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="Terms &amp; Conditions"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp" />
 
 
-        <TextView
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_power_settings_new_black_24dp"
-            android:drawablePadding="22dp"
-            android:drawableTint="@color/menu_color"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:text="Logout"
-            android:textColor="@color/menu_color" />
+            <TextView
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_help_black_24dp"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="FAQs"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp"
+                android:visibility="visible" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_phone_contact"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="Contact Us"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/refer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_rupee"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="Refer and Earn (upto 5 persons)"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#cdcdcd" />
+
+
+            <TextView
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_power_settings_new_black_24dp"
+                android:drawablePadding="22dp"
+                android:drawableTint="@color/menu_color"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="Logout"
+                android:textColor="@color/menu_color"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/textView8"

@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
     Toolbar toolbar;
     DrawerLayout drawer;
     BottomNavigationView navigation;
-    TextView count, rewards, login, terms, about, address, logout, cart, orders, refer, location, wishlist, contact, find;
+    TextView count, rewards, login, terms, about, address, logout, cart, orders, refer, location, wishlist, contact, find, aboutus;
     ImageView cart2, notification;
     private FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
         notification = findViewById(R.id.imageView10);
         find = findViewById(R.id.find);
         email = findViewById(R.id.textView8);
+        aboutus = findViewById(R.id.aboutus);
 
         contact = findViewById(R.id.contact);
         facebook = findViewById(R.id.imageView15);
@@ -329,12 +330,26 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
                 Intent intent = new Intent(MainActivity.this, Web.class);
                 intent.putExtra("title", "Terms & Conditions");
-                intent.putExtra("url", "https://technuoma.com/elittleplanet/terms.php");
+                intent.putExtra("url", "https://elittleplanet.com/terms.php");
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
 
             }
         });
+
+        aboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, Web.class);
+                intent.putExtra("title", "About Us");
+                intent.putExtra("url", "https://elittleplanet.com/about.php");
+                startActivity(intent);
+                drawer.closeDrawer(GravityCompat.START);
+
+            }
+        });
+
 
         wishlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -365,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
                 Intent intent = new Intent(MainActivity.this, Web.class);
                 intent.putExtra("title", "FAQs");
-                intent.putExtra("url", "https://technuoma.com/elittleplanet/faq.php");
+                intent.putExtra("url", "https://elittleplanet.com/faq.php");
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
 

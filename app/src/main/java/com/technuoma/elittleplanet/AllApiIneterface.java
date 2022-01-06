@@ -25,47 +25,47 @@ import retrofit2.http.Part;
 
 public interface AllApiIneterface {
 
-    @GET("elittleplanet/api/getBrands.php")
+    @GET("api/getBrands.php")
     Call<brandBean> getBrands();
 
-    @GET("elittleplanet/api/getFilters.php")
+    @GET("api/getFilters.php")
     Call<filtersBean> getFilters();
 
     @Multipart
-    @POST("elittleplanet/api/getHome2.php")
+    @POST("api/getHome2.php")
     Call<homeBean> getHome(
             @Part("lat") String lat,
             @Part("lng") String lng
     );
 
     @Multipart
-    @POST("elittleplanet/api/getSubCat1.php")
+    @POST("api/getSubCat1.php")
     Call<subCat1Bean> getSubCat1(
             @Part("cat") String cat
     );
 
     @Multipart
-    @POST("elittleplanet/api/getSubCat2.php")
+    @POST("api/getSubCat2.php")
     Call<subCat1Bean> getSubCat2(
             @Part("subcat1") String cat
     );
 
     @Multipart
-    @POST("elittleplanet/api/getOrderId.php")
+    @POST("api/getOrderId.php")
     Call<payBean> getOrderId(
             @Part("amount") String amount,
             @Part("receipt") String receipt
     );
 
     @Multipart
-    @POST("elittleplanet/api/getProducts.php")
+    @POST("api/getProducts.php")
     Call<productsBean> getProducts(
             @Part("subcat2") String cat,
             @Part("location_id") String location_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/findPhone.php")
+    @POST("api/findPhone.php")
     Call<productsBean> findPhone(
             @Part("min") String min,
             @Part("max") String max,
@@ -79,28 +79,28 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/getProductById.php")
+    @POST("api/getProductById.php")
     Call<singleProductBean> getProductById(
             @Part("id") String cat,
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/addWishlist.php")
+    @POST("api/addWishlist.php")
     Call<singleProductBean> addWishlist(
             @Part("user_id") String user_id,
             @Part("product_id") String product_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/removeWishlist.php")
+    @POST("api/removeWishlist.php")
     Call<singleProductBean> removeWishlist(
             @Part("user_id") String user_id,
             @Part("product_id") String product_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/search.php")
+    @POST("api/search.php")
     Call<searchBean> search(
             @Part("query") String query,
             @Part("location_id") String location_id
@@ -108,7 +108,7 @@ public interface AllApiIneterface {
 
 
     @Multipart
-    @POST("elittleplanet/api/login4.php")
+    @POST("api/login4.php")
     Call<loginBean> login(
             @Part("email") String email,
             @Part("password") String password,
@@ -117,7 +117,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/register.php")
+    @POST("api/register.php")
     Call<loginBean> register(
             @Part("email") String email,
             @Part("password") String password,
@@ -130,14 +130,14 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/verify.php")
+    @POST("api/verify.php")
     Call<loginBean> verify(
             @Part("phone") String phone,
             @Part("otp") String otp
     );
 
     @Multipart
-    @POST("elittleplanet/api/addCart.php")
+    @POST("api/addCart.php")
     Call<singleProductBean> addCart(
             @Part("user_id") String user_id,
             @Part("product_id") String product_id,
@@ -149,7 +149,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/addAddress.php")
+    @POST("api/addAddress.php")
     Call<singleProductBean> addAddress(
             @Part("user_id") String user_id,
             @Part("house") String house,
@@ -160,7 +160,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/editAddress.php")
+    @POST("api/editAddress.php")
     Call<singleProductBean> editAddress(
             @Part("id") String id,
             @Part("house") String house,
@@ -171,7 +171,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/updateCart.php")
+    @POST("api/updateCart.php")
     Call<singleProductBean> updateCart(
             @Part("id") String id,
             @Part("quantity") String quantity,
@@ -179,38 +179,38 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/deleteCart.php")
+    @POST("api/deleteCart.php")
     Call<singleProductBean> deleteCart(
             @Part("id") String id
     );
 
     @Multipart
-    @POST("elittleplanet/api/getRew.php")
+    @POST("api/getRew.php")
     Call<String> getRew(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/getCoupons.php")
+    @POST("api/getCoupons.php")
     Call<couponsBean> getCoupons(
             @Part("user_id") String user_id
     );
 
 
     @Multipart
-    @POST("elittleplanet/api/clearCart.php")
+    @POST("api/clearCart.php")
     Call<singleProductBean> clearCart(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/getOrderDetails.php")
+    @POST("api/getOrderDetails.php")
     Call<orderDetailsBean> getOrderDetails(
             @Part("order_id") String order_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/getCart.php")
+    @POST("api/getCart.php")
     Call<cartBean> getCart(
             @Part("user_id") String user_id,
             @Part("location") String location,
@@ -219,31 +219,31 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/getNotification.php")
+    @POST("api/getNotification.php")
     Call<notiBeam> getNotification(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/getOrders.php")
+    @POST("api/getOrders.php")
     Call<ordersBean> getOrders(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/getAddress.php")
+    @POST("api/getAddress.php")
     Call<addressBean> getAddress(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/deleteAddress.php")
+    @POST("api/deleteAddress.php")
     Call<addressBean> deleteAddress(
             @Part("id") String id
     );
 
     @Multipart
-    @POST("elittleplanet/api/checkPromo.php")
+    @POST("api/checkPromo.php")
     Call<checkPromoBean> checkPromo(
             @Part("promo") String promo,
             @Part("user_id") String user_id,
@@ -251,7 +251,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/buyVouchers.php")
+    @POST("api/buyVouchers.php")
     Call<checkoutBean> buyVouchers(
             @Part("user_id") String user_id,
             @Part("lat") String lat,
@@ -276,32 +276,32 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/getLogs.php")
+    @POST("api/getLogs.php")
     Call<trackBean> getLogs(
             @Part("order_id") String order_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/getWishlist.php")
+    @POST("api/getWishlist.php")
     Call<orderDetailsBean> getWishlist(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/getRating.php")
+    @POST("api/getRating.php")
     Call<ratingsBean> getRating(
             @Part("product_id") String product_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/checkPurchase.php")
+    @POST("api/checkPurchase.php")
     Call<ratingsBean> checkPurchase(
             @Part("product_id") String product_id,
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/addRating.php")
+    @POST("api/addRating.php")
     Call<ratingsBean> addRating(
             @Part("product_id") String product_id,
             @Part("rating") String rating,
@@ -310,13 +310,13 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("elittleplanet/api/checkLoaderRating.php")
+    @POST("api/checkLoaderRating.php")
     Call<ratingsBean> checkLoaderRating(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("elittleplanet/api/submitLoaderRating.php")
+    @POST("api/submitLoaderRating.php")
     Call<ratingsBean> submitLoaderRating(
             @Part("id") String id,
             @Part("loader_rating") String loader_rating

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -57,6 +59,10 @@ public class Login2 extends AppCompatActivity {
     Button signInButton, facebook;
     ProgressBar progress;
 
+    LinearLayout loginlayout;
+    EditText email, password;
+    Button login;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +104,10 @@ public class Login2 extends AppCompatActivity {
         signInButton = findViewById(R.id.button10);
         facebook = findViewById(R.id.button14);
         progress = findViewById(R.id.progressBar11);
+        loginlayout = findViewById(R.id.textView108);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        login = findViewById(R.id.login);
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +126,122 @@ public class Login2 extends AppCompatActivity {
                 // Initialize Facebook Login button
 
                 loginButton.logInWithReadPermissions(Login2.this, Arrays.asList("email", "public_profile"));
+            }
+        });
+
+        loginlayout.setVisibility(View.GONE);
+
+
+        progress.setVisibility(View.VISIBLE);
+
+        Bean b = (Bean) getApplicationContext();
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.level(HttpLoggingInterceptor.Level.HEADERS);
+        logging.level(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .client(client)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<String> call = cr.getLoginPage();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.body().equals("yes")) {
+                    loginlayout.setVisibility(View.VISIBLE);
+                } else {
+                    loginlayout.setVisibility(View.GONE);
+                }
+                progress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String em = email.getText().toString();
+                String pa = password.getText().toString();
+                String na = "Test Login";
+
+                if (em.equals("test@gmail.com")) {
+                    if (pa.equals("12345678")) {
+                        progress.setVisibility(View.VISIBLE);
+
+                        Bean b = (Bean) getApplicationContext();
+
+                        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                        logging.level(HttpLoggingInterceptor.Level.HEADERS);
+                        logging.level(HttpLoggingInterceptor.Level.BODY);
+
+                        OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(b.baseurl)
+                                .client(client)
+                                .addConverterFactory(ScalarsConverterFactory.create())
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+                        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                        Call<loginBean> call = cr.login(em, pa, na, SharePreferenceUtils.getInstance().getString("token"));
+
+                        call.enqueue(new Callback<loginBean>() {
+                            @Override
+                            public void onResponse(@NotNull Call<loginBean> call, @NotNull Response<loginBean> response) {
+
+                                assert response.body() != null;
+                                if (response.body().getStatus().equals("1")) {
+
+                                    SharePreferenceUtils.getInstance().saveString("userId", response.body().getUserId());
+                                    SharePreferenceUtils.getInstance().saveString("phone", response.body().getPhone());
+                                    SharePreferenceUtils.getInstance().saveString("email", response.body().getEmail());
+                                    SharePreferenceUtils.getInstance().saveString("name", response.body().getName());
+                                    SharePreferenceUtils.getInstance().saveString("image", "");
+                                    Toast.makeText(Login2.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    Intent intent = new Intent(Login2.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finishAffinity();
+
+                                        /*DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+                                        ImageLoader loader = ImageLoader.getInstance();
+                                        loader.displayImage(SharePreferenceUtils.getInstance().getString("image"), profile, options);*/
+
+                                } else {
+                                    Toast.makeText(Login2.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+
+                                progress.setVisibility(View.GONE);
+
+                            }
+
+                            @Override
+                            public void onFailure(@NotNull Call<loginBean> call, @NotNull Throwable t) {
+                                progress.setVisibility(View.GONE);
+                            }
+                        });
+                    } else {
+                        Toast.makeText(Login2.this, "Invalid password", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(Login2.this, "Invalid email", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 

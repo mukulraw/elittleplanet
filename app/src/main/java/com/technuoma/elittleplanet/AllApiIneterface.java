@@ -106,6 +106,8 @@ public interface AllApiIneterface {
             @Part("location_id") String location_id
     );
 
+    @GET("api/getLoginPage.php")
+    Call<String> getLoginPage();
 
     @Multipart
     @POST("api/login4.php")

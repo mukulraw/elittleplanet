@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -51,7 +52,6 @@ public class Spalsh extends AppCompatActivity implements InstallReferrerStateLis
         mReferrerClient.startConnection(this);
 
         if (hasPermissions(this, PERMISSIONS)) {
-
             startApp();
         } else {
             ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_CODE_ASK_PERMISSIONS);
@@ -137,9 +137,30 @@ public class Spalsh extends AppCompatActivity implements InstallReferrerStateLis
             public void run() {
 
                 if (id.length() > 0) {
-                    Intent intent = new Intent(Spalsh.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+
+
+                    Intent intent2 = getIntent();
+                    Uri data = intent2.getData();
+                    if (data != null) {
+                        String pid = data.getQueryParameter("id");
+                        String action = intent2.getAction();
+                        Log.d("action", action);
+                        Log.d("data", pid);
+
+                        Intent intent = new Intent(Spalsh.this, MainActivity.class);
+                        intent.putExtra("pid", pid);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(Spalsh.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+
+
                 } else {
                     Intent intent = new Intent(Spalsh.this, Login2.class);
                     startActivity(intent);

@@ -215,19 +215,6 @@ public class SingleProduct extends Fragment {
             }
         });
 
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT,
-                        "Download eLittle Planet: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID);
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-
-            }
-        });
 
         return view;
 
@@ -281,6 +268,21 @@ public class SingleProduct extends Fragment {
                         loved.setVisibility(View.GONE);
                         relatedtitle.setVisibility(View.GONE);
                     }
+
+                    share.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Intent sendIntent = new Intent();
+                            sendIntent.setAction(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                                    item.getName() + " : https://elittleplanet.com/product.php?id=" + id);
+                            sendIntent.setType("text/plain");
+                            startActivity(sendIntent);
+
+                        }
+                    });
+
 
                     /*String clr = item.getColor();
                     String[] arr = clr.split(",");
@@ -370,7 +372,7 @@ public class SingleProduct extends Fragment {
                     float pri = Float.parseFloat(item.getPrice());
                     float dv1 = Float.parseFloat(item.getDiscount());
                     float dv = pri - dv1;
-                    float dis = (dv/ pri) * 100;
+                    float dis = (dv / pri) * 100;
                     String nv1 = null;
 
 
@@ -777,7 +779,6 @@ public class SingleProduct extends Fragment {
                 holder.tag.setTextColor(Color.BLACK);
 
 
-
             } else {
                 holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.dotted_back_stroke));
                 holder.tag.setTextColor(Color.LTGRAY);
@@ -786,8 +787,7 @@ public class SingleProduct extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getType().equals("new"))
-                    {
+                    if (item.getType().equals("new")) {
                         FragmentManager fm4 = mainActivity.getSupportFragmentManager();
 
                         FragmentTransaction ft4 = fm4.beginTransaction();
@@ -800,9 +800,7 @@ public class SingleProduct extends Fragment {
                         ft4.replace(R.id.replace, frag14);
                         ft4.addToBackStack(null);
                         ft4.commit();
-                    }
-                    else
-                    {
+                    } else {
                         selectPos(position);
                     }
 
@@ -868,7 +866,6 @@ public class SingleProduct extends Fragment {
                 holder.tag.setTextColor(Color.BLACK);
 
 
-
             } else {
                 holder.tag.setBackground(colors.getResources().getDrawable(R.drawable.dotted_back_stroke));
                 holder.tag.setTextColor(Color.LTGRAY);
@@ -887,8 +884,7 @@ public class SingleProduct extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getType().equals("new"))
-                    {
+                    if (item.getType().equals("new")) {
                         FragmentManager fm4 = mainActivity.getSupportFragmentManager();
 
                         FragmentTransaction ft4 = fm4.beginTransaction();
@@ -901,9 +897,7 @@ public class SingleProduct extends Fragment {
                         ft4.replace(R.id.replace, frag14);
                         ft4.addToBackStack(null);
                         ft4.commit();
-                    }
-                    else
-                    {
+                    } else {
                         selectPos(position);
                     }
 
@@ -1003,8 +997,6 @@ public class SingleProduct extends Fragment {
     }
 
 
-
-
     class BestAdapter extends RecyclerView.Adapter<BestAdapter.ViewHolder> {
 
         Context context;
@@ -1051,7 +1043,7 @@ public class SingleProduct extends Fragment {
             float pri = Float.parseFloat(item.getPrice());
             float dv1 = Float.parseFloat(item.getDiscount());
             float dv = pri - dv1;
-            float dis = (dv/ pri) * 100;
+            float dis = (dv / pri) * 100;
             String nv1 = null;
 
 
@@ -1333,7 +1325,7 @@ public class SingleProduct extends Fragment {
             float pri = Float.parseFloat(item.getPrice());
             float dv1 = Float.parseFloat(item.getDiscount());
             float dv = pri - dv1;
-            float dis = (dv/ pri) * 100;
+            float dis = (dv / pri) * 100;
             String nv1 = null;
 
 

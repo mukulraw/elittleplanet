@@ -561,6 +561,23 @@ public class MainActivity extends AppCompatActivity implements ResultCallback<Lo
 
         navigation.setSelectedItemId(R.id.action_home);
 
+        String pid = getIntent().getStringExtra("pid");
+        if (pid != null) {
+
+            FragmentManager fm31 = getSupportFragmentManager();
+            FragmentTransaction ft31 = fm31.beginTransaction();
+            ft31.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            SingleProduct frag14 = new SingleProduct();
+            Bundle b = new Bundle();
+            b.putString("id", pid);
+            b.putString("title", "");
+            frag14.setArguments(b);
+            ft31.replace(R.id.replace, frag14);
+            ft31.addToBackStack(null);
+            ft31.commit();
+
+        }
+
     }
 
     @Override

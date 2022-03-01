@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -273,12 +274,18 @@ public class SingleProduct extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-                            Intent sendIntent = new Intent();
+                            ShareCompat.IntentBuilder.from(mainActivity)
+                                    .setType("text/plain")
+                                    .setChooserTitle(item.getName())
+                                    .setText("https://elittleplanet.com/product.php?id=" + id)
+                                    .startChooser();
+
+                            /*Intent sendIntent = new Intent();
                             sendIntent.setAction(Intent.ACTION_SEND);
                             sendIntent.putExtra(Intent.EXTRA_TEXT,
                                     item.getName() + " : https://elittleplanet.com/product.php?id=" + id);
                             sendIntent.setType("text/plain");
-                            startActivity(sendIntent);
+                            startActivity(sendIntent);*/
 
                         }
                     });
